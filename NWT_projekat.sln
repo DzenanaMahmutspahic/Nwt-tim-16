@@ -12,6 +12,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{490098
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWT.Pomocnici", "NWT.Pomocnici\NWT.Pomocnici.csproj", "{9B52AD6B-D27E-4C2D-89D9-5EFED92A122F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Database", "Database", "{11B75156-B11A-48F3-AD4D-414AAC04AC26}"
+	ProjectSection(SolutionItems) = preProject
+		Database\populationScript.sql = Database\populationScript.sql
+		Database\StoredProcedures.sql = Database\StoredProcedures.sql
+		Database\tables.sql = Database\tables.sql
+		Database\types.sql = Database\types.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

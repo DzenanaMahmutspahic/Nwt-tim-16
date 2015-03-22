@@ -6,7 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NWT.Pomocnici{
+namespace NWT.Pomocnici{ 
+    /// <summary>
+    /// Klasa koja sadrži podatke i metode za rad sa bazom podataka
+    /// </summary>
 	public class DbPomocnik {
 
         private static readonly string CONNECTION_STRING = @"Data Source=.\SQLSERVER;Initial Catalog=NWT;Integrated Security=True";

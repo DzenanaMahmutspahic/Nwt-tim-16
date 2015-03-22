@@ -9,20 +9,63 @@ using System.Web.Http;
 namespace NWT_projekat.Controllers {
     public class AccountController: ApiController {
 
-        /* [HttpGet]
-        public Account Get(int? id=null) {
-            return new Account { ID = id??0, Username = "dmahmutspahic", Datum = DateTime.Now };
-        }*/
+        private readonly Konstante _konstante = new Konstante();
 
-        public Korisnik Get(int? ID = null) {
-            var K = new Korisnik() { Ime = "Dženana", Prezime = "Mahmutspahić", Pozicija = "Šefica" };
-            return K;
+        /// <summary>
+        /// Servis za dobavljanje korisnika po ID
+        /// </summary>
+        /// <param name="ID">ID Korisnika</param>
+        /// <returns>Objekat sa podacima o korisniku ili null ako korisnik nije nađen</returns>
+        [HttpGet]
+        public Korisnik DajKorisnika(int ID) {
+            var parametri = new Dictionary<string, object>{
+                {"ID", ID}
+            };
+            var k = DbPomocnik.IzvrsiProceduru(Konstante.DAJ_KORISNIKA_ID, parametri).Rows[0];
+            return new Korisnik{
+                ID=Convert.ToInt32(k["ID"]),
+                Ime=k["Ime"].ToString(),
+                Password=k["Password"].ToString(),
+                Pozicija=k["Pozicija"].ToString(),
+                Prezime = k["Prezime"].ToString(),
+                Username = k["Username"].ToString()
+            };
         }
 
+        /// <summary>
+        /// Servis za prijavu na sistem.
+        /// </summary>
+        /// <param name="korisnik">Objekat sa popunjenom podacima o korisniku</param>
+        /// <returns>Logičku vrijednost true ako je prijavljivanje uspješno</returns>
         [System.Web.Mvc.HttpPost]
         public bool Login(Korisnik korisnik) {
-            return DbPomocnik.IzvrsiProceduru("Login", new Dictionary<string, object>()).Rows.Count == 1;
+            var parametri = new Dictionary<string, object>{
+                {"Username", korisnik.Username},
+                {"Password", korisnik.Password}
+            };
+            return DbPomocnik.IzvrsiProceduru(Konstante.DAJ_KORISNIKA_UNAME_PASS, parametri).Rows.Count == 1;
         }
 
+        /// <summary>
+        /// Servis za registraciju novog korisnika
+        /// </summary>
+        /// <param name="korisnik"></param>
+        /// <returns></returns>
+        public Korisnik Registracija(Korisnik korisnik) {
+            var parametri = new Dictionary<string, object>{
+                {"Username", korisnik.Username},
+                {"Password", korisnik.Password},
+                {"Ime", korisnik.Ime},
+                {"Prezime", korisnik.Prezime},
+                {"Pozicija", korisnik.Pozicija}
+            };
+            try {
+                int ID = Convert.ToInt32(DbPomocnik.IzvrsiProceduru(Konstante.REGISTRUJ_KORISNIKA, parametri).Rows[0][0]);
+                korisnik.ID = ID;
+                return korisnik;
+            } catch(Exception) {
+            }
+            return null;
+        }
     }
 }

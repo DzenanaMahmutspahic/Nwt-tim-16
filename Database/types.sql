@@ -1,0 +1,11 @@
+IF DB_ID('NWT') IS NULL
+	CREATE DATABASE NWT
+GO
+
+USE NWT
+
+IF TYPE_ID(N'type_array_int') IS NULL
+	CREATE TYPE type_array_int AS TABLE(
+		ID INT
+	)
+GO
