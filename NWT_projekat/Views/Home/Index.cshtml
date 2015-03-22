@@ -41,8 +41,10 @@
                 <a href="http://go.microsoft.com/fwlink/?LinkId=245164">Learn more…</a>
             </li>
             <li>
-                <form action="api/Account" method="get">
-                    <input type="submit" value="Account"/>
+                <form action="../api/Account/Login" method="post">
+                    <input type="hidden" name="username" value="user" />
+                    <input type="hidden" name="password" value="user" />
+                    <input type="submit" value="Login"/>
                 </form>
             </li>
         </ol>

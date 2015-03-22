@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{490098
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NWT.Pomocnici", "NWT.Pomocnici\NWT.Pomocnici.csproj", "{9B52AD6B-D27E-4C2D-89D9-5EFED92A122F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{B3CCE1D3-90F2-44C6-B15C-9828D70F1555}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B3CCE1D3-90F2-44C6-B15C-9828D70F1555}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B3CCE1D3-90F2-44C6-B15C-9828D70F1555}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B52AD6B-D27E-4C2D-89D9-5EFED92A122F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B52AD6B-D27E-4C2D-89D9-5EFED92A122F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B52AD6B-D27E-4C2D-89D9-5EFED92A122F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B52AD6B-D27E-4C2D-89D9-5EFED92A122F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
