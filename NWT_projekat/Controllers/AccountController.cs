@@ -2,6 +2,7 @@
 using NWT_projekat.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -12,11 +13,12 @@ namespace NWT_projekat.Controllers {
         private readonly Konstante _konstante = new Konstante();
 
         /// <summary>
-        /// Servis za dobavljanje korisnika po ID
+        /// Servis za dobavljanje korisnika po ID.
         /// </summary>
         /// <param name="ID">ID Korisnika</param>
         /// <returns>Objekat sa podacima o korisniku ili null ako korisnik nije nađen</returns>
         [HttpGet]
+        [Description ("Servis za dobavljanje korisnika po ID")]
         public Korisnik DajKorisnika(int ID) {
             var parametri = new Dictionary<string, object>{
                 {"ID", ID}
@@ -47,7 +49,7 @@ namespace NWT_projekat.Controllers {
         }
 
         /// <summary>
-        /// Servis za registraciju novog korisnika
+        /// Servis za registraciju novog korisnika.
         /// </summary>
         /// <param name="korisnik"></param>
         /// <returns></returns>
