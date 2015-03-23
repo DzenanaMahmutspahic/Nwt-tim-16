@@ -61,3 +61,99 @@ BEGIN
 		ID= @ID
 END
 GO
+
+
+
+IF OBJECT_ID('UnesiPosao', 'P') IS NOT NULL
+	DROP PROCEDURE UnesiPosao;
+GO	
+CREATE PROCEDURE UnesiPosao
+
+		@DTP BIT,
+		@Stampa BIT, 
+		@Knjigovodstvena_usluga BIT,
+		@Vanjska_usluga BIT,
+		@Montaza BIT, 
+		@Rucni_rad BIT,
+		@Status_posla BIT,
+		@Repromaterijal BIT,
+		@Materijalni_troskovi DECIMAL,
+		@Rad DECIMAL,
+		@Popust BIT,
+		@Ukupna_cijena DECIMAL,
+		@Cijena_komad DECIMAL,
+		@Vrsta_posla VARCHAR(50),
+		@Obim_posla DECIMAL,
+		@Datum DATE,
+		@Papir VARCHAR(50),
+		@Dorada VARCHAR(50),
+		@Montaza_posla VARCHAR(50),
+		@Cijena_kom_PDV DECIMAL,
+		@Ukupna_cijena_PDV DECIMAL
+AS
+BEGIN
+	INSERT INTO Korisnik(
+		DTP,
+		Stampa, 
+		Knjigovodstvena_usluga,
+		Vanjska_usluga,
+		Montaza, 
+		Rucni_rad,
+		Status_posla,
+		Repromaterijal,
+		Materijalni_troskovi,
+		Rad,
+		Popust,
+		Ukupna_cijena,
+		Cijena_komad,
+		Vrsta_posla,
+		Obim_posla,
+		Datum,
+		Papir,
+		Dorada,
+		Montaza_posla,
+		Cijena_kom_PDV,
+		Ukupna_cijena_PDV
+
+	)VALUES(
+		@DTP,
+		@Stampa, 
+		@Knjigovodstvena_usluga,
+		@Vanjska_usluga,
+		@Montaza, 
+		@Rucni_rad,
+		@Status_posla,
+		@Repromaterijal,
+		@Materijalni_troskovi,
+		@Rad,
+		@Popust,
+		@Ukupna_cijena,
+		@Cijena_komad,
+		@Vrsta_posla,
+		@Obim_posla,
+		@Datum,
+		@Papir,
+		@Dorada,
+		@Montaza_posla,
+		@Cijena_kom_PDV,
+		@Ukupna_cijena_PDV
+	)
+	RETURN SCOPE_IDENTITY();
+END
+GO
+
+
+
+IF OBJECT_ID('DajPosao_ID', 'P') IS NOT NULL
+	DROP PROCEDURE DajPosao_ID;
+GO	
+CREATE PROCEDURE DajPosao_ID
+	@ID INT
+AS
+BEGIN
+	SELECT * 
+	FROM Posao
+	WHERE
+		ID= @ID
+END
+GO

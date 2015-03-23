@@ -198,6 +198,7 @@
     </Compile>
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Korisnik.cs" />
+    <Compile Include="Models\Posao.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
