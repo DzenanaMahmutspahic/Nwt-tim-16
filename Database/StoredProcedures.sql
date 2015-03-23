@@ -70,6 +70,13 @@ GO
 CREATE PROCEDURE UnesiPosao
 
 		@DTP BIT,
+		@Korisnik_ID INT,
+		@Repromaterijal_ID INT,
+		@DTP_ID INT,
+		@Montaza_ID INT,
+		@Knjigovodstvena_dorada_ID INT,
+		@Rucni_rad_ID INT,
+		@Stampa_ID INT,
 		@Stampa BIT, 
 		@Knjigovodstvena_usluga BIT,
 		@Vanjska_usluga BIT,
@@ -92,8 +99,15 @@ CREATE PROCEDURE UnesiPosao
 		@Ukupna_cijena_PDV DECIMAL
 AS
 BEGIN
-	INSERT INTO Korisnik(
+	INSERT INTO Posao(
 		DTP,
+		Korisnik_ID,
+		Repromaterijal_ID,
+		DTP_ID,
+		Montaza_ID,
+		Knjigovodstvena_dorada_ID,
+		Rucni_rad_ID,
+		Stampa_ID,
 		Stampa, 
 		Knjigovodstvena_usluga,
 		Vanjska_usluga,
@@ -117,6 +131,13 @@ BEGIN
 
 	)VALUES(
 		@DTP,
+		@Korisnik_ID,
+		@Repromaterijal_ID,
+		@DTP_ID,
+		@Montaza_ID,
+		@Knjigovodstvena_dorada_ID,
+		@Rucni_rad_ID,
+		@Stampa_ID,
 		@Stampa, 
 		@Knjigovodstvena_usluga,
 		@Vanjska_usluga,

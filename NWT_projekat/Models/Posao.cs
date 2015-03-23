@@ -8,7 +8,7 @@ namespace NWT_projekat.Models
     public class Posao
     {
         public int ID { get; set; }
-        public bool DTP { get; set; }
+        public byte DTP { get; set; }
         public bool Stampa { get; set; }
         public bool Knjigovodstvena_usluga { get; set; }
         public bool Vanjska_usluga { get; set; }

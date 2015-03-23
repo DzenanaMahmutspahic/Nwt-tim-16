@@ -10,5 +10,6 @@ namespace NWT.Pomocnici {
         public static readonly string DAJ_KORISNIKA_UNAME_PASS = "DajKorisnika";
         public static readonly string REGISTRUJ_KORISNIKA = "RegistrujKorisnika";
         public static readonly string DAJ_POSAO_ID = "DajPosao_ID";
+        public static readonly string DODAJ_POSAO = "UnesiPosao";
     }
 }

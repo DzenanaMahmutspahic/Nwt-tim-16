@@ -112,14 +112,13 @@ namespace NWT.Pomocnici{
                 SqlCommand cmd2 = new SqlCommand(imeProcedure, conn);
 
                 cmd.CommandType = CommandType.StoredProcedure;
-                conn.Open();
                 SqlCommandBuilder.DeriveParameters(cmd);
                 var modelProperties = model.GetType().GetProperties();
                 foreach (SqlParameter p in cmd.Parameters)
                 {
-                    var properti = modelProperties.FirstOrDefault(y => y.Name == p.ParameterName);
+                    var properti = modelProperties.FirstOrDefault(y => y.Name == p.ParameterName.Substring(1));
                     if (properti != null)
-                        cmd2.Parameters.Add(p.ParameterName, properti.GetValue(model));
+                        cmd2.Parameters.Add(new SqlParameter( p.ParameterName, properti.GetValue(model)));
                 }
 
                 var odgovor_properties = odgovor.GetType().GetProperties();
