@@ -68,7 +68,6 @@ IF OBJECT_ID('UnesiPosao', 'P') IS NOT NULL
 	DROP PROCEDURE UnesiPosao;
 GO	
 CREATE PROCEDURE UnesiPosao
-
 		@DTP BIT,
 		@Korisnik_ID INT,
 		@Repromaterijal_ID INT,
@@ -165,16 +164,16 @@ GO
 
 
 
-IF OBJECT_ID('DajPosao_ID', 'P') IS NOT NULL
-	DROP PROCEDURE DajPosao_ID;
+IF OBJECT_ID('DajZavrsenePoslove', 'P') IS NOT NULL
+	DROP PROCEDURE DajZavrsenePoslove;
 GO	
-CREATE PROCEDURE DajPosao_ID
-	@ID INT
+CREATE PROCEDURE DajZavrsenePoslove
+	--@ID INT
 AS
 BEGIN
 	SELECT * 
 	FROM Posao
 	WHERE
-		ID= @ID
+		Status_posla == true
 END
 GO

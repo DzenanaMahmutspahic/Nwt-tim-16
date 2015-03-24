@@ -28,7 +28,7 @@ namespace NWT_projekat.Models
         public string Dorada { get; set; }
         public string Montaza_posla { get; set; }
         public decimal Ukupna_cijena_PDV { get; set; }
-        public decimal Cijena_komad_PDV { get; set; }
+        public decimal Cijena_kom_PDV { get; set; }
         public int Korisnik_ID { get; set; }
         public int Repromaterijal_ID { get; set; }
         public int DTP_ID { get; set; }

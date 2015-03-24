@@ -62,7 +62,11 @@ namespace NWT.Pomocnici{
             var properties = model.GetType().GetProperties();
             Dictionary<string, object> parametri = new Dictionary<string,object>();
             foreach (var p in properties)
-                parametri.Add(p.Name, p.GetValue(model));
+            {
+                var p_vrijednost = p.GetValue(model);
+                if (p_vrijednost != null)
+                    parametri.Add(p.Name, p_vrijednost);
+            }
             return IzvrsiProceduru(imeProcedure, parametri);
         }
 
@@ -99,41 +103,46 @@ namespace NWT.Pomocnici{
         /// <param name="imeProcedure"></param>
         /// <param name="model"></param>
         /// <returns></returns>
-        public static T2 IzvrsiProceduru<T1, T2>(string imeProcedure, T1 model) where T2:new()
+        public static List<T2> IzvrsiProceduru<T1, T2>(string imeProcedure, T1 model) where T2:new()
         {
-            var properties = model.GetType().GetProperties();
-            T2 odgovor = new T2();
+            //var properties = model.GetType().GetProperties();
+            List<T2> odgovor = new List<T2>();
 
             using (SqlConnection conn = new SqlConnection(CONNECTION_STRING))
             {
                 conn.Open();
 
                 SqlCommand cmd = new SqlCommand(imeProcedure, conn);
-                SqlCommand cmd2 = new SqlCommand(imeProcedure, conn);
+                //SqlCommand cmd2 = new SqlCommand(imeProcedure, conn);
 
                 cmd.CommandType = CommandType.StoredProcedure;
-                SqlCommandBuilder.DeriveParameters(cmd);
-                var modelProperties = model.GetType().GetProperties();
-                foreach (SqlParameter p in cmd.Parameters)
+                if (model != null)
                 {
-                    var properti = modelProperties.FirstOrDefault(y => y.Name == p.ParameterName.Substring(1));
-                    if (properti != null)
-                        cmd2.Parameters.Add(new SqlParameter( p.ParameterName, properti.GetValue(model)));
-                }
+                    SqlCommandBuilder.DeriveParameters(cmd);
+                    var modelProperties = model.GetType().GetProperties();
+                    foreach (SqlParameter p in cmd.Parameters)
+                    {
+                        var properti = modelProperties.FirstOrDefault(y => y.Name == p.ParameterName.Substring(1));
+                        if (properti != null)
+                            cmd.Parameters[p.ParameterName].Value = properti.GetValue(model);
+                    }
 
-                var odgovor_properties = odgovor.GetType().GetProperties();
-                using (SqlDataReader rdr = cmd2.ExecuteReader())
+                }
+                var odgovor_properties = typeof(T2).GetProperties();
+                using (SqlDataReader rdr = cmd.ExecuteReader())
                 {
                     while (rdr.Read())
                     {
-                        List<object> parametri1 = new List<object>();
+                        T2 cvor = new T2();
                         for (int i = 0; i < rdr.FieldCount; i++)
                         {   
                             var ovajProperty = odgovor_properties.FirstOrDefault(x=>x.Name == (rdr.GetName(i)));
-                            if ( ovajProperty != null)
-                                ovajProperty.SetValue(odgovor, Convert.ChangeType(rdr.GetName(i), ovajProperty.GetType()));
-                            parametri1.Add(rdr.GetValue(i));
+                            var ovajValue = rdr.GetValue(i);
+                            if ( ovajProperty != null && ovajValue != null && ovajValue != DBNull.Value)
+                                 ovajProperty.SetValue(cvor, Convert.ChangeType(ovajValue, ovajProperty.PropertyType ));
+                            //parametri1.Add(rdr.GetValue(i));
                         }
+                        odgovor.Add(cvor);
                     }
                 }
                 return odgovor;

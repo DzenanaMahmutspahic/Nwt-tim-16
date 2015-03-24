@@ -65,7 +65,18 @@ namespace NWT_projekat.Controllers
         [System.Web.Http.HttpPost]
         public Posao UnesiPosao(Posao p)
         {
-            return DbPomocnik.IzvrsiProceduru<Posao, Posao>(Konstante.DODAJ_POSAO, p);
+            return DbPomocnik.IzvrsiProceduru<Posao, Posao>(Konstante.DODAJ_POSAO, p).FirstOrDefault();
         }
+
+
+        [HttpGet]
+        [Description("Servis za dobavljanje završenih poslova")]
+        public List<Posao> DajZavrsenePoslove()
+        {
+            var q = DbPomocnik.IzvrsiProceduru<Posao, Posao>(Konstante.DAJ_ZAVRSENE_POSLOVE, null);
+            return q;
+            
+        }
+
     }
 }
