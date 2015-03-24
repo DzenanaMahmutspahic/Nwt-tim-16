@@ -1,10 +1,7 @@
 ﻿using NWT.Pomocnici;
 using NWT_projekat.Models;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Web;
 using System.Web.Http;
 //using System.Web.Mvc;
 
@@ -22,7 +19,7 @@ namespace NWT_projekat.Controllers
         /// <param name="ID">ID Posla</param>
         /// <returns>Objekat sa podacima o poslu ili null ako posao nije nađen</returns>
         [HttpGet]
-        [Description("Servis za dobavljanje posla po ID")]
+        //[Description("Servis za dobavljanje posla po ID")]
         public Posao DajPosao(int ID)
         {
             var parametri = new Dictionary<string, object>{
@@ -70,7 +67,7 @@ namespace NWT_projekat.Controllers
 
 
         [HttpGet]
-        [Description("Servis za dobavljanje završenih poslova")]
+        //[Description("Servis za dobavljanje završenih poslova")]
         public List<Posao> DajZavrsenePoslove()
         {
             var q = DbPomocnik.IzvrsiProceduru<Posao, Posao>(Konstante.DAJ_ZAVRSENE_POSLOVE, null);

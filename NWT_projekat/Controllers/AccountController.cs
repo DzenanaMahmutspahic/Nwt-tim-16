@@ -38,7 +38,7 @@ namespace NWT_projekat.Controllers {
         /// </summary>
         /// <param name="korisnik">Objekat sa popunjenom podacima o korisniku</param>
         /// <returns>Logičku vrijednost true ako je prijavljivanje uspješno</returns>
-        [System.Web.Mvc.HttpPost]
+        [HttpPost]
         public bool Login(Korisnik korisnik) {
             var parametri = new Dictionary<string, object>{
                 {"Username", korisnik.Username},
