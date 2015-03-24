@@ -190,7 +190,7 @@ CREATE TABLE Vanjska_usluga(
 	Ukupno_cijena DECIMAL NOT NULL,
 	Vrijeme_pocetka DATETIME NOT NULL,
 	Vrijeme_zavrsetka DATETIME NOT NULL,
-	Status_dorade INT NOT NULL,
+	Status_usluge INT NOT NULL,
 	Vrijeme_cekanja TIME NOT NULL,
     Komentar VARCHAR NOT NULL
 )
