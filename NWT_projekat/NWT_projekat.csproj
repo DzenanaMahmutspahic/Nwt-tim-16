@@ -199,7 +199,10 @@
     </Compile>
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\Korisnik.cs" />
+    <Compile Include="Models\Montaza.cs" />
     <Compile Include="Models\Posao.cs" />
+    <Compile Include="Models\Rucni_rad.cs" />
+    <Compile Include="Models\Vanjska_usluga.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
