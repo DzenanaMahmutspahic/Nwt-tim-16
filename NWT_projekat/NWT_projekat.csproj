@@ -199,6 +199,7 @@
     </Compile>
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\DTP.cs" />
+    <Compile Include="Models\Knjigovodstvena_dorada.cs" />
     <Compile Include="Models\Korisnik.cs" />
     <Compile Include="Models\Montaza.cs" />
     <Compile Include="Models\Posao.cs" />

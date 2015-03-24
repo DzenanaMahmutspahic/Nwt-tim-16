@@ -7,7 +7,7 @@ namespace NWT_projekat.Models
 {
     public class Stampa
     {
-        public int ID { get; set; }
+        public int Stampa_ID { get; set; }
         public int Korisnik_ID { get; set; }
         public string Priprema4b_materijal { get; set; }
         public decimal Priprema4b_sati { get; set; }
