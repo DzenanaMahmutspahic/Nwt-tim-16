@@ -19,9 +19,9 @@ namespace NWT.Pomocnici{
         /// Metoda za izvršavanje procedure na Bazi podataka
         /// </summary>
         /// <param name="NazivProcedure"></param>
-        /// <param name="parametri"></param>
+        /// <param name="parametri"></param>   
         /// <returns></returns>
-		public static DataTable IzvrsiProceduru(string NazivProcedure, Dictionary<string, object> parametri) {
+		public static DataTable IzvrsiProceduru(string NazivProcedure, Dictionary<string, object> parametri) {    
 			using(SqlConnection conn = new SqlConnection(CONNECTION_STRING)) {
 				conn.Open();
 

@@ -174,6 +174,6 @@ BEGIN
 	SELECT * 
 	FROM Posao
 	WHERE
-		Status_posla == true
+		Status_posla = 1
 END
 GO
