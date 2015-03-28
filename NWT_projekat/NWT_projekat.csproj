@@ -62,6 +62,7 @@
     <Reference Include="Microsoft.ApplicationInsights.Extensibility.Web">
       <HintPath>..\packages\Microsoft.ApplicationInsights.Web.0.13.2-build00132\lib\net45\Microsoft.ApplicationInsights.Extensibility.Web.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Build.Tasks.v4.0" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Diagnostics.Instrumentation.Extensions.Intercept">
       <HintPath>..\packages\Microsoft.Diagnostics.Instrumentation.Extensions.Intercept.0.13.0-build22724\lib\net40\Microsoft.Diagnostics.Instrumentation.Extensions.Intercept.dll</HintPath>

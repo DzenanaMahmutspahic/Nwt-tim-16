@@ -11,7 +11,7 @@ namespace NWT_projekat.Controllers
     {
         //
         // GET: /Posao/
-
+        // Radi sve :)
 
         /// <summary>
         /// Servis za dobavljanje posla po ID.
