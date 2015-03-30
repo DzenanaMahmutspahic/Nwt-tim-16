@@ -177,3 +177,69 @@ BEGIN
 		Status_posla = 1
 END
 GO
+
+
+IF OBJECT_ID('UnesiDTP', 'P') IS NOT NULL
+	DROP PROCEDURE UnesiDTP;
+GO	
+CREATE PROCEDURE UnesiDTP
+		@DTP_ID INT,
+		@Korisnik_ID INT,
+		@Status_DTP BIT,
+		@Sofp_materijal VARCHAR,
+		@Sofp_sati DECIMAL,
+		@Sofp_cijena DECIMAL,
+		@Fotografija_materijal VARCHAR,
+		@Fotografija_sati DECIMAL,
+		@Fotografija_cijena DECIMAL,
+		@Ukupno_sati DECIMAL,
+		@Ukupno_cijena DECIMAL,
+		@Vrijeme_pocetka DATETIME,
+		@Vrijeme_zavrsetka DATETIME,
+		@Vrijeme_cekanja TIME,
+		@Komentar VARCHAR
+
+	
+AS
+BEGIN
+	INSERT INTO Posao(
+		DTP_ID,
+		Korisnik_ID,
+		Status_DTP,
+		Sofp_materijal,
+		Sofp_sati,
+		Sofp_cijena,
+		Fotografija_materijal,
+		Fotografija_sati,
+		Fotografija_cijena,
+		Ukupno_sati,
+		Ukupno_cijena,
+		Vrijeme_pocetka,
+		Vrijeme_zavrsetka,
+		Vrijeme_cekanja,
+		Komentar
+
+	)VALUES(
+
+	@DTP_ID,
+		@Korisnik_ID,
+		@Status_DTP,
+		@Sofp_materijal,
+		@Sofp_sati,
+		@Sofp_cijena,
+		@Fotografija_materijal,
+		@Fotografija_sati,
+		@Fotografija_cijena,
+		@Ukupno_sati,
+		@Ukupno_cijena,
+		@Vrijeme_pocetka,
+		@Vrijeme_zavrsetka,
+		@Vrijeme_cekanja,
+		@Komentar
+
+	)
+	RETURN SCOPE_IDENTITY();
+END
+GO
+
+

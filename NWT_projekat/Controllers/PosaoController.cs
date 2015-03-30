@@ -75,5 +75,11 @@ namespace NWT_projekat.Controllers
             
         }
 
+        [System.Web.Http.HttpPost]
+        public DTP UnesiDTP(DTP p)
+        {
+            return DbPomocnik.IzvrsiProceduru<DTP, DTP>(Konstante.DODAJ_DTP, p).FirstOrDefault();
+        }
+
     }
 }
