@@ -65,12 +65,40 @@ namespace NWT_projekat.Controllers
             };*/
         }
 
+        [HttpGet]
+        //[Description("Servis za dobavljanje poslova json")]
+        public System.Net.Http.HttpResponseMessage DajPosaoJson(int ID)
+        {
+            var parametri = new Dictionary<string, object>{
+                {"ID", ID}
+            };
+            var q = DbPomocnik.IzvrsiProceduru<Posao>(Konstante.DAJ_POSAO_ID, parametri);
+
+            return new HttpResponseMessage()
+            {
+                Content = new JsonContent(q)
+            };
+        }
+
+
         [System.Web.Http.HttpPost]
         public Posao UnesiPosao(Posao p)
         {
             return DbPomocnik.IzvrsiProceduru<Posao, Posao>(Konstante.DODAJ_POSAO, p).FirstOrDefault();
         }
 
+
+        [System.Web.Http.HttpPost]
+        //[Description("Servis za unos posla")]
+        public System.Net.Http.HttpRequestMessage UnesiPosaoJson( Posao p)
+        {
+            var q = DbPomocnik.IzvrsiProceduru<Posao, Posao>(Konstante.DODAJ_POSAO, p).FirstOrDefault();
+
+            return new HttpRequestMessage()
+            {
+                Content = new JsonContent(q)
+            };
+        }
 
         [HttpGet]
         //[Description("Servis za dobavljanje završenih poslova")]
