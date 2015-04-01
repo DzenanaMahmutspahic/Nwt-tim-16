@@ -12,5 +12,6 @@ namespace NWT.Pomocnici {
         public static readonly string DAJ_POSAO_ID = "DajPosao_ID";
         public static readonly string DODAJ_POSAO = "UnesiPosao";
         public static readonly string DAJ_ZAVRSENE_POSLOVE = "DajZavrsenePoslove";
+        public static readonly string DODAJ_DTP = "UnesiDTP";
     }
 }

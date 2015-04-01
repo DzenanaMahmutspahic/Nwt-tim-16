@@ -12,8 +12,8 @@ namespace NWT.Pomocnici{
     /// </summary>
 	public class DbPomocnik {
         
-        //private static readonly string CONNECTION_STRING = @"Data Source=.\SQLSERVER;Initial Catalog=NWT;Integrated Security=True";
-        private static readonly string CONNECTION_STRING = @"Data Source=.\SQLEXPRESS;Initial Catalog=NWT;Integrated Security=True";
+        private static readonly string CONNECTION_STRING = @"Data Source=.\SQLSERVER;Initial Catalog=NWT;Integrated Security=True";
+        //private static readonly string CONNECTION_STRING = @"Data Source=.\SQLEXPRESS;Initial Catalog=NWT;Integrated Security=True";
 
         /// <summary>
         /// Metoda za izvršavanje procedure na Bazi podataka
