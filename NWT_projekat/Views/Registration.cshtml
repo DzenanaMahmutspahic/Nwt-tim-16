@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = "Registration";
+}
+
+<head>
+<script src= "http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>
+</head>
+
+<body>
+
+<div ng-app="">
+<h2>Registration</h2>
+<p>Unesite podatke za registraciju:</p>
+<p>First Name: <input type="text" ng-model="name"></p>
+
+<p>Last Name: <input type="text" ng-model="lastname"></p>
+
+<p>Position: <select name="position">
+             <option>Postion1</option>
+             <option>Postion2</option>
+             <option>Postion3</option>
+             <option>Postion4</option>
+             <option>Postion5</option>
+             </select>
+
+<p>User Name: <input type="text" ng-model="username"></p>
+
+<p>Password: <input type="password" ng-model="password"></p>
+<p>{{password}}</p>
+
+<input type="submit" value="Submit">
+
+</div>
+
+</body>
