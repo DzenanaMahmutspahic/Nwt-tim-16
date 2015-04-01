@@ -25,7 +25,7 @@ namespace NWT_projekat.Controllers
             var parametri = new Dictionary<string, object>{
                 {"ID", ID}
             };
-            var q = DbPomocnik.IzvrsiProceduru<Posao>(Konstante.DAJ_POSAO_ID, parametri);
+            var q = DbPomocnik.IzvrsiProceduru<Posao>(Konstante.DAJ_POSAO_ID, parametri);  
             return q;
             /*Dženana Mahmutspahić:
              * OVAKO NE TREBA!

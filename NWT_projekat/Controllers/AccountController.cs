@@ -5,18 +5,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Services;
+
+
+
+
+
 
 namespace NWT_projekat.Controllers {
     public class AccountController: ApiController {
 
         private readonly Konstante _konstante = new Konstante();
-
+        
         /// <summary>
         /// Servis za dobavljanje korisnika po ID
         /// </summary>
         /// <param name="ID">ID Korisnika</param>
         /// <returns>Objekat sa podacima o korisniku ili null ako korisnik nije nađen</returns>
         [HttpGet]
+        [AcceptVerbs(HttpVerbs.Get)]
         public Korisnik DajKorisnika(int ID) {
             var parametri = new Dictionary<string, object>{
                 {"ID", ID}
@@ -30,6 +37,8 @@ namespace NWT_projekat.Controllers {
                 Prezime = k["Prezime"].ToString(),
                 Username = k["Username"].ToString()
             };
+           
+           
 
         }
 
@@ -39,6 +48,7 @@ namespace NWT_projekat.Controllers {
         /// <param name="korisnik">Objekat sa popunjenom podacima o korisniku</param>
         /// <returns>Logičku vrijednost true ako je prijavljivanje uspješno</returns>
         [HttpPost]
+    
         public bool Login(Korisnik korisnik) {
             var parametri = new Dictionary<string, object>{
                 {"Username", korisnik.Username},
