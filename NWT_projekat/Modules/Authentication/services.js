@@ -11,23 +11,34 @@ angular.module('Authentication')
 
             /* Dummy authentication for testing, uses $timeout to simulate api call
              ----------------------------------------------*/
-            $timeout(function () {
-                var response = { success: username === 'test' && password === 'test' };
-                if (!response.success) {
-                    response.message = 'Username or password is incorrect';
-                }
-                callback(response);
-            }, 1000);
+            //$timeout(function () {
+            //    var response = { success: username === 'test' && password === 'test' };
+            //    if (!response.success) {
+            //        response.message = 'Username or password is incorrect';
+            //    }
+            //    callback(response);
+            //}, 1000);
 
 
             /* Use this for real authentication
              ----------------------------------------------*/
-            //$http.post('/api/authenticate', { username: username, password: password })
-            //    .success(function (response) {
-            //        callback(response);
-            //    });
+            $http.post('/api/Account/Login', { username: username, password: password })
+               .success(function(response) {
+                    if (response != 'true') {
+                        //response.message = 'Username or password is incorrect';
+                        callback({success:false, message:'Wrong credentials!'})
+                    } else {
+                        var newResponse = { success: true };
+                        callback(newResponse);
+                    }
+        })
+            .error(function (data, status, headers, config) {
+                alert("Login failed");
+            }
+            );
 
         };
+
 
         service.SetCredentials = function (username, password) {
             var authdata = Base64.encode(username + ':' + password);
@@ -136,4 +147,28 @@ angular.module('Authentication')
     };
 
     /* jshint ignore:end */
-});
+})
+
+
+
+    .factory('dataFactory', ['$http', function($http) {
+
+        var urlBase = '/api/Korisnik';
+        var dataFactory = {};
+
+        dataFactory.Login = function () {
+            return $http.get(urlBase);
+        };
+    }])
+
+
+
+    .service('dataService', ['$http', function ($http) {
+
+        var urlBase = '/api/Korisnik';
+
+        this.Login = function () {
+            return $http.get(urlBase);
+        };
+
+    }]);
