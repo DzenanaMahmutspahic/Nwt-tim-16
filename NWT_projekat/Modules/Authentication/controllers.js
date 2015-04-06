@@ -49,14 +49,12 @@ angular.module('Authentication')
 .controller('RegistrationController',
     ['$scope', '$rootScope', '$location', 'AuthenticationService',
     function ($scope, $rootScope, $location, AuthenticationService) {
-        // reset login status
-        AuthenticationService.ClearCredentials();
 
         $scope.registration = function () {
             $scope.dataLoading = true;
-            AuthenticationService.Login($scope.name, $scope.lastname, $scope.email ,$scope.username, $scope.password, function (response) {
+            AuthenticationService.registracija($scope.name, $scope.lastname, $scope.email ,$scope.username, $scope.password, function (response) {
                 if (response.success) {
-                    AuthenticationService.SetCredentials($scope.name, $scope.lastname, $scope.email, $scope.username, $scope.password   );
+                    AuthenticationService.SetCredentials($scope.name, $scope.lastname);
                     $location.path('/');
                 } else {
                     $scope.error = response.message;
