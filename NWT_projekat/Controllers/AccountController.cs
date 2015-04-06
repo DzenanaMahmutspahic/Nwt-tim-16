@@ -79,6 +79,7 @@ namespace NWT_projekat.Controllers {
         /// </summary>
         /// <param name="korisnik"></param>
         /// <returns></returns>
+        [System.Web.Mvc.HttpPost]
         public Korisnik Registracija(Korisnik korisnik) {
             var parametri = new Dictionary<string, object>{
                 {"Username", korisnik.Username},
