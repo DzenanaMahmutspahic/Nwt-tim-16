@@ -9,24 +9,8 @@ angular.module('Authentication')
         service.Login = function (username, password, callback) {
             $http.post('/api/Account/Login', { username: username, password: password })
                .success(function(response) {
-                    if (response != 'true') {
-                        //response.message = 'Username or password is incorrect';
-                        callback({success:false, message:'Wrong credentials!'})
-                    } else {
-                        var newResponse = { success: true };
-                        callback(newResponse);
-                    }
-        })
-            .error(function (data, status, headers, config) {
-                alert("Login failed");
-            }
-            );
-        };
-        service.registracija = function (name, lastname,email, username, password, callback) {
-            $http.post('/api/Account/Registracija', {username: username, password: password, ime:name, prezime:lastname, pozicija:email})
-               .success(function(response) {
                    if (response != 'true') {
-                       response.message = 'Nesto nije ok';
+                       //response.message = 'Username or password is incorrect';
                        callback({success:false, message:'Wrong credentials!'})
                    } else {
                        var newResponse = { success: true };
@@ -34,11 +18,24 @@ angular.module('Authentication')
                    }
                })
             .error(function (data, status, headers, config) {
-                alert("Registration failed");
+                alert("Login failed");
             }
-            };
-    };
-
+            );
+        };
+        service.registracija = function (name, lastname, email, username, password, callback) {
+            $http.post('/api/Account/RegistracijaJson', { username: username, password: password, ime: name, prezime: lastname, pozicija: email })
+               .success(function (response) {
+                   if (response != 'true') {
+                       callback({ success: false, message: response })
+                   } else {
+                       var newResponse = { success: true };
+                       callback(newResponse);
+                   }
+               })
+            .error(function (data, status, headers, config) {
+                alert("Registration failed");
+            })
+        };
 
         service.SetCredentials = function (username, password) {
             var authdata = Base64.encode(username + ':' + password);
@@ -60,8 +57,8 @@ angular.module('Authentication')
             $http.defaults.headers.common.Authorization = 'Basic ';
         };
 
-        return service;
-    }])
+return service;
+}])
 
 .factory('Base64', function () {
     /* jshint ignore:start */

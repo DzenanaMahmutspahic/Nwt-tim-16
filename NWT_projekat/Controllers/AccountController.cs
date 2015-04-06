@@ -97,6 +97,33 @@ namespace NWT_projekat.Controllers {
             return null;
         }
 
+        /// <summary>
+        /// Servis za registraciju novog korisnika
+        /// </summary>
+        /// <param name="korisnik"></param>
+        /// <returns></returns>
+        [System.Web.Mvc.HttpPost]
+        public System.Net.Http.HttpResponseMessage RegistracijaJson(Korisnik korisnik) {
+            var parametri = new Dictionary<string, object>{
+                {"Username", korisnik.Username},
+                {"Password", korisnik.Password},
+                {"Ime", korisnik.Ime},
+                {"Prezime", korisnik.Prezime},
+                {"Pozicija", korisnik.Pozicija}
+            };
+            try {
+                int ID = Convert.ToInt32(DbPomocnik.IzvrsiProceduru(Konstante.REGISTRUJ_KORISNIKA, parametri).Rows[0][0]);
+                korisnik.ID = ID;
+                return new HttpResponseMessage() {
+                    Content = new JsonContent(ID != 0 )
+                };
+            } catch(Exception ex) {
+                return new HttpResponseMessage() {
+                    Content = new JsonContent(ex.Message)
+                };
+            }
+        }
+
 
 
 

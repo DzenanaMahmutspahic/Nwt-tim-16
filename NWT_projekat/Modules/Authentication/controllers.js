@@ -16,7 +16,6 @@ angular.module('Authentication')
                     $location.path('/');
                 } else {
                     $scope.error = response.message;
-                    $("#errorMessage").val(response.message);
                     $scope.dataLoading = false;
                 }
             });
@@ -47,8 +46,8 @@ angular.module('Authentication')
     //}])
 
 .controller('RegistrationController',
-    ['$scope', '$rootScope', '$location', 'AuthenticationService',
-    function ($scope, $rootScope, $location, AuthenticationService) {
+    ['$scope', '$rootScope', '$location', '$sce', 'AuthenticationService',
+    function ($scope, $rootScope, $location, $sce, AuthenticationService) {
 
         $scope.registration = function () {
             $scope.dataLoading = true;
@@ -58,6 +57,7 @@ angular.module('Authentication')
                     $location.path('/');
                 } else {
                     $scope.error = response.message;
+                    $scope.errorMessage = $sce.trustAsHtml(response.message);
                     $scope.dataLoading = false;
                 }
             });
