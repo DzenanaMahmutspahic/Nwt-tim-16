@@ -133,7 +133,7 @@ namespace NWT_projekat.Controllers {
         /// <param name="korisnik"></param>
         /// <returns></returns>
         [System.Web.Mvc.HttpPost]
-        public System.Net.Http.HttpResponseMessage ResetPasswordJson(Korisnik korisnik)
+        public System.Net.Http.HttpResponseMessage Reset(Korisnik korisnik)
         {
             var parametri = new Dictionary<string, object>{
                 
