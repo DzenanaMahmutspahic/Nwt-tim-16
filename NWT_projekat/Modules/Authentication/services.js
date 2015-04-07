@@ -57,6 +57,23 @@ angular.module('Authentication')
             $http.defaults.headers.common.Authorization = 'Basic ';
         };
 
+        service.reset = function (id, password, confirmpassword ,callback) {
+            $http.post('/api/Account/Login', { username: username, password: password })
+               .success(function (response) {
+                   if (response != 'true') {
+                       //response.message = 'Username or password is incorrect';
+                       callback({ success: false, message: 'Wrong credentials!' })
+                   } else {
+                       var newResponse = { success: true };
+                       callback(newResponse);
+                   }
+               })
+            .error(function (data, status, headers, config) {
+                alert("Login failed");
+            }
+            );
+        };
+
 return service;
 }])
 

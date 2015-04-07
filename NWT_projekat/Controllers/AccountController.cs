@@ -34,6 +34,7 @@ namespace NWT_projekat.Controllers {
                 ID = Convert.ToInt32(k["ID"]),
                 Ime = k["Ime"].ToString(),
                 Password = k["Password"].ToString(),
+                ConfirmPassword = k["ConfirmPassword"].ToString(),
                 Pozicija = k["Pozicija"].ToString(),
                 Prezime = k["Prezime"].ToString(),
                 Username = k["Username"].ToString()
@@ -51,6 +52,7 @@ namespace NWT_projekat.Controllers {
                 ID = Convert.ToInt32(k["ID"]),
                 Ime = k["Ime"].ToString(),
                 Password = k["Password"].ToString(),
+                ConfirmPassword = k["ConfirmPassword"].ToString(),
                 Pozicija = k["Pozicija"].ToString(),
                 Prezime = k["Prezime"].ToString(),
                 Username = k["Username"].ToString()
@@ -119,6 +121,39 @@ namespace NWT_projekat.Controllers {
                 };
             } catch(Exception ex) {
                 return new HttpResponseMessage() {
+                    Content = new JsonContent(ex.Message)
+                };
+            }
+        }
+
+
+        /// <summary>
+        /// Servis za reset Password
+        /// </summary>
+        /// <param name="korisnik"></param>
+        /// <returns></returns>
+        [System.Web.Mvc.HttpPost]
+        public System.Net.Http.HttpResponseMessage ResetPasswordJson(Korisnik korisnik)
+        {
+            var parametri = new Dictionary<string, object>{
+                {"ID", korisnik.ID},
+                {"Password", korisnik.Password},
+                {"ConfirmPassword", korisnik.ConfirmPassword},
+              
+            };
+            try
+            {
+                int ID = Convert.ToInt32(DbPomocnik.IzvrsiProceduru(Konstante.DAJ_KORISNIKA_ID, parametri).Rows[0]);
+                korisnik.ID = ID;
+                return new HttpResponseMessage()
+                {
+                    Content = new JsonContent(ID != 0)
+                };
+            }
+            catch (Exception ex)
+            {
+                return new HttpResponseMessage()
+                {
                     Content = new JsonContent(ex.Message)
                 };
             }
