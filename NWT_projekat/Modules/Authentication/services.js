@@ -23,10 +23,10 @@ angular.module('Authentication')
             );
         };
         service.registracija = function (name, lastname, email, username, password, callback) {
-            $http.post('/api/Account/RegistracijaJson', { username: username, password: password, ime: name, prezime: lastname, pozicija: email })
+            $http.post('/api/Account/RegistracijaJson', { username : username, password : password, ime : name, prezime : lastname, pozicija : email })
                .success(function (response) {
                    if (response != 'true') {
-                       callback({ success: false, message: response })
+                       callback({ success: false, message : response })
                    } else {
                        var newResponse = { success: true };
                        callback(newResponse);
@@ -57,19 +57,19 @@ angular.module('Authentication')
             $http.defaults.headers.common.Authorization = 'Basic ';
         };
 
-        service.reset = function (id, password, confirmpassword ,callback) {
-            $http.post('/api/Account/Login', { username: username, password: password })
+        service.reset = function (password ,callback) {
+            $http.post('/api/Account/ResetPasswordJson', {  password : password})
                .success(function (response) {
                    if (response != 'true') {
-                       //response.message = 'Username or password is incorrect';
-                       callback({ success: false, message: 'Wrong credentials!' })
+                       //response.message = 'Username or password is ncorrect';
+                       callback({ success : false, message : 'Wrong password!' })
                    } else {
-                       var newResponse = { success: true };
+                       var newResponse = { success : true };
                        callback(newResponse);
                    }
                })
             .error(function (data, status, headers, config) {
-                alert("Login failed");
+                alert("Reset failed");
             }
             );
         };

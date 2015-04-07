@@ -136,9 +136,9 @@ namespace NWT_projekat.Controllers {
         public System.Net.Http.HttpResponseMessage ResetPasswordJson(Korisnik korisnik)
         {
             var parametri = new Dictionary<string, object>{
-                {"ID", korisnik.ID},
-                {"Password", korisnik.Password},
-                {"ConfirmPassword", korisnik.ConfirmPassword},
+                
+                {"Password", korisnik.Password}
+                
               
             };
             try

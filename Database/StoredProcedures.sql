@@ -18,14 +18,12 @@ BEGIN
 	INSERT INTO Korisnik(
 		Username,
 		Password,
-		ConfirmPassword,
 		Ime,
 		Prezime,
 		Pozicija
 	)VALUES(
 		@Username,
 		@Password,
-		@ConfirmPassword,
 		@Ime,
 		@Prezime,
 		@Pozicija
