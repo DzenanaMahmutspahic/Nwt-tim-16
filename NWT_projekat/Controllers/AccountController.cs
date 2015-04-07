@@ -8,6 +8,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Http;
@@ -86,7 +87,7 @@ namespace NWT_projekat.Controllers {
                 {"Password", korisnik.Password},
                 {"Ime", korisnik.Ime},
                 {"Prezime", korisnik.Prezime},
-                {"Pozicija", korisnik.Pozicija}
+                {"Email", korisnik.Email},
             };
             try {
                 int ID = Convert.ToInt32(DbPomocnik.IzvrsiProceduru(Konstante.REGISTRUJ_KORISNIKA, parametri).Rows[0][0]);
@@ -104,18 +105,23 @@ namespace NWT_projekat.Controllers {
         /// <returns></returns>
         [System.Web.Mvc.HttpPost]
         public System.Net.Http.HttpResponseMessage RegistracijaJson(Korisnik korisnik) {
+            Guid tmpGuid = Guid.NewGuid();
             var parametri = new Dictionary<string, object>{
                 {"Username", korisnik.Username},
                 {"Password", korisnik.Password},
                 {"Ime", korisnik.Ime},
                 {"Prezime", korisnik.Prezime},
-                {"Pozicija", korisnik.Pozicija}
+                {"Email", korisnik.Email},
+                {"GUID", tmpGuid.ToString().ToLower()}
             };
             try {
                 int ID = Convert.ToInt32(DbPomocnik.IzvrsiProceduru(Konstante.REGISTRUJ_KORISNIKA, parametri).Rows[0][0]);
                 korisnik.ID = ID;
+
+                SendEmail("Potvrda Registracije", string.Format(Konstante.REGISTRACIJA_TEMPLATE, korisnik.ID, tmpGuid), korisnik.Email);
+
                 return new HttpResponseMessage() {
-                    Content = new JsonContent(ID != 0 )
+                    Content = new JsonContent(ID != 0)
                 };
             } catch(Exception ex) {
                 return new HttpResponseMessage() {
@@ -125,30 +131,43 @@ namespace NWT_projekat.Controllers {
         }
 
 
+        [System.Web.Http.HttpGet]
+        public System.Net.Http.HttpResponseMessage PotvrdaRegistracijeJson(int id, string guid) {
+            var parametri = new Dictionary<string, object>{
+                {"ID", id},
+                {"GUID", guid.ToLower()}
+            };
+            var response = DbPomocnik.IzvrsiProceduru<Korisnik>(Konstante.POTVRDI_REGISTRACIJU, parametri);
 
-
-        public class JsonContent: HttpContent {
-
-            private readonly MemoryStream _Stream = new MemoryStream();
-            public JsonContent(object value) {
-
-                Headers.ContentType = new MediaTypeHeaderValue("application/json");
-                var jw = new JsonTextWriter(new StreamWriter(_Stream));
-                jw.Formatting = Formatting.Indented;
-                var serializer = new JsonSerializer();
-                serializer.Serialize(jw, value);
-                jw.Flush();
-                _Stream.Position = 0;
-
+            try {
+                return new HttpResponseMessage() {
+                    Content = new JsonContent(response.ID != 0)
+                };
+            } catch(Exception ex) {
+                return new HttpResponseMessage() {
+                    Content = new JsonContent(ex.Message)
+                };
             }
-            protected override Task SerializeToStreamAsync(Stream stream, TransportContext context) {
-                return _Stream.CopyToAsync(stream);
+        }
+
+        private bool SendEmail(string subject, string body, string mailTo) {
+            string fromMail = "do.not.answer.nwt@gmail.com";
+
+            MailMessage mail = new MailMessage(fromMail, mailTo, subject, body);
+
+            var client = new SmtpClient("smtp.gmail.com", 587) {
+                UseDefaultCredentials = false,
+                EnableSsl = true,
+                Timeout = 20000,
+                Credentials = new NetworkCredential("do.not.answer.nwt", "lozinka123")
+            };
+            try {
+                client.Send(mail);
+            } catch(Exception ex) {
+                return false;
             }
 
-            protected override bool TryComputeLength(out long length) {
-                length = _Stream.Length;
-                return true;
-            }
+            return true;
         }
     }
 }

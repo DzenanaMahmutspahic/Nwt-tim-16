@@ -1,41 +1,88 @@
-IF DB_ID('NWT') IS NULL
-	CREATE DATABASE NWT
-GO
+--IF DB_ID('NWT') IS NULL
+--	ALTER DATABASE NWT
+--GO
 
-USE NWT
+--USE NWT
 
-IF OBJECT_ID('RegistrujKorisnika', 'P') IS NOT NULL
-	DROP PROCEDURE RegistrujKorisnika;
-GO	
-CREATE PROCEDURE RegistrujKorisnika
+--IF OBJECT_ID('RegistrujKorisnika', 'P') IS NOT NULL
+--	DROP PROCEDURE RegistrujKorisnika;
+--GO	
+ALTER PROCEDURE RegistrujKorisnika
 	@Username VARCHAR(25),
 	@Password VARCHAR(25),
 	@Ime	  VARCHAR(35),
 	@Prezime  VARCHAR(35),
-	@Pozicija VARCHAR(50)
+	@Email VARCHAR(250),
+	@GUID VARCHAR(38)
 AS
 BEGIN
-	INSERT INTO Korisnik(
+	INSERT INTO PrivremeniKorisnik(
 		Username,
 		Password,
 		Ime,
 		Prezime,
-		Pozicija
+		Email,
+		GUID
 	)VALUES(
 		@Username,
 		@Password,
 		@Ime,
 		@Prezime,
-		@Pozicija
+		@Email,
+		@GUID
 	)
+	SELECT SCOPE_IDENTITY();
 	RETURN SCOPE_IDENTITY();
 END
 GO
+	
+ALTER PROCEDURE PotvrdiRegistraciju
+	@ID INT,
+	@GUID VARCHAR(38)
+AS
+BEGIN
+	DECLARE 
+	@Username VARCHAR(25),
+	@Password VARCHAR(25),
+	@Ime	  VARCHAR(35),
+	@Prezime  VARCHAR(35),
+	@Email VARCHAR(250);
 
-IF OBJECT_ID('DajKorisnika', 'P') IS NOT NULL
-	DROP PROCEDURE DajKorisnika;
-GO	
-CREATE PROCEDURE DajKorisnika
+	SELECT 
+		@Username = Username,
+		@Password = Password,
+		@Ime = Ime,
+		@Prezime = Prezime,
+		@Email = Email
+	FROM PrivremeniKorisnik
+	WHERE ID = @ID
+		AND GUID = @GUID
+
+	IF @@ROWCOUNT = 1
+	BEGIN
+		INSERT INTO Korisnik(
+			Username,
+			Password,
+			Ime,
+			Prezime,
+			Email
+		)VALUES(
+			@Username,
+			@Password,
+			@Ime,
+			@Prezime,
+			@Email
+		)
+		SELECT SCOPE_IDENTITY();
+		RETURN SCOPE_IDENTITY();
+	END
+END
+GO
+
+--IF OBJECT_ID('DajKorisnika', 'P') IS NOT NULL
+--	DROP PROCEDURE DajKorisnika;
+--GO	
+ALTER PROCEDURE DajKorisnika
 	@Username VARCHAR(25),
 	@Password VARCHAR(25)
 AS
@@ -48,10 +95,10 @@ BEGIN
 END
 GO
 
-IF OBJECT_ID('DajKorisnika_ID', 'P') IS NOT NULL
-	DROP PROCEDURE DajKorisnika_ID;
-GO	
-CREATE PROCEDURE DajKorisnika_ID
+--IF OBJECT_ID('DajKorisnika_ID', 'P') IS NOT NULL
+--	DROP PROCEDURE DajKorisnika_ID;
+--GO	
+ALTER PROCEDURE DajKorisnika_ID
 	@ID INT
 AS
 BEGIN
@@ -64,10 +111,10 @@ GO
 
 
 
-IF OBJECT_ID('UnesiPosao', 'P') IS NOT NULL
-	DROP PROCEDURE UnesiPosao;
-GO	
-CREATE PROCEDURE UnesiPosao
+--IF OBJECT_ID('UnesiPosao', 'P') IS NOT NULL
+--	DROP PROCEDURE UnesiPosao;
+--GO	
+ALTER PROCEDURE UnesiPosao
 		@DTP BIT,
 		@Korisnik_ID INT,
 		@Repromaterijal_ID INT,
@@ -158,16 +205,17 @@ BEGIN
 		@Cijena_kom_PDV,
 		@Ukupna_cijena_PDV
 	)
+	SELECT SCOPE_IDENTITY();
 	RETURN SCOPE_IDENTITY();
 END
 GO
 
 
 
-IF OBJECT_ID('DajZavrsenePoslove', 'P') IS NOT NULL
-	DROP PROCEDURE DajZavrsenePoslove;
-GO	
-CREATE PROCEDURE DajZavrsenePoslove
+--IF OBJECT_ID('DajZavrsenePoslove', 'P') IS NOT NULL
+--	DROP PROCEDURE DajZavrsenePoslove;
+--GO	
+ALTER PROCEDURE DajZavrsenePoslove
 	--@ID INT
 AS
 BEGIN
@@ -179,10 +227,10 @@ END
 GO
 
 
-IF OBJECT_ID('UnesiDTP', 'P') IS NOT NULL
-	DROP PROCEDURE UnesiDTP;
-GO	
-CREATE PROCEDURE UnesiDTP
+--IF OBJECT_ID('UnesiDTP', 'P') IS NOT NULL
+--	DROP PROCEDURE UnesiDTP;
+--GO	
+ALTER PROCEDURE UnesiDTP
 		@DTP_ID INT,
 		@Korisnik_ID INT,
 		@Status_DTP BIT,
@@ -238,6 +286,7 @@ BEGIN
 		@Komentar
 
 	)
+	SELECT SCOPE_IDENTITY();
 	RETURN SCOPE_IDENTITY();
 END
 GO

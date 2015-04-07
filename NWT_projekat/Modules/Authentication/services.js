@@ -23,7 +23,7 @@ angular.module('Authentication')
             );
         };
         service.registracija = function (name, lastname, email, username, password, callback) {
-            $http.post('/api/Account/RegistracijaJson', { username: username, password: password, ime: name, prezime: lastname, pozicija: email })
+            $http.post('/api/Account/RegistracijaJson', { username: username, password: password, ime: name, prezime: lastname, Email: email })
                .success(function (response) {
                    if (response != 'true') {
                        callback({ success: false, message: response })

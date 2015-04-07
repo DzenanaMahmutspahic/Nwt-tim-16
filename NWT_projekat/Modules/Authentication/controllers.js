@@ -54,7 +54,7 @@ angular.module('Authentication')
             AuthenticationService.registracija($scope.name, $scope.lastname, $scope.email ,$scope.username, $scope.password, function (response) {
                 if (response.success) {
                     AuthenticationService.SetCredentials($scope.name, $scope.lastname);
-                    $location.path('/');
+                    $location.path('/login');
                 } else {
                     $scope.error = response.message;
                     $scope.errorMessage = $sce.trustAsHtml(response.message);
