@@ -63,3 +63,26 @@ angular.module('Authentication')
             });
         };
     }]);
+
+
+.controller('ResetController',
+    ['$scope', '$rootScope', '$location', 'AuthenticationService',
+    function ($scope, $rootScope, $location, AuthenticationService) {
+       
+        AuthenticationService.ClearCredentials();
+
+        $scope.reset = function () {
+            $scope.dataLoading = true;
+            AuthenticationService.Reset( $scope.password, function (response) {
+                if (response.success) {
+                    AuthenticationService.SetCredentials( $scope.password );
+                    $location.path('/');
+                } else {
+                    $scope.error = response.message;
+                    $scope.dataLoading = false;
+                }
+            });
+        };
+    }]);
+
+   

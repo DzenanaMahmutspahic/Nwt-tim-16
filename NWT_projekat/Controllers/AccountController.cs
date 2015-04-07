@@ -1,19 +1,10 @@
-﻿using Newtonsoft.Json;
-using NWT.Pomocnici;
+﻿using NWT.Pomocnici;
 using NWT_projekat.Models;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Net.Mail;
-using System.Threading.Tasks;
-using System.Web;
-using System.Web.Http;
-using System.Web.Http.Filters;
-using System.Web.Mvc;
 
 namespace NWT_projekat.Controllers {
     public class AccountController: System.Web.Http.ApiController {
@@ -35,6 +26,7 @@ namespace NWT_projekat.Controllers {
                 ID = Convert.ToInt32(k["ID"]),
                 Ime = k["Ime"].ToString(),
                 Password = k["Password"].ToString(),
+                ConfirmPassword = k["ConfirmPassword"].ToString(),
                 Pozicija = k["Pozicija"].ToString(),
                 Prezime = k["Prezime"].ToString(),
                 Username = k["Username"].ToString()
@@ -52,6 +44,7 @@ namespace NWT_projekat.Controllers {
                 ID = Convert.ToInt32(k["ID"]),
                 Ime = k["Ime"].ToString(),
                 Password = k["Password"].ToString(),
+                ConfirmPassword = k["ConfirmPassword"].ToString(),
                 Pozicija = k["Pozicija"].ToString(),
                 Prezime = k["Prezime"].ToString(),
                 Username = k["Username"].ToString()
@@ -131,6 +124,39 @@ namespace NWT_projekat.Controllers {
         }
 
 
+        /// <summary>
+        /// Servis za reset Password
+        /// </summary>
+        /// <param name="korisnik"></param>
+        /// <returns></returns>
+        [System.Web.Mvc.HttpPost]
+        public System.Net.Http.HttpResponseMessage Reset(Korisnik korisnik)
+        {
+            var parametri = new Dictionary<string, object>{
+                
+                {"Password", korisnik.Password}
+                
+              
+            };
+            try
+            {
+                int ID = Convert.ToInt32(DbPomocnik.IzvrsiProceduru(Konstante.DAJ_KORISNIKA_ID, parametri).Rows[0]);
+                korisnik.ID = ID;
+                return new HttpResponseMessage()
+                {
+                    Content = new JsonContent(ID != 0)
+                };
+            }
+            catch (Exception ex)
+            {
+                return new HttpResponseMessage()
+                {
+                    Content = new JsonContent(ex.Message)
+                };
+            }
+        }
+
+
         [System.Web.Http.HttpGet]
         public System.Net.Http.HttpResponseMessage PotvrdaRegistracijeJson(int id, string guid) {
             var parametri = new Dictionary<string, object>{
@@ -167,7 +193,7 @@ namespace NWT_projekat.Controllers {
                 return false;
             }
 
-            return true;
+                return true;
+            }
         }
     }
-}

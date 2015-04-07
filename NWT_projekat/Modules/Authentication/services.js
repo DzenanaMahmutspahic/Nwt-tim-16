@@ -3,15 +3,15 @@
 angular.module('Authentication')
 
 .factory('AuthenticationService',
-    ['Base64', '$http', '$cookieStore', '$rootScope', '$timeout',
+    [ 'Base64', '$http', '$cookieStore', '$rootScope', '$timeout',
     function (Base64, $http, $cookieStore, $rootScope, $timeout) {
         var service = {};
         service.Login = function (username, password, callback) {
             $http.post('/api/Account/Login', { username: username, password: password })
                .success(function(response) {
-                   if (response != 'true') {
+                   if (response !== 'true') {
                        //response.message = 'Username or password is incorrect';
-                       callback({success:false, message:'Wrong credentials!'})
+                       callback({ success: false, message: 'Wrong credentials!' });
                    } else {
                        var newResponse = { success: true };
                        callback(newResponse);
@@ -25,8 +25,8 @@ angular.module('Authentication')
         service.registracija = function (name, lastname, email, username, password, callback) {
             $http.post('/api/Account/RegistracijaJson', { username: username, password: password, ime: name, prezime: lastname, Email: email })
                .success(function (response) {
-                   if (response != 'true') {
-                       callback({ success: false, message: response })
+                   if (response !== 'true') {
+                       callback({ success: false, message: response });
                    } else {
                        var newResponse = { success: true };
                        callback(newResponse);
@@ -34,7 +34,7 @@ angular.module('Authentication')
                })
             .error(function (data, status, headers, config) {
                 alert("Registration failed");
-            })
+            });
         };
 
         service.SetCredentials = function (username, password) {
@@ -47,7 +47,7 @@ angular.module('Authentication')
                 }
             };
 
-            $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata; // jshint ignore:line
+            $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata; //jshint ignore:line
             $cookieStore.put('globals', $rootScope.globals);
         };
 
@@ -57,45 +57,69 @@ angular.module('Authentication')
             $http.defaults.headers.common.Authorization = 'Basic ';
         };
 
-return service;
+
+        //RESET SERVICE
+        service.Reset = function ( password, callback) {
+            $http.post('/api/Account/Reset', {  password : password })
+               .success(function ( response ) {
+                   if ( response !== 'true' ) {
+                       
+                       callback ( { success: false, message: 'Invalid password!' } );
+                   }
+                   else {
+                       var newResponse = { success : true };
+                       callback( newResponse );
+                   }
+               })
+            .error( function  () {
+                alert( "Reset failed");
+            }
+            );
+        };
+
+
+
+        return service;
+
+
 }])
 
-.factory('Base64', function () {
+.factory( 'Base64', function () {
     /* jshint ignore:start */
 
     var keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
 
     return {
-        encode: function (input) {
+        encode: function ( input) {
             var output = "";
             var chr1, chr2, chr3 = "";
             var enc1, enc2, enc3, enc4 = "";
             var i = 0;
 
-            do {
-                chr1 = input.charCodeAt(i++);
-                chr2 = input.charCodeAt(i++);
-                chr3 = input.charCodeAt(i++);
+            do{
+                chr1 = input.charCodeAt( i++);
+                chr2 = input.charCodeAt( i++);
+                chr3 = input.charCodeAt( i++);
 
                 enc1 = chr1 >> 2;
-                enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
-                enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
+                enc2 = ( ( chr1 & 3) << 4) | ( chr2 >> 4);
+                enc3 = ( ( chr2 & 15) << 2) | ( chr3 >> 6);
                 enc4 = chr3 & 63;
 
-                if (isNaN(chr2)) {
+                if ( isNaN(chr2)) {
                     enc3 = enc4 = 64;
-                } else if (isNaN(chr3)) {
+                } else if (  isNaN(chr3)) {
                     enc4 = 64;
                 }
 
                 output = output +
-                    keyStr.charAt(enc1) +
-                    keyStr.charAt(enc2) +
-                    keyStr.charAt(enc3) +
-                    keyStr.charAt(enc4);
+                    keyStr.charAt( enc1) +
+                    keyStr.charAt( enc2) +
+                    keyStr.charAt( enc3) +
+                    keyStr.charAt( enc4);
                 chr1 = chr2 = chr3 = "";
                 enc1 = enc2 = enc3 = enc4 = "";
-            } while (i < input.length);
+            } while(i < input.length);
 
             return output;
         },
@@ -106,7 +130,7 @@ return service;
             var enc1, enc2, enc3, enc4 = "";
             var i = 0;
 
-            // remove all characters that are not A-Z, a-z, 0-9, +, /, or =
+            //remove all characters that are not A-Z, a-z, 0-9, +, /, or =
             var base64test = /[^A-Za-z0-9\+\/\=]/g;
             if (base64test.exec(input)) {
                 window.alert("There were invalid base64 characters in the input text.\n" +
@@ -115,7 +139,7 @@ return service;
             }
             input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
 
-            do {
+            do{
                 enc1 = keyStr.indexOf(input.charAt(i++));
                 enc2 = keyStr.indexOf(input.charAt(i++));
                 enc3 = keyStr.indexOf(input.charAt(i++));
@@ -137,7 +161,7 @@ return service;
                 chr1 = chr2 = chr3 = "";
                 enc1 = enc2 = enc3 = enc4 = "";
 
-            } while (i < input.length);
+            } while(i < input.length);
 
             return output;
         }

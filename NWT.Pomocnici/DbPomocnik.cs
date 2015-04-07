@@ -11,9 +11,9 @@ namespace NWT.Pomocnici{
     /// Klasa koja sadrži podatke i metode za rad sa bazom podataka
     /// </summary>
 	public class DbPomocnik {
-
-        private static readonly string CONNECTION_STRING = @"Data Source=.\SQLSERVER;Initial Catalog=NWT;Integrated Security=True";
-        //private static readonly string CONNECTION_STRING = @"Data Source=.\SQLEXPRESS;Initial Catalog=NWT;Integrated Security=True";
+        
+        //private static readonly string CONNECTION_STRING = @"Data Source=.\SQLSERVER;Initial Catalog=NWT;Integrated Security=True";
+        private static readonly string CONNECTION_STRING = @"Data Source=.\SQLEXPRESS;Initial Catalog=NWT;Integrated Security=True";
         //private static readonly string CONNECTION_STRING = @"workstation id=nwtbaza.mssql.somee.com;packet size=4096;user id=HarisJavoras_SQLLogin_1;pwd=7dtdicwprj;data source=nwtbaza.mssql.somee.com;persist security info=False;initial catalog=nwtbaza";
 
         /// <summary>
