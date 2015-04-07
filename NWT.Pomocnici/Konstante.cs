@@ -17,7 +17,7 @@ namespace NWT.Pomocnici {
         public static readonly string REGISTRACIJA_TEMPLATE = @"
 Dobro došli na našu stranicu i čestitamo na uspješnoj registraciji.
 Da biste potvrdili registraciju, kliknite na link ispod:
-http://www.nwt.somee.com/api/Account/PotvrdaRegistracijeJson/{0}&guid={1}
+http://www.nwt.somee.com/api/Account/PotvrdaRegistracijeJson/{0}?guid={1}
 
 Ako niste Vi zahtjevali registaciju na našoj stranici, molimo Vas da ovu poruku zanemarite.
 ";
