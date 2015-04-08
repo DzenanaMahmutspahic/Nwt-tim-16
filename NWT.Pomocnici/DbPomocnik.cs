@@ -14,7 +14,7 @@ namespace NWT.Pomocnici{
         
         //private static readonly string CONNECTION_STRING = @"Data Source=.\SQLSERVER;Initial Catalog=NWT;Integrated Security=True";
         private static readonly string CONNECTION_STRING = @"Data Source=.\SQLEXPRESS;Initial Catalog=NWT;Integrated Security=True";
-        //private static readonly string CONNECTION_STRING = @"workstation id=nwtbaza.mssql.somee.com;packet size=4096;user id=HarisJavoras_SQLLogin_1;pwd=7dtdicwprj;data source=nwtbaza.mssql.somee.com;persist security info=False;initial catalog=nwtbaza";
+       // private static readonly string CONNECTION_STRING = @"workstation id=nwtbaza.mssql.somee.com;packet size=4096;user id=HarisJavoras_SQLLogin_1;pwd=7dtdicwprj;data source=nwtbaza.mssql.somee.com;persist security info=False;initial catalog=nwtbaza";
 
         /// <summary>
         /// Metoda za izvršavanje procedure na Bazi podataka

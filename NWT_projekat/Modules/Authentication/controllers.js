@@ -62,7 +62,7 @@ angular.module('Authentication')
                 }
             });
         };
-    }]);
+    }])
 
 
 .controller('ResetController',
