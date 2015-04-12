@@ -14,11 +14,14 @@ using System.Web.Http;
 using System.Web.Http.Filters;
 using System.Xml;
 
-namespace NWT.Pomocnici {
-    public class JsonContent: HttpContent {
+namespace NWT.Pomocnici
+{
+    public class JsonContent: HttpContent
+    {
 
         private readonly MemoryStream _Stream = new MemoryStream();
-        public JsonContent(object value) {
+        public JsonContent(object value)
+        {
 
             Headers.ContentType = new MediaTypeHeaderValue("application/json");
             var jw = new JsonTextWriter(new StreamWriter(_Stream));
@@ -29,11 +32,13 @@ namespace NWT.Pomocnici {
             _Stream.Position = 0;
 
         }
-        protected override Task SerializeToStreamAsync(Stream stream, TransportContext context) {
+        protected override Task SerializeToStreamAsync(Stream stream, TransportContext context)
+        {
             return _Stream.CopyToAsync(stream);
         }
 
-        protected override bool TryComputeLength(out long length) {
+        protected override bool TryComputeLength(out long length)
+        {
             length = _Stream.Length;
             return true;
         }

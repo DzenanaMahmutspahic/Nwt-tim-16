@@ -8,8 +8,26 @@ using System.Web.Http;
 
 namespace NWT_projekat.Controllers
 {
-    public class PosaoController : ApiController
-    {
+    public class PosaoController: ApiController {
+        #region *** Fields ***
+
+        private readonly DbPomocnik _dbPomocnik = null;
+
+        #endregion
+
+        #region *** Konstruktori ***
+
+        /// <summary>
+        /// Kreira novu instancu klase <see cref="PosaoController"/>
+        /// </summary>
+        public PosaoController() {
+            _dbPomocnik = new DbPomocnik();
+        }
+
+        #endregion
+
+        #region *** Metode ***
+
         //
         // GET: /Posao/
 
@@ -20,12 +38,11 @@ namespace NWT_projekat.Controllers
         /// <returns>Objekat sa podacima o poslu ili null ako posao nije nađen</returns>
         [HttpGet]
         //[Description("Servis za dobavljanje posla po ID")]
-        public Posao DajPosao(int ID)
-        {
+        public Posao DajPosao(int ID) {
             var parametri = new Dictionary<string, object>{
                 {"ID", ID}
             };
-            var q = DbPomocnik.IzvrsiProceduru<Posao>(Konstante.DAJ_POSAO_ID, parametri);
+            var q = _dbPomocnik.IzvrsiProceduru<Posao>(Konstante.DAJ_POSAO_ID, parametri);
             return q;
             /*Dženana Mahmutspahić:
              * OVAKO NE TREBA!
@@ -61,56 +78,53 @@ namespace NWT_projekat.Controllers
 
         [HttpGet]
         //[Description("Servis za dobavljanje poslova json")]
-        public System.Net.Http.HttpResponseMessage DajPosaoJson(int ID)
-        {
+        public System.Net.Http.HttpResponseMessage DajPosaoJson(int ID) {
             var parametri = new Dictionary<string, object>{
                 {"ID", ID}
             };
-            var q = DbPomocnik.IzvrsiProceduru<Posao>(Konstante.DAJ_POSAO_ID, parametri);
-
-            return new HttpResponseMessage()
-            {
-                Content = new JsonContent(q)
-            };
-        }
-
-
-        [System.Web.Http.HttpPost]
-        public Posao UnesiPosao(Posao p)
-        {
-            return DbPomocnik.IzvrsiProceduru<Posao, Posao>(Konstante.DODAJ_POSAO, p).FirstOrDefault();
-        }
-
-
-        [System.Web.Http.HttpPost]
-        //[Description("Servis za unos posla")]
-        public System.Net.Http.HttpRequestMessage UnesiPosaoJson( Posao p)
-        {
-            var q = DbPomocnik.IzvrsiProceduru<Posao, Posao>(Konstante.DODAJ_POSAO, p).FirstOrDefault();
-
-            return new HttpRequestMessage()
-            {
-                Content = new JsonContent(q)
-            };
-        }
-
-        [HttpGet]
-        //[Description("Servis za dobavljanje završenih poslova")]
-        public List<Posao> DajZavrsenePoslove()
-        {
-            var q = DbPomocnik.IzvrsiProceduru<Posao, Posao>(Konstante.DAJ_ZAVRSENE_POSLOVE, null);
-            return q;
-            
-        }
-
-        [HttpGet]
-        //[Description("Servis za dobavljanje završenih poslova")]
-        public System.Net.Http.HttpResponseMessage DajZavrsenePosloveJson() {
-            var q = DbPomocnik.IzvrsiProceduru<Posao, Posao>(Konstante.DAJ_ZAVRSENE_POSLOVE, null);
+            var q = _dbPomocnik.IzvrsiProceduru<Posao>(Konstante.DAJ_POSAO_ID, parametri);
 
             return new HttpResponseMessage() {
                 Content = new JsonContent(q)
             };
         }
+
+
+        [System.Web.Http.HttpPost]
+        public Posao UnesiPosao(Posao p) {
+            return _dbPomocnik.IzvrsiProceduru<Posao, Posao>(Konstante.DODAJ_POSAO, p).FirstOrDefault();
+        }
+
+
+        [System.Web.Http.HttpPost]
+        //[Description("Servis za unos posla")]
+        public System.Net.Http.HttpRequestMessage UnesiPosaoJson(Posao p) {
+            var q = _dbPomocnik.IzvrsiProceduru<Posao, Posao>(Konstante.DODAJ_POSAO, p).FirstOrDefault();
+
+            return new HttpRequestMessage() {
+                Content = new JsonContent(q)
+            };
+        }
+
+        [HttpGet]
+        //[Description("Servis za dobavljanje završenih poslova")]
+        public List<Posao> DajZavrsenePoslove() {
+            var q = _dbPomocnik.IzvrsiProceduru<Posao, Posao>(Konstante.DAJ_ZAVRSENE_POSLOVE, null);
+            return q;
+
+        }
+
+        [HttpGet]
+        //[Description("Servis za dobavljanje završenih poslova")]
+        public System.Net.Http.HttpResponseMessage DajZavrsenePosloveJson() {
+            var q = _dbPomocnik.IzvrsiProceduru<Posao, Posao>(Konstante.DAJ_ZAVRSENE_POSLOVE, null);
+
+            return new HttpResponseMessage() {
+                Content = new JsonContent(q)
+            };
+        }
+
+        #endregion
+
     }
 }

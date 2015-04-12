@@ -1,12 +1,12 @@
---IF DB_ID('NWT') IS NULL
---	ALTER DATABASE NWT
---GO
+IF DB_ID('NWT') IS NULL
+	CREATE DATABASE NWT
+GO
 
---USE NWT
+USE NWT
 
---IF OBJECT_ID('RegistrujKorisnika', 'P') IS NOT NULL
---	DROP PROCEDURE RegistrujKorisnika;
---GO	
+IF OBJECT_ID('RegistrujKorisnika', 'P') IS NOT NULL
+	DROP PROCEDURE RegistrujKorisnika;
+GO	
 ALTER PROCEDURE RegistrujKorisnika
 	@Username VARCHAR(25),
 	@Password VARCHAR(25),
@@ -79,9 +79,26 @@ BEGIN
 END
 GO
 
---IF OBJECT_ID('DajKorisnika', 'P') IS NOT NULL
---	DROP PROCEDURE DajKorisnika;
---GO	
+IF OBJECT_ID('PromjeniLozinku', 'P') IS NOT NULL
+	DROP PROCEDURE PromjeniLozinku;
+GO	
+ALTER PROCEDURE PromjeniLozinku
+	@Username VARCHAR(25),
+	@Password VARCHAR(25),
+	@NewPassword VARCHAR(25)
+AS
+BEGIN
+	UPDATE Korisnik
+	SET Password = @NewPassword
+	WHERE Username = @Username
+		AND Password = @Password;
+
+END
+GO
+
+IF OBJECT_ID('DajKorisnika', 'P') IS NOT NULL
+	DROP PROCEDURE DajKorisnika;
+GO	
 ALTER PROCEDURE DajKorisnika
 	@Username VARCHAR(25),
 	@Password VARCHAR(25)
@@ -95,9 +112,9 @@ BEGIN
 END
 GO
 
---IF OBJECT_ID('DajKorisnika_ID', 'P') IS NOT NULL
---	DROP PROCEDURE DajKorisnika_ID;
---GO	
+IF OBJECT_ID('DajKorisnika_ID', 'P') IS NOT NULL
+	DROP PROCEDURE DajKorisnika_ID;
+GO	
 ALTER PROCEDURE DajKorisnika_ID
 	@ID INT
 AS
@@ -109,11 +126,23 @@ BEGIN
 END
 GO
 
+IF OBJECT_ID('DajKorisnika_Email', 'P') IS NOT NULL
+	DROP PROCEDURE DajKorisnika_Email;
+GO	
+ALTER PROCEDURE DajKorisnika_Email
+	@Email VARCHAR(250)
+AS
+BEGIN
+	SELECT * 
+	FROM Korisnik
+	WHERE
+		Email= @Email
+END
+GO
 
-
---IF OBJECT_ID('UnesiPosao', 'P') IS NOT NULL
---	DROP PROCEDURE UnesiPosao;
---GO	
+IF OBJECT_ID('UnesiPosao', 'P') IS NOT NULL
+	DROP PROCEDURE UnesiPosao;
+GO	
 ALTER PROCEDURE UnesiPosao
 		@DTP BIT,
 		@Korisnik_ID INT,
@@ -212,9 +241,9 @@ GO
 
 
 
---IF OBJECT_ID('DajZavrsenePoslove', 'P') IS NOT NULL
---	DROP PROCEDURE DajZavrsenePoslove;
---GO	
+IF OBJECT_ID('DajZavrsenePoslove', 'P') IS NOT NULL
+	DROP PROCEDURE DajZavrsenePoslove;
+GO	
 ALTER PROCEDURE DajZavrsenePoslove
 	--@ID INT
 AS
@@ -227,9 +256,9 @@ END
 GO
 
 
---IF OBJECT_ID('UnesiDTP', 'P') IS NOT NULL
---	DROP PROCEDURE UnesiDTP;
---GO	
+IF OBJECT_ID('UnesiDTP', 'P') IS NOT NULL
+	DROP PROCEDURE UnesiDTP;
+GO	
 ALTER PROCEDURE UnesiDTP
 		@DTP_ID INT,
 		@Korisnik_ID INT,
