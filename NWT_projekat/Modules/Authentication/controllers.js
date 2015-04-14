@@ -17,6 +17,7 @@ angular.module('Authentication')
                 } else {
                     $scope.error = response.message;
                     $scope.dataLoading = false;
+                   
                 }
             });
         };
@@ -65,7 +66,7 @@ angular.module('Authentication')
     }])
 
 
-.controller('ResetController',
+.controller('ResetPasswordController',
     ['$scope', '$rootScope', '$location', 'AuthenticationService',
     function ($scope, $rootScope, $location, AuthenticationService) {
        
@@ -73,10 +74,10 @@ angular.module('Authentication')
 
         $scope.reset = function () {
             $scope.dataLoading = true;
-            AuthenticationService.Reset( $scope.password, function (response) {
+            AuthenticationService.Reset( $scope.email, function (response) {
                 if (response.success) {
-                    AuthenticationService.SetCredentials( $scope.password );
-                    $location.path('/');
+                    AuthenticationService.SetCredentials( $scope.email );
+                    $location.path('/login');
                 } else {
                     $scope.error = response.message;
                     $scope.dataLoading = false;

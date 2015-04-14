@@ -25,6 +25,12 @@ angular.module('BasicHttpAuthExample', [
             hideMenus: true
         })
 
+        .when('/resetPassword', {
+            controller: 'ResetPasswordController',
+            templateUrl: 'modules/authentication/views/ResetPassword.html',
+            hideMenus: true
+        })
+
         .when('/', {
             controller: 'HomeController',
             templateUrl: 'modules/home/views/home.html'
@@ -43,7 +49,11 @@ angular.module('BasicHttpAuthExample', [
 
         $rootScope.$on('$locationChangeStart', function (event, next, current) {
             // redirect to login page if not logged in
-            if ($location.path() !== '/login' && $location.path() !== '/registration' && !$rootScope.globals.currentUser) {
+            if ($location.path() !== '/login' &&
+                $location.path() !== '/registration' &&
+                $location.path() !== '/resetPassword' &&
+                $location.path() !== '/changePassword' &&
+                !$rootScope.globals.currentUser) {
                 $location.path('/login');
             }
         });

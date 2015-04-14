@@ -59,12 +59,12 @@ angular.module('Authentication')
 
 
         //RESET SERVICE
-        service.Reset = function ( password, callback) {
-            $http.post('/api/Account/Reset', {  password : password })
+        service.Reset = function ( Email, callback) {
+            $http.post('/api/Account/PosaljiLozinkuJson', { Email: Email })
                .success(function ( response ) {
                    if ( response !== 'true' ) {
                        
-                       callback ( { success: false, message: 'Invalid password!' } );
+                       callback ( { success: false, message: response} );
                    }
                    else {
                        var newResponse = { success : true };
