@@ -55,6 +55,7 @@ angular.module('Authentication')
             AuthenticationService.registracija($scope.name, $scope.lastname, $scope.email ,$scope.username, $scope.password, function (response) {
                 if (response.success) {
                     AuthenticationService.SetCredentials($scope.name, $scope.lastname);
+                    alert('Email za potvrdu registracije je poslan. Provjerite Vaš inbox!');
                     $location.path('/login');
                 } else {
                     $scope.error = response.message;
