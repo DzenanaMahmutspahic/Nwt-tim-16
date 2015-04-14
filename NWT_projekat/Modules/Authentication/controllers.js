@@ -76,7 +76,8 @@ angular.module('Authentication')
             $scope.dataLoading = true;
             AuthenticationService.Reset( $scope.email, function (response) {
                 if (response.success) {
-                    AuthenticationService.SetCredentials( $scope.email );
+                    AuthenticationService.SetCredentials($scope.email);
+                    alert('Vaša šifra je poslana na Email adresu koju ste unijeli. Provjerite poštu!');
                     $location.path('/login');
                 } else {
                     $scope.error = response.message;
