@@ -19,6 +19,8 @@ namespace NWT_projekat.Controllers
         /// </summary>
         private readonly DbPomocnik _dbPomocnik = null;
 
+        private readonly Zapisnik _zapisnik = null;
+
         #endregion
 
         #region *** Konstruktori ***
@@ -29,6 +31,7 @@ namespace NWT_projekat.Controllers
         public AccountController()
         {
             _dbPomocnik = new DbPomocnik();
+            _zapisnik = new Zapisnik();
         }
 
         #endregion
@@ -68,24 +71,35 @@ namespace NWT_projekat.Controllers
         [System.Web.Http.HttpGet]
         public System.Net.Http.HttpResponseMessage DajKorisnikaJson(int ID)
         {
-            var parametri = new Dictionary<string, object>{
+            try
+            {
+                var parametri = new Dictionary<string, object>{
                 {"ID", ID}
             };
-            var k = _dbPomocnik.IzvrsiProceduru(Konstante.DAJ_KORISNIKA_ID, parametri).Rows[0];
-            var response = new Korisnik
+                var k = _dbPomocnik.IzvrsiProceduru(Konstante.DAJ_KORISNIKA_ID, parametri).Rows[0];
+                var response = new Korisnik
+                {
+                    ID = Convert.ToInt32(k["ID"]),
+                    Ime = k["Ime"].ToString(),
+                    Password = k["Password"].ToString(),
+                    ConfirmPassword = k["ConfirmPassword"].ToString(),
+                    Pozicija = k["Pozicija"].ToString(),
+                    Prezime = k["Prezime"].ToString(),
+                    Username = k["Username"].ToString()
+                };
+                return new HttpResponseMessage()
+                {
+                    Content = new JsonContent(response)
+                };
+            }
+            catch(Exception ex)
             {
-                ID = Convert.ToInt32(k["ID"]),
-                Ime = k["Ime"].ToString(),
-                Password = k["Password"].ToString(),
-                ConfirmPassword = k["ConfirmPassword"].ToString(),
-                Pozicija = k["Pozicija"].ToString(),
-                Prezime = k["Prezime"].ToString(),
-                Username = k["Username"].ToString()
-            };
-            return new HttpResponseMessage()
-            {
-                Content = new JsonContent(response)
-            };
+                _zapisnik.Zapisi(new Log { Datum = DateTime.Now, Sadrzaj = ex.ToString(), Tip = 3 }); ;
+                return new HttpResponseMessage()
+                {
+                    Content = new JsonContent(ex.Message)
+                };
+            }
         }
 
         /// <summary>
@@ -96,11 +110,24 @@ namespace NWT_projekat.Controllers
         [System.Web.Mvc.HttpPost]
         public bool Login(Korisnik korisnik)
         {
-            var parametri = new Dictionary<string, object>{
+            try
+            {
+                var parametri = new Dictionary<string, object>{
                 {"Username", korisnik.Username},
                 {"Password", korisnik.Password}
             };
-            return _dbPomocnik.IzvrsiProceduru(Konstante.DAJ_KORISNIKA_UNAME_PASS, parametri).Rows.Count == 1;
+                return _dbPomocnik.IzvrsiProceduru(Konstante.DAJ_KORISNIKA_UNAME_PASS, parametri).Rows.Count == 1;
+            }
+            catch(Exception ex)
+            {
+                _zapisnik.Zapisi(new Log
+                                    {
+                                        Datum = DateTime.Now,
+                                        Sadrzaj = ex.ToString(),
+                                        Tip = 3
+                                    });
+                return false;
+            }
         }
 
         /// <summary>
@@ -124,8 +151,16 @@ namespace NWT_projekat.Controllers
                 korisnik.ID = ID;
                 return korisnik;
             }
-            catch(Exception)
+            catch(Exception ex)
             {
+                _zapisnik.Zapisi(
+                    new Log
+                    {
+                        Datum = DateTime.Now,
+                        Sadrzaj = ex.ToString(),
+                        Tip = 3
+                    }
+                );
             }
             return null;
         }
@@ -161,6 +196,14 @@ namespace NWT_projekat.Controllers
             }
             catch(Exception ex)
             {
+                _zapisnik.Zapisi(
+                    new Log
+                    {
+                        Datum = DateTime.Now,
+                        Sadrzaj = ex.ToString(),
+                        Tip = 3
+                    }
+                );
                 return new HttpResponseMessage()
                 {
                     Content = new JsonContent(ex.Message)
@@ -192,6 +235,14 @@ namespace NWT_projekat.Controllers
             }
             catch(Exception ex)
             {
+                _zapisnik.Zapisi(
+                    new Log
+                    {
+                        Datum = DateTime.Now,
+                        Sadrzaj = ex.ToString(),
+                        Tip = 3
+                    }
+                );
                 return new HttpResponseMessage()
                 {
                     Content = new JsonContent(ex.Message)
@@ -223,6 +274,14 @@ namespace NWT_projekat.Controllers
             }
             catch(Exception ex)
             {
+                _zapisnik.Zapisi(
+                    new Log
+                    {
+                        Datum = DateTime.Now,
+                        Sadrzaj = ex.ToString(),
+                        Tip = 3
+                    }
+                );
                 return new HttpResponseMessage()
                 {
                     Content = new JsonContent(ex.Message)
@@ -259,6 +318,14 @@ namespace NWT_projekat.Controllers
             }
             catch(Exception ex)
             {
+                _zapisnik.Zapisi(
+                    new Log
+                    {
+                        Datum = DateTime.Now,
+                        Sadrzaj = ex.ToString(),
+                        Tip = 3
+                    }
+                );
                 return new HttpResponseMessage()
                 {
                     Content = new JsonContent(ex.Message)
@@ -289,6 +356,14 @@ namespace NWT_projekat.Controllers
             }
             catch(Exception ex)
             {
+                _zapisnik.Zapisi(
+                    new Log
+                    {
+                        Datum = DateTime.Now,
+                        Sadrzaj = ex.ToString(),
+                        Tip = 3
+                    }
+                );
                 return false;
             }
 

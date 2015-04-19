@@ -320,4 +320,49 @@ BEGIN
 END
 GO
 
+IF OBJECT_ID('DajLogove', 'P') IS NOT NULL
+	DROP PROCEDURE DajLogove;
+GO	
+ALTER PROCEDURE DajLogove
+AS
+BEGIN
+	SELECT * 
+	FROM Logovi
+END
+GO
 
+
+IF OBJECT_ID('DodajLog', 'P') IS NOT NULL
+	DROP PROCEDURE DodajLog;
+GO	
+CREATE PROCEDURE DodajLog
+	@Sadrzaj VARCHAR(5120),
+	@Tip INT = 0,
+	@Datum DATETIME = NULL
+AS
+BEGIN
+	INSERT INTO Logovi(
+		Sadrzaj,
+		Tip,
+		Datum
+	)
+	VALUES(
+		@Sadrzaj,
+		@Tip,
+		ISNULL(@Datum, CURRENT_TIMESTAMP)
+	)
+END
+GO
+
+IF OBJECT_ID('DajLogZadnjiMinute', 'P') IS NOT NULL
+	DROP PROCEDURE DajLogZadnjiMinute;
+GO	
+CREATE PROCEDURE DajLogZadnjiMinute
+	@Minute INT
+AS
+BEGIN
+	SELECT *
+	FROM Logovi
+	WHERE DATEDIFF(minute, Datum, CURRENT_TIMESTAMP) <=  @Minute
+END
+GO

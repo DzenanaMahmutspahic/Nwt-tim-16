@@ -55,7 +55,9 @@
     <Compile Include="DbPomocnik.cs" />
     <Compile Include="JsonContent.cs" />
     <Compile Include="Konstante.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Zapisnik.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
