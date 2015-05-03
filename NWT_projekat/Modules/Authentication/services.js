@@ -32,10 +32,12 @@ angular.module('Authentication')
                        callback(newResponse);
                    }
                })
-            .error(function (data, status, headers, config) {
-                alert("Registration failed");
-            });
+            .error(error12345(data, status, headers, config));
         };
+
+        function error12345(data, status, headers, config) {
+            alert("Registration failed");
+        }
 
         service.SetCredentials = function (username, password) {
             var authdata = Base64.encode(username + ':' + password);
@@ -62,8 +64,7 @@ angular.module('Authentication')
         service.Reset = function ( Email, callback) {
             $http.post('/api/Account/PosaljiLozinkuJson', { Email: Email })
                .success(function ( response ) {
-                   if ( response !== 'true' ) {
-                       
+                   if ( response !== 'true' ) {                       
                        callback ( { success: false, message: response} );
                    }
                    else {

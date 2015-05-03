@@ -1,27 +1,49 @@
 ﻿<!DOCTYPE html>
 <html ng-app="BasicHttpAuthExample">
 
-  <head>
+<head>
     <meta charset="utf-8" />
     <title>Online kopirnica</title>
+    <link rel="stylesheet" href="Content/Site.css"/>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
-  </head>
+</head>
 
-  <body>
-  
-    <div class="jumbotron">
-      <div class="container">
-        <div class="col-xs-offset-2 col-xs-8">
-          <div ng-view></div>
+<body>
+
+    <header>
+        <div class="content-wrapper">
+            <div class="float-left">
+                <p class="site-title">
+                    <a href="">Online kopirnica</a>
+                </p>
+            </div>
+            <div class="float-right">
+                <nav>
+                    <ul id="menu">
+                        <li><a href="Home/">Home</a></li>
+                        <li><a href="Help/">API</a></li>
+                        <li><a href="index.html">Login</a></li>
+                        <li><a href="index.html#/registration">Registration</a></li>
+                    </ul>
+                </nav>
+            </div>
         </div>
-      </div>
+    </header>
+
+    <div class="jumbotron">
+        <div class="container">
+            <div class="col-xs-offset-2 col-xs-8">
+                <div ng-view>
+                </div>
+            </div>
+        </div>
     </div>
 
     <div class="credits text-center">
-      <p>
-        <b> Copyright &copy; 2015 (Riki, Kera, Javoraš, Snježa, Dž-Šefica) </b> 
-      </p>
-      
+        <p>
+            <b> Copyright &copy; 2015 (Riki, Kera, Javoraš, Snježa, Dž-Šefica) </b>
+        </p>
+
     </div>
 
     <script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
@@ -32,6 +54,6 @@
     <script src="modules/authentication/services.js"></script>
     <script src="modules/authentication/controllers.js"></script>
     <script src="modules/home/controllers.js"></script>
-  </body>
+</body>
 
 </html>

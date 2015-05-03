@@ -1,0 +1,37 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>PromjenaLozinke</title>
+    <script type="text/javascript">
+        function submitForm() {
+            var l1 = document.getElementById("lozinka1");
+            var l2 = document.getElementById("lozinka2");
+
+            if (l1.value != l2.value)
+                document.getElementById("tekstGreske").innerText = "Unjeli ste razlicite vrijednosti lozinke!";
+            else
+                document.forms["Forma1"].submit();
+        }
+
+    </script>
+</head>
+<body>
+    <div>
+        <span id="tekstGreske" class="error"></span>
+        <form id="Forma1" action="~/api/Account/PromjenaLozinke" method="post">
+            <input type="hidden" name="id" value="@ViewBag.Id" />
+            <input type="hidden" name="guid" value="@ViewBag.Guid" />
+            <input type="password" name="novaLozinka" id="lozinka1" />
+            <input type="password" id="lozinka2" />
+            <button type="button" onclick="submitForm()">Promijeni lozinku</button>
+        </form>
+
+    </div>
+</body>
+</html>

@@ -12,5 +12,11 @@ namespace NWT_projekat.Controllers
         {
             return View();
         }
+
+        public ActionResult PromjenaLozinke(int id, Guid guid) {
+            ViewBag.Id = id;
+            ViewBag.Guid = guid;
+            return View();
+        }
     }
 }

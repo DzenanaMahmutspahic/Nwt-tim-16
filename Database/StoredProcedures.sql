@@ -43,7 +43,7 @@ AS
 BEGIN
 	DECLARE 
 	@Username VARCHAR(25),
-	@Password VARCHAR(25),
+	@Password VARCHAR(32),
 	@Ime	  VARCHAR(35),
 	@Prezime  VARCHAR(35),
 	@Email VARCHAR(250);
@@ -366,3 +366,37 @@ BEGIN
 	WHERE DATEDIFF(minute, Datum, CURRENT_TIMESTAMP) <=  @Minute
 END
 GO
+
+IF OBJECT_ID('PromijeniLozinku', 'P') IS NOT NULL
+	DROP PROCEDURE PromijeniLozinku;
+GO	
+CREATE PROCEDURE PromijeniLozinku
+	@Id INT,
+	@GUID VARCHAR(38),
+	@NovaLozinka VARCHAR(250)
+AS
+BEGIN
+	IF EXISTS (SELECT * FROM PromjenaLozinke WHERE ID = @Id AND GUID = @GUID AND Enabled = 1)
+	BEGIN
+		DECLARE @KorisnikId INT;
+		
+		SELECT @KorisnikId = KorisnikId
+		FROM PromjenaLozinke
+		WHERE GUID = @GUID
+
+		IF EXISTS (SELECT * FROM Korisnik WHERE ID = @KorisnikId)
+		BEGIN
+			UPDATE Korisnik
+			SET Password = @NovaLozinka
+			WHERE ID = @KorisnikId
+
+			UPDATE PromjenaLozinke
+			SET Enabled = 0
+			WHERE ID = @Id
+		END
+		ELSE
+			SELECT 'Pogresan korisnik' AS Greska
+	END
+	ELSE
+		SELECT 'Pogresan zahtjev!' AS Greska
+END
