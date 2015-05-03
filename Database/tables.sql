@@ -388,3 +388,14 @@ CREATE TABLE Logovi(
 	Datum DATETIME,
 	Tip INT
 )
+
+if 1=2 -- Nece se nikad izvrsiti. Korisno za rucno brisanje tabele (Selektovanjem komande i F5
+	DROP TABLE PromjenaLozinke
+GO
+CREATE TABLE PromjenaLozinke(
+	ID INT IDENTITY(1,1),
+	KorisnikId INT NOT NULL,
+	GUID VARCHAR(38) NOT NULL,
+	Datum DATETIME NOT NULL,
+	Email VARCHAR(250) NOT NULL
+)

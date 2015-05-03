@@ -24,7 +24,8 @@ namespace NWT_projekat.Areas.HelpPage.Controllers
 
         public ActionResult Index()
         {
-            return View(Configuration.Services.GetApiExplorer().ApiDescriptions);
+            var apiExplorer = Configuration.Services.GetApiExplorer();
+            return View(apiExplorer.ApiDescriptions);
         }
 
         public ActionResult Api(string apiId)

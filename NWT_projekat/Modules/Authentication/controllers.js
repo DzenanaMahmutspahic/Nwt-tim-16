@@ -65,7 +65,30 @@ angular.module('Authentication')
             });
         };
     }])
+    .controller('RegistrationController',
+    ['$scope', '$rootScope', '$location', '$sce', 'AuthenticationService',
+    function ($scope, $rootScope, $location, $sce, AuthenticationService) {
 
+        $scope.submitRegistration = function () {
+            $scope.dataLoading = true;
+            if ($scope.password != $scope.password_verify) {
+                $scope.error = "Razlicite vrijednosti lozinke!";
+                $scope.dataLoading = false;
+            } else {
+                AuthenticationService.registracija($scope.name, $scope.lastname, $scope.email, $scope.username, $scope.password, function (response) {
+                    if (response.success) {
+                        AuthenticationService.SetCredentials($scope.name, $scope.lastname);
+                        alert('Email za potvrdu registracije je poslan. Provjerite Vaš inbox!');
+                        $location.path('/login');
+                    } else {
+                        $scope.error = response.message;
+                        $scope.errorMessage = $sce.trustAsHtml(response.message);
+                        $scope.dataLoading = false;
+                    }
+                });
+            }
+        };
+    }])
 
 .controller('ResetPasswordController',
     ['$scope', '$rootScope', '$location', 'AuthenticationService',
@@ -75,13 +98,18 @@ angular.module('Authentication')
 
         $scope.reset = function () {
             $scope.dataLoading = true;
-            AuthenticationService.Reset( $scope.email, function (response) {
+            AuthenticationService.Reset($scope.email, function (response) {
+                alert(response.success);
                 if (response.success) {
                     AuthenticationService.SetCredentials($scope.email);
                     alert('Vaša šifra je poslana na Email adresu koju ste unijeli. Provjerite poštu!');
                     $location.path('/login');
                 } else {
-                    $scope.error = response.message;
+                    alert(response.message);
+                    if (response.message === undefined || response.error === null || response.message == '')
+                        $scope.error = 'Desila se gre[ka u promjeni lozinke. Kontaktirajte Administratora za detalje.';
+                    else
+                        $scope.error = response.message;
                     $scope.dataLoading = false;
                 }
             });

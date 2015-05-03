@@ -9,8 +9,12 @@ using System.Web.Http;
 
 namespace NWT_projekat.Controllers
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class AccountController: System.Web.Http.ApiController
     {
+        bool POSALjIMAIL = false;
 
         #region *** Fields ***
 
@@ -31,7 +35,7 @@ namespace NWT_projekat.Controllers
         public AccountController()
         {
             _dbPomocnik = new DbPomocnik();
-            _zapisnik = new Zapisnik();
+            _zapisnik = new Zapisnik(_dbPomocnik);
         }
 
         #endregion
@@ -114,7 +118,7 @@ namespace NWT_projekat.Controllers
             {
                 var parametri = new Dictionary<string, object>{
                 {"Username", korisnik.Username},
-                {"Password", korisnik.Password}
+                {"Password", KriptoPomocnik.GetMd5Hash(korisnik.Password)}
             };
                 return _dbPomocnik.IzvrsiProceduru(Konstante.DAJ_KORISNIKA_UNAME_PASS, parametri).Rows.Count == 1;
             }
@@ -303,18 +307,46 @@ namespace NWT_projekat.Controllers
                 };
                 var noviKorisnik = _dbPomocnik.IzvrsiProceduru<Korisnik>(Konstante.DAJ_KORISNIKA_EMAIL, parametri);
 
-                if(noviKorisnik != null)
+                if(noviKorisnik != null && noviKorisnik.ID  != 0 && !string.IsNullOrEmpty(noviKorisnik.Email))
                 {
-                    SendEmail(
-                        "Promjena lozinke",
-                        string.Format(Konstante.PROMJENA_LOZINKE_TEMPLATE, noviKorisnik.Password),
-                        noviKorisnik.Email
-                   );
+                    Guid noviGuid = Guid.NewGuid();
+                    parametri = new Dictionary<string, object> { 
+                        {"KorisnikId", noviKorisnik.ID },
+                        {"GUID", noviGuid},
+                        {"Email", noviKorisnik.Email}
+                    };
+
+                    var zahtjevIdOdgovor = _dbPomocnik.IzvrsiProceduru(Konstante.ZAHTJEV_NOVA_LOZINKA, parametri);
+                    int zahtjevId;
+                    try
+                    {
+                        int.TryParse(zahtjevIdOdgovor.Rows[0]["ID"].ToString(), out zahtjevId);
+
+                        SendEmail(
+                            "Promjena lozinke",
+                            string.Format(Konstante.PROMJENA_LOZINKE_TEMPLATE, zahtjevId, noviGuid),
+                            noviKorisnik.Email
+                       );
+                    }
+                    catch(Exception ex)
+                    {
+                        _zapisnik.Zapisi(ex.ToString(), 2);
+                        return new HttpResponseMessage()
+                        {
+                            Content = new JsonContent("Greška pri slanju email poruke.")
+                        };
+                    }
                 }
-                return new HttpResponseMessage()
+                var response = new HttpResponseMessage();
+                if(noviKorisnik.ID != 0)                
                 {
-                    Content = new JsonContent(noviKorisnik.ID != 0)
-                };
+                    response.Content = new JsonContent(true);
+                }
+                else
+                {
+                    response.Content = new JsonContent("Pogrešan korisnik.");
+                }
+                return response;
             }
             catch(Exception ex)
             {
@@ -333,12 +365,62 @@ namespace NWT_projekat.Controllers
             }
         }
 
+        /// <summary>
+        /// Akcija promjene lozinke
+        /// </summary>
+        /// <returns></returns>
+        [System.Web.Mvc.HttpPost]
+        public System.Net.Http.HttpResponseMessage PromjenaLozinke(PromjenaLozinkeModel model)
+        {
+            try
+            {
+                int id = model.id;
+                string zahtjevGuid = model.guid.ToUpper();
+                string novaLozinka = KriptoPomocnik.GetMd5Hash(model.novaLozinka);
+
+                var parametri = new Dictionary<string, object>{
+                    {"Id", id},
+                    {"GUID", zahtjevGuid},
+                    {"NovaLozinka", novaLozinka}
+                };
+                var tmp = _dbPomocnik.IzvrsiProceduru(Konstante.PROMJENI_LOZINKU, parametri);
+
+                try {
+                    string poruka = tmp.Rows[0]["Greska"].ToString();
+                    _zapisnik.Zapisi(poruka, 2);
+                }
+                catch { /* Nothing to see here. Move along!*/ }
+
+                var response = Request.CreateResponse(HttpStatusCode.Moved);
+                response.Headers.Location = new Uri("index.html", UriKind.Relative);
+                return response;
+            }
+            catch(Exception ex)
+            {
+                _zapisnik.Zapisi(new Log()
+                {
+                    Datum = DateTime.Now,
+                    Sadrzaj = ex.ToString(),
+                    Tip = 3
+                });
+            }
+            return new HttpResponseMessage()
+            {
+                Content = new JsonContent("Doslo je do greske u procesiranju!")
+            };
+        }
+
         #endregion
 
         #region *** Pomoćne metode ***
 
         private bool SendEmail(string subject, string body, string mailTo)
         {
+            if(!POSALjIMAIL)
+            {
+                _zapisnik.Zapisi("Slanje maila iskljuceno!", 1);
+                return false;
+            }
             string fromMail = "do.not.answer.nwt@gmail.com";
 
             MailMessage mail = new MailMessage(fromMail, mailTo, subject, body);

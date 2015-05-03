@@ -21,9 +21,11 @@ namespace NWT_projekat.Controllers
         }
 
         // GET api/log/5
-        public string Get(int id)
+        public IEnumerable<Log> Get(int tipZapisa)
         {
-            return "value";
+            var parametri = new Log { Tip = tipZapisa };
+            var redovi = new DbPomocnik().IzvrsiProceduru<Log, Log>(Konstante.DAJ_LOGOVE_TIP, parametri);
+            return redovi;
         }
     }
 }
