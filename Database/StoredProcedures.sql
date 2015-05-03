@@ -7,7 +7,7 @@ USE NWT
 IF OBJECT_ID('RegistrujKorisnika', 'P') IS NOT NULL
 	DROP PROCEDURE RegistrujKorisnika;
 GO	
-ALTER PROCEDURE RegistrujKorisnika
+CREATE PROCEDURE RegistrujKorisnika
 	@Username VARCHAR(25),
 	@Password VARCHAR(25),
 	@Ime	  VARCHAR(35),
@@ -36,7 +36,7 @@ BEGIN
 END
 GO
 	
-ALTER PROCEDURE PotvrdiRegistraciju
+CREATE PROCEDURE PotvrdiRegistraciju
 	@ID INT,
 	@GUID VARCHAR(38)
 AS
@@ -82,7 +82,7 @@ GO
 IF OBJECT_ID('PromjeniLozinku', 'P') IS NOT NULL
 	DROP PROCEDURE PromjeniLozinku;
 GO	
-ALTER PROCEDURE PromjeniLozinku
+CREATE PROCEDURE PromjeniLozinku
 	@Username VARCHAR(25),
 	@Password VARCHAR(25),
 	@NewPassword VARCHAR(25)
@@ -99,7 +99,7 @@ GO
 IF OBJECT_ID('DajKorisnika', 'P') IS NOT NULL
 	DROP PROCEDURE DajKorisnika;
 GO	
-ALTER PROCEDURE DajKorisnika
+CREATE PROCEDURE DajKorisnika
 	@Username VARCHAR(25),
 	@Password VARCHAR(25)
 AS
@@ -115,7 +115,7 @@ GO
 IF OBJECT_ID('DajKorisnika_ID', 'P') IS NOT NULL
 	DROP PROCEDURE DajKorisnika_ID;
 GO	
-ALTER PROCEDURE DajKorisnika_ID
+CREATE PROCEDURE DajKorisnika_ID
 	@ID INT
 AS
 BEGIN
@@ -129,7 +129,7 @@ GO
 IF OBJECT_ID('DajKorisnika_Email', 'P') IS NOT NULL
 	DROP PROCEDURE DajKorisnika_Email;
 GO	
-ALTER PROCEDURE DajKorisnika_Email
+CREATE PROCEDURE DajKorisnika_Email
 	@Email VARCHAR(250)
 AS
 BEGIN
@@ -143,7 +143,7 @@ GO
 IF OBJECT_ID('UnesiPosao', 'P') IS NOT NULL
 	DROP PROCEDURE UnesiPosao;
 GO	
-ALTER PROCEDURE UnesiPosao
+CREATE PROCEDURE UnesiPosao
 		@DTP BIT,
 		@Korisnik_ID INT,
 		@Repromaterijal_ID INT,
@@ -244,7 +244,7 @@ GO
 IF OBJECT_ID('DajZavrsenePoslove', 'P') IS NOT NULL
 	DROP PROCEDURE DajZavrsenePoslove;
 GO	
-ALTER PROCEDURE DajZavrsenePoslove
+CREATE PROCEDURE DajZavrsenePoslove
 	--@ID INT
 AS
 BEGIN
@@ -259,7 +259,7 @@ GO
 IF OBJECT_ID('UnesiDTP', 'P') IS NOT NULL
 	DROP PROCEDURE UnesiDTP;
 GO	
-ALTER PROCEDURE UnesiDTP
+CREATE PROCEDURE UnesiDTP
 		@DTP_ID INT,
 		@Korisnik_ID INT,
 		@Status_DTP BIT,
@@ -321,3 +321,5 @@ END
 GO
 
 
+select * from privremeniKorisnik
+select * from Korisnik
