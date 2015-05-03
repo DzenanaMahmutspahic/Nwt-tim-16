@@ -18,6 +18,10 @@ namespace NWT.Pomocnici
         public static readonly string DODAJ_DTP = "UnesiDTP";
         public static readonly string POTVRDI_REGISTRACIJU = "PotvrdiRegistraciju";
         public static readonly string PROMJENA_LOZINKE = "PromjeniLozinku";
+        public static readonly string DAJ_LOGOVE = "DajLogove";
+        public static readonly string DAJ_LOG_ZADNjI_MINUTE = "DajLogZadnjiMinute";
+        public static readonly string DODAJ_LOG = "DodajLog";
+
         public static readonly string REGISTRACIJA_TEMPLATE = @"
 Dobro došli na našu stranicu i čestitamo na uspješnoj registraciji.
 Da biste potvrdili registraciju, kliknite na link ispod:

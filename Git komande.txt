@@ -1,0 +1,2 @@
+Team Explorer -> Home -> Unsynced Commits -> Actions -> Open Command Prompt
+git pull

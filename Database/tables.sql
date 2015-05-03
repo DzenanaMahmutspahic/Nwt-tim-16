@@ -360,8 +360,6 @@ IF DB_ID('NWT') IS NULL
 	CREATE DATABASE NWT
 GO
 
-USE NWT
-
 if 1=2 -- Nece se nikad izvrsiti. Korisno za rucno brisanje tabele (Selektovanjem komande i F5
 	DROP TABLE Radni_nalog
 GO
@@ -378,4 +376,15 @@ CREATE TABLE Radni_nalog(
 	Ukupno_sati DECIMAL NOT NULL,
 	Status_naloga INT NOT NULL,
     Komentar VARCHAR NOT NULL
+)
+
+
+if 1=2 -- Nece se nikad izvrsiti. Korisno za rucno brisanje tabele (Selektovanjem komande i F5
+	DROP TABLE Logovi
+GO
+CREATE TABLE Logovi(
+	ID INT NOT NULL IDENTITY(1,1) PRIMARY KEY,
+	Sadrzaj VARCHAR(5120),
+	Datum DATETIME,
+	Tip INT
 )
