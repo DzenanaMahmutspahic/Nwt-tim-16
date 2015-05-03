@@ -316,6 +316,7 @@
     <Content Include="Modules\Authentication\Views\ResetPassword.html" />
     <Content Include="Modules\Home\controllers.js" />
     <Content Include="Modules\Home\Views\home.html" />
+    <Content Include="Modules\Posao\View\unos_posla.html" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />
