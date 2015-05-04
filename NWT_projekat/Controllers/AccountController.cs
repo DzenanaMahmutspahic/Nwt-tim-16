@@ -14,7 +14,7 @@ namespace NWT_projekat.Controllers
     /// </summary>
     public class AccountController: System.Web.Http.ApiController
     {
-        bool POSALjIMAIL = false;
+        bool POSALjIMAIL = true;
 
         #region *** Fields ***
 
@@ -144,7 +144,7 @@ namespace NWT_projekat.Controllers
         {
             var parametri = new Dictionary<string, object>{
                 {"Username", korisnik.Username},
-                {"Password", korisnik.Password},
+                {"Password", KriptoPomocnik.GetMd5Hash( korisnik.Password)},
                 {"Ime", korisnik.Ime},
                 {"Prezime", korisnik.Prezime},
                 {"Email", korisnik.Email},
@@ -180,7 +180,7 @@ namespace NWT_projekat.Controllers
             Guid tmpGuid = Guid.NewGuid();
             var parametri = new Dictionary<string, object>{
                 {"Username", korisnik.Username},
-                {"Password", korisnik.Password},
+                {"Password", KriptoPomocnik.GetMd5Hash( korisnik.Password)},
                 {"Ime", korisnik.Ime},
                 {"Prezime", korisnik.Prezime},
                 {"Email", korisnik.Email},
@@ -307,7 +307,7 @@ namespace NWT_projekat.Controllers
                 };
                 var noviKorisnik = _dbPomocnik.IzvrsiProceduru<Korisnik>(Konstante.DAJ_KORISNIKA_EMAIL, parametri);
 
-                if(noviKorisnik != null && noviKorisnik.ID  != 0 && !string.IsNullOrEmpty(noviKorisnik.Email))
+                if(noviKorisnik != null && noviKorisnik.ID != 0 && !string.IsNullOrEmpty(noviKorisnik.Email))
                 {
                     Guid noviGuid = Guid.NewGuid();
                     parametri = new Dictionary<string, object> { 
@@ -338,7 +338,7 @@ namespace NWT_projekat.Controllers
                     }
                 }
                 var response = new HttpResponseMessage();
-                if(noviKorisnik.ID != 0)                
+                if(noviKorisnik.ID != 0)
                 {
                     response.Content = new JsonContent(true);
                 }
@@ -385,7 +385,8 @@ namespace NWT_projekat.Controllers
                 };
                 var tmp = _dbPomocnik.IzvrsiProceduru(Konstante.PROMJENI_LOZINKU, parametri);
 
-                try {
+                try
+                {
                     string poruka = tmp.Rows[0]["Greska"].ToString();
                     _zapisnik.Zapisi(poruka, 2);
                 }
