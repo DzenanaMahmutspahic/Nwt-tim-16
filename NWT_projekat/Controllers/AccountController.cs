@@ -14,7 +14,7 @@ namespace NWT_projekat.Controllers
     /// </summary>
     public class AccountController: System.Web.Http.ApiController
     {
-        bool POSALjIMAIL = false;
+        bool POSALjIMAIL = true;
 
         #region *** Fields ***
 
