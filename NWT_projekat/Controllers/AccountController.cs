@@ -120,7 +120,8 @@ namespace NWT_projekat.Controllers
                 {"Username", korisnik.Username},
                 {"Password", KriptoPomocnik.GetMd5Hash(korisnik.Password)}
             };
-                return _dbPomocnik.IzvrsiProceduru(Konstante.DAJ_KORISNIKA_UNAME_PASS, parametri).Rows.Count == 1;
+                var redovi = _dbPomocnik.IzvrsiProceduru(Konstante.DAJ_KORISNIKA_UNAME_PASS, parametri).Rows;
+                return redovi.Count == 1;
             }
             catch(Exception ex)
             {
