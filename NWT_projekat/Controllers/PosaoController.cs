@@ -124,6 +124,80 @@ namespace NWT_projekat.Controllers
             };
         }
 
+
+        [System.Web.Http.HttpPost]
+        //[Description("Servis za unos montaze")]
+        public System.Net.Http.HttpRequestMessage UnesiMontazu(Montaza m)
+        {
+            var q = _dbPomocnik.IzvrsiProceduru<Montaza, Montaza>(Konstante.DODAJ_MONTAZU, m).FirstOrDefault();
+
+            return new HttpRequestMessage()
+            {
+                Content = new JsonContent(q)
+            };
+        }
+
+        [System.Web.Http.HttpPost]
+        //[Description("Servis za unos repromaterijala")]
+        public System.Net.Http.HttpRequestMessage UnesiRepromaterijal(Repromaterijal r)
+        {
+            var q = _dbPomocnik.IzvrsiProceduru<Repromaterijal, Repromaterijal>(Konstante.DODAJ_REPROMATERIJAL, r).FirstOrDefault();
+
+            return new HttpRequestMessage()
+            {
+                Content = new JsonContent(q)
+            };
+        }
+
+
+        [System.Web.Http.HttpPost]
+        //[Description("Servis za unos knjigovodstvene dorade")]
+        public System.Net.Http.HttpRequestMessage UnesiKnjigovodstvenuDoradu(Knjigovodstvena_dorada k)
+        {
+            var q = _dbPomocnik.IzvrsiProceduru<Knjigovodstvena_dorada, Knjigovodstvena_dorada>(Konstante.DODAJ_KNJIGOVODSTVENU_DORADU, k).FirstOrDefault();
+
+            return new HttpRequestMessage()
+            {
+                Content = new JsonContent(q)
+            };
+        }
+
+        [System.Web.Http.HttpPost]
+        //[Description("Servis za unos rucnog rada")]
+        public System.Net.Http.HttpRequestMessage UnesiRucniRad(Rucni_rad r)
+        {
+            var q = _dbPomocnik.IzvrsiProceduru<Rucni_rad, Rucni_rad>(Konstante.DODAJ_RUCNI_RAD, r).FirstOrDefault();
+
+            return new HttpRequestMessage()
+            {
+                Content = new JsonContent(q)
+            };
+        }
+
+        [System.Web.Http.HttpPost]
+        //[Description("Servis za unos stampe")]
+        public System.Net.Http.HttpRequestMessage UnesiStampu(Stampa s)
+        {
+            var q = _dbPomocnik.IzvrsiProceduru<Stampa, Stampa>(Konstante.DODAJ_STAMPU, s).FirstOrDefault();
+
+            return new HttpRequestMessage()
+            {
+                Content = new JsonContent(q)
+            };
+        }
+
+        [System.Web.Http.HttpPost]
+        //[Description("Servis za unos vanjske usluge")]
+        public System.Net.Http.HttpRequestMessage UnesiVanjskuUslugu(Vanjska_usluga v)
+        {
+            var q = _dbPomocnik.IzvrsiProceduru<Vanjska_usluga, Vanjska_usluga>(Konstante.DODAJ_VANJSKU_USLUGU, v).FirstOrDefault();
+
+            return new HttpRequestMessage()
+            {
+                Content = new JsonContent(q)
+            };
+        }
+
         #endregion
 
     }

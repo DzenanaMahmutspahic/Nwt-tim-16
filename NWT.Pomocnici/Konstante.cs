@@ -24,7 +24,12 @@ namespace NWT.Pomocnici
         public static readonly string DODAJ_LOG = "DodajLog";
         public static readonly string ZAHTJEV_NOVA_LOZINKA = "ZahtjevNovaLozinka";
         public static readonly string PROMJENI_LOZINKU = "PromijeniLozinku";
-
+        public static readonly string DODAJ_REPROMATERIJAL = "DodajRepromaterijal";
+        public static readonly string DODAJ_VANJSKU_USLUGU = "DodajVanjskuUslugu";
+        public static readonly string DODAJ_STAMPU = "DodajStampu";
+        public static readonly string DODAJ_RUCNI_RAD = "DodajRucniRad";
+        public static readonly string DODAJ_MONTAZU = "DodajMontazu";
+        public static readonly string DODAJ_KNJIGOVODSTVENU_DORADU = "DodajKnjigovodstvenuDoradu";
         public static readonly string REGISTRACIJA_TEMPLATE = @"
 Dobro došli na našu stranicu i čestitamo na uspješnoj registraciji.
 Da biste potvrdili registraciju, kliknite na link ispod:
