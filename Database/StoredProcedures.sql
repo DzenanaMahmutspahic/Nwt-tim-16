@@ -401,9 +401,9 @@ BEGIN
 		SELECT 'Pogresan zahtjev!' AS Greska
 END
 
+GO
 
-
-CREATE PROCEDURE  dbo . DodajMontazu 
+CREATE PROCEDURE  dbo.DodajMontazu 
 		@Korisnik_ID INT,
 	 @Snimanje_materijal VARCHAR(25),
 	@Snimanje_sati decimal (18, 0),
