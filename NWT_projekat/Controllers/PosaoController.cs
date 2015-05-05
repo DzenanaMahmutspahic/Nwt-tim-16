@@ -9,6 +9,7 @@ using System.Web.Http;
 namespace NWT_projekat.Controllers
 {
     public class PosaoController: ApiController {
+
         #region *** Fields ***
 
         private readonly DbPomocnik _dbPomocnik = null;
@@ -76,8 +77,12 @@ namespace NWT_projekat.Controllers
             };*/
         }
 
+        /// <summary>
+        /// Servis za dobavljanje poslova json
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
         [HttpGet]
-        //[Description("Servis za dobavljanje poslova json")]
         public System.Net.Http.HttpResponseMessage DajPosaoJson(int ID) {
             var parametri = new Dictionary<string, object>{
                 {"ID", ID}
