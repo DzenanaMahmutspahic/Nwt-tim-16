@@ -3,6 +3,7 @@
 // declare modules
 angular.module('Authentication', []);
 angular.module('Home', []);
+angular.module('Posao', []);
 
 angular.module('BasicHttpAuthExample', [
     'Authentication',
@@ -30,6 +31,11 @@ angular.module('BasicHttpAuthExample', [
             templateUrl: 'modules/authentication/views/ResetPassword.html',
             hideMenus: true
         })
+        .when('/posao', {
+            controller: 'PosaoController',
+            templateUrl: 'modules/Posao/View/unos_posla.html',
+            hideMenus: true
+        })
 
         .when('/', {
             controller: 'HomeController',
@@ -53,6 +59,7 @@ angular.module('BasicHttpAuthExample', [
                 $location.path() !== '/registration' &&
                 $location.path() !== '/resetPassword' &&
                 $location.path() !== '/changePassword' &&
+                $location.path() !== '/posao' &&
                 !$rootScope.globals.currentUser) {
                 $location.path('/login');
             }
