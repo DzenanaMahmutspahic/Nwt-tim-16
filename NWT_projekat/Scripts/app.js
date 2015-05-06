@@ -12,6 +12,8 @@ angular.module('BasicHttpAuthExample', [
     'ngCookies'
 ])
 
+
+
 .config(['$routeProvider', function ($routeProvider) {
 
     $routeProvider
@@ -65,3 +67,43 @@ angular.module('BasicHttpAuthExample', [
             }
         });
     }]);
+
+
+
+
+angular.module('angularTranslateApp', ['pascalprecht.translate'])
+.config(function ($translateProvider) {
+    // Our translations will go in here
+
+    $translateProvider.translations('bos_BOS', {
+        'GREETING': 'Zdravo!',
+        'BUTTON_BOS': 'Bosanski',
+        'BUTTON_EN': 'Engleski'
+    });
+    // register english translation table
+    $translateProvider.translations('en_EN', {
+        'GREETING': 'Hello!',
+        'BUTTON_BOS': 'Bosnian',
+        'BUTTON_EN': 'English'
+    });
+    // which language to use?
+    $translateProvider.preferredLanguage('bos_BOS');
+});
+
+//app.controller('Ctrl', function ($scope, $translate) {
+//    $scope.changeLanguage = function (key) {
+//        $translate.use(key);
+//    };
+//});
+
+angular.module('angularTranslateApp').controller('Ctrl', ['$translate', '$scope', function ($translate, $scope) {
+
+   //$scope.changeLanguage = function () {
+   //    $translate.uses(($translate.uses() === 'en_EN') ? 'bos_BOS' : 'en_EN');
+   //};
+
+   $scope.changeLanguage = function (key) {
+              $translate.use(key);
+          };
+
+}]);
