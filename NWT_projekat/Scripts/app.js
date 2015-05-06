@@ -8,6 +8,7 @@ angular.module('Posao', []);
 angular.module('BasicHttpAuthExample', [
     'Authentication',
     'Home',
+    'Posao',
     'ngRoute',
     'ngCookies'
 ])

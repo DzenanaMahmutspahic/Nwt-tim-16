@@ -167,7 +167,6 @@ namespace NWT.Pomocnici
                         if(properti != null)
                             cmd.Parameters[p.ParameterName].Value = properti.GetValue(model);
                     }
-
                 }
                 var odgovor_properties = typeof(T2).GetProperties();
                 using(SqlDataReader rdr = cmd.ExecuteReader())

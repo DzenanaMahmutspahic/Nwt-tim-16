@@ -318,6 +318,7 @@
     <Content Include="Modules\Home\Views\home.html" />
     <Content Include="Modules\Posao\controllers.js" />
     <Content Include="Modules\Posao\services.js" />
+    <Content Include="Modules\Posao\View\prikaz_posla.html" />
     <Content Include="Modules\Posao\View\unos_posla.html" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />

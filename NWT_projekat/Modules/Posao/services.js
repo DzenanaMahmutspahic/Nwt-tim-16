@@ -1,45 +1,49 @@
 ﻿'use strict';
 
 angular.module('Posao')
-.factory('PosaoController',
+.factory('PosaoService',
         function (Base64, $http, $cookieStore, $rootScope, $timeout) {
-            service = {};
-            service.DajPosao = function (callback) {
-                $http.get('/api/Posao/DajPosaoJson/1')
+            var service = {};
+            service.dajPosao = function (posaoId, callback) {
+                $http.get('/api/Posao/DajPosaoJson/' + posaoId)
                .success(function (response) {
                    alert(response);
                    var a = { success: true, data: response };
                    callback(a);
-                })
+               })
                 .error(function (data, status, headers, config) {
                     alert("Login failed");
                 });
             };
             return service;
         }
-    ])
-    /*
+    )
+
 .factory('PosaoService',
     ['Base64', '$http', '$cookieStore', '$rootScope', '$timeout',
     function (Base64, $http, $cookieStore, $rootScope, $timeout) {
         var service = {};
-        service.DodajPosao = function (posaoId, callback) {
-            $http.get('/api/Posao/DajPosaoJson/1')
-               .success(function (response) {
-                   alert(response);
-                   var a = { success: true, data: response };
-                   callback(a);
-               })
+        service.dodajDTP = function (sofpM, sofpC, sofpS, fM, fC, fS, callback) {
+            $http.post('/api/Posao/UnesiDtpJson', {
+                Sofp_materijal: sofpM,
+                Sofp_sati: sofpS,
+                Sofp_cijena: sofpC,
+                Fotografija_materijal: fM,
+                Fotografija_cijena: fC,
+                Fotografija_sati: fS,
+                Korisnik_ID: 1
+            })
+            .success(function (response) {
+                var a = { success: true, data: response };
+                callback(a);
+            })
             .error(function (data, status, headers, config) {
-                alert("Login failed");
+                alert("Postavljanje DTP failed failed");
             }
             );
         };
         return service;
     }])
-
-*/
-
 
 
 

@@ -15,7 +15,7 @@ namespace NWT.Pomocnici
         public static readonly string DAJ_POSAO_ID = "DajPosao_ID";
         public static readonly string DODAJ_POSAO = "UnesiPosao";
         public static readonly string DAJ_ZAVRSENE_POSLOVE = "DajZavrsenePoslove";
-        public static readonly string DODAJ_DTP = "UnesiDTP";
+        public static readonly string DODAJ_DTP = "DodajDTP";
         public static readonly string POTVRDI_REGISTRACIJU = "PotvrdiRegistraciju";
         public static readonly string PROMJENA_LOZINKE = "PromjeniLozinku";
         public static readonly string DAJ_LOGOVE = "DajLogove";

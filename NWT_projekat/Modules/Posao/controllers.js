@@ -1,24 +1,32 @@
 ﻿'use strict';
 
 angular.module('Posao')
-
 .controller('PosaoController',
     ['$scope', '$rootScope', '$location', 'PosaoService',
     function ($scope, $rootScope, $location, PosaoService) {
-        PosSvc = PosaoService;
-        scp = $scope;
-        $scope.dajPosao = dajPosao();
-    }])
-    /*
-.controller('PosaoController',
-    ['$scope', '$rootScope', '$location', 'PosaoService',
-    function ($scope, $rootScope, $location, PosaoService) {
-        $scope.dodajPosao = function () {
+       
+        $scope.dajPosao = function () {
             $scope.dataLoading = true;
             PosaoService.dajPosao(1, function (response) {
-                alert(response);
                 if (response.success) {
-                    $scope.data.posao = response.posao;
+                    $scope['data'] = { posao: response.posao };
+                } else {
+                    $scope.error = response.message;
+                    $scope.errorMessage = $scope.trustAsHtml(response.message);
+                }
+                //$scope.dataLoading = false;
+            })
+        }
+    }])
+    
+.controller('PosaoController',
+    ['$scope', '$rootScope', '$location', 'PosaoService',
+    function ($scope, $rootScope, $location, PosaoService) {
+        $scope.dodajDTP = function () {
+            PosaoService.dodajDTP($scope.t3c1, $scope.t3c2, $scope.t3c4, $scope.t3c5, $scope.t3c6, $scope.t3c7, function (response) {
+                if (response.success) {
+                    $scope['data'] = { posao: { DTP_ID: response.data.DTP_ID } };
+                    $scope.data['DTP'] = response.data;
                 } else {
                     $scope.error = response.message;
                     $scope.errorMessage = $sce.trustAsHtml(response.message);
@@ -26,24 +34,18 @@ angular.module('Posao')
                 //$scope.dataLoading = false;
             })
         };
+        $scope.pokaziDTP = function () {
+            if ($scope.data !== undefined && $scope.data !== null)
+                if ($scope.data.posao !== undefined && $scope.data.posao !== null)
+                    if ($scope.data.posao.DTP_ID !== undefined && $scope.data.posao.DTP_ID !== null)
+                        return $scope.data.posao.DTP_ID == 0;
+            return true;
+        };
     }])
-    */
+    
 
 var PosSvc;
 var scp;
+var rsp;
 
-function dajPosao() {
-    scp.dataLoading = true;
-    PosaoSvc.dajPosao(1, dajPosaoResponse(response, scp))
-}
 
-function dajPosaoResponse(response, sc) {
-    alert(response);
-    if (response.success) {
-        sc.data.posao = response.posao;
-    } else {
-        sc.error = response.message;
-        sc.errorMessage = sc.trustAsHtml(response.message);
-    }
-    //$scope.dataLoading = false;
-}
