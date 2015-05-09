@@ -84,7 +84,8 @@ angular.module('angularTranslateApp', ['pascalprecht.translate'])
         'REGISTER': 'Registruj se',
         'WELCOME': 'Dobrodošli!',
         'LOGOUT': 'Odjavi se',
-        'LOGGED_IN': 'Uspješno ste logovani!'
+        'LOGGED_IN': 'Uspješno ste logovani!',
+        'PromjenaLozinke': 'Promijeni lozinku'
     });
     // register english translation table
     $translateProvider.translations('en_EN', {
@@ -95,17 +96,14 @@ angular.module('angularTranslateApp', ['pascalprecht.translate'])
         'REGISTER': 'Registration',
         'WELCOME': 'Welcome!',
         'LOGOUT': 'Logout',
-        'LOGGED_IN': 'You are logged in!'
+        'LOGGED_IN': 'You are logged in!',
+        'PromjenaLozinke': 'Change password'
     });
     // which language to use?
     $translateProvider.preferredLanguage('bos_BOS');
 });
 
-//app.controller('Ctrl', function ($scope, $translate) {
-//    $scope.changeLanguage = function (key) {
-//        $translate.use(key);
-//    };
-//});
+
 
 angular.module('angularTranslateApp').controller('Ctrl', ['$translate', '$scope', function ($translate, $scope) {
 
@@ -118,3 +116,6 @@ angular.module('angularTranslateApp').controller('Ctrl', ['$translate', '$scope'
           };
 
 }]);
+
+angular.module('myModule', ['ui.bootstrap']);
+

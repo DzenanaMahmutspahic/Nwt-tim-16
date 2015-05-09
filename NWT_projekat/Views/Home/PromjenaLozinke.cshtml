@@ -2,9 +2,22 @@
     Layout = null;
 }
 
-<!DOCTYPE html>
 
-<html>
+<section class="featured">
+    <div class="content-wrapper">
+        <hgroup class="title">
+            <h1>Online kopirnica</h1>
+          
+        </hgroup>   
+        <link rel="stylesheet" href="Content/Site.css" />
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+    </div>
+</section>
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>PromjenaLozinke</title>
@@ -21,16 +34,44 @@
 
     </script>
 </head>
-<body>
+
+
+<body class="ng-scope" ng-app="angularTranslateApp">
     <div>
         <span id="tekstGreske" class="error"></span>
         <form id="Forma1" action="~/api/Account/PromjenaLozinke" method="post">
             <input type="hidden" name="id" value="@ViewBag.Id" />
             <input type="hidden" name="guid" value="@ViewBag.Guid" />
-            <input type="password" name="novaLozinka" id="lozinka1" />
-            <input type="password" id="lozinka2" />
-            <button type="button" onclick="submitForm()">Promijeni lozinku</button>
+            <div style="width:200px;">
+                <input type="password" name="novaLozinka" id="lozinka1" ng-model="dynamicPopover.content" class="form-control" />
+                <br />
+                <input type="password" id="lozinka2" ng-model="dynamicPopover.content" class="form-control" />
+                <br />
+                <button type="button" onclick="submitForm()" class="btn btn-primary" ng-model="singleModel" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
+                    {{ 'PromjenaLozinke' | translate }}
+                </button>
+            </div> 
+            @*<button type="button" onclick="submitForm()">{{ 'PromjenaLozinke' | translate }}</button>*@
+           
+
+            
+
+
         </form>
+
+        <script src="../../../Scripts/angular-translate.js"></script>
+        <script src="../../../Scripts/angular.js"></script>
+        <script src="../../../Scripts/app.js"></script>
+        <script src="../../../Scripts/angular-translate.min.js"></script>
+        <script src="~/Scripts/angular-translate-loader-url.min.js"></script>
+        <script src="~/Scripts/bootstrap.js"></script>
+        <div ng-controller="Ctrl" class="ng-scope">
+            <button class="btn ng-scope" ng-click="changeLanguage('bos_BOS')" translate="BUTTON_BOS">Bosanski</button>
+            <button class="btn ng-scope" ng-click="changeLanguage('en_EN')" translate="BUTTON_EN">Engleski</button>
+        </div>
+
+
+        
 
     </div>
 </body>
