@@ -18,7 +18,7 @@ angular.module('Posao')
             })
         }
     }])
-    
+
 .controller('PosaoController',
     ['$scope', '$rootScope', '$location', 'PosaoService',
     function ($scope, $rootScope, $location, PosaoService) {
@@ -42,10 +42,27 @@ angular.module('Posao')
             return true;
         };
     }])
-    
 
-var PosSvc;
-var scp;
-var rsp;
-
-
+.controller('PosaoController',
+    ['$scope', '$rootScope', '$location', 'PosaoService',
+    function ($scope, $rootScope, $location, PosaoService) {
+        $scope.dodajMontazu = function () {
+            PosaoService.dodajMontazu($scope.t4c1, $scope.t4c2, $scope.t4c4, $scope.t4c5, $scope.t4c7, function (response) {
+                if (response.success) {
+                    $scope['data'] = { posao: { Montaza_ID: response.data.DTP_ID } };
+                    $scope.data['Montaza'] = response.data;
+                } else {
+                    $scope.error = response.message;
+                    $scope.errorMessage = $sce.trustAsHtml(response.message);
+                }
+                //$scope.dataLoading = false;
+            })
+        };
+        $scope.pokaziMontaza = function () {
+            if ($scope.data !== undefined && $scope.data !== null)
+                if ($scope.data.posao !== undefined && $scope.data.posao !== null)
+                    if ($scope.data.posao.Montaza_ID !== undefined && $scope.data.posao.Montaza_ID !== null)
+                        return $scope.data.posao.Montaza_ID == 0;
+            return true;
+        };
+    }])

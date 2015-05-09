@@ -23,14 +23,13 @@ angular.module('Posao')
     ['Base64', '$http', '$cookieStore', '$rootScope', '$timeout',
     function (Base64, $http, $cookieStore, $rootScope, $timeout) {
         var service = {};
-        service.dodajDTP = function (sofpM, sofpC, sofpS, fM, fC, fS, callback) {
-            $http.post('/api/Posao/UnesiDtpJson', {
-                Sofp_materijal: sofpM,
-                Sofp_sati: sofpS,
-                Sofp_cijena: sofpC,
-                Fotografija_materijal: fM,
-                Fotografija_cijena: fC,
-                Fotografija_sati: fS,
+        service.dodajMontazu = function (sM, sC, sS, mM, mS, callback) {
+            $http.post('/api/Posao/UnesiMontazuJson', {
+                Snimanje_materijal: sM,
+                Snimanje_sati: sC,
+                Snimanje_cijena: sS,
+                Montaza_materijal: mM,
+                Montaza_sati: mS,
                 Korisnik_ID: 1
             })
             .success(function (response) {
@@ -38,7 +37,7 @@ angular.module('Posao')
                 callback(a);
             })
             .error(function (data, status, headers, config) {
-                alert("Postavljanje DTP failed failed");
+                alert("Postavljanje Montaze failed failed");
             }
             );
         };

@@ -110,7 +110,7 @@ namespace NWT_projekat.Controllers
             }
             return new HttpResponseMessage()
             {
-                Content = new JsonContent("{greska:'Greska u izvrsavanju servisa!'}")
+                Content = new JsonContent("{\"greska\":\"Greska u izvrsavanju servisa!\"}")
             };
         }
 
@@ -141,12 +141,15 @@ namespace NWT_projekat.Controllers
             }
             return new HttpResponseMessage()
             {
-                Content = new JsonContent("{greska:'Greska u izvrsavanju servisa!'}")
+                Content = new JsonContent("{\"greska\":\"Greska u izvrsavanju servisa!\"}")
             };
         }
 
+        /// <summary>
+        /// Servis za dobavljanje završenih poslova
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        //[Description("Servis za dobavljanje završenih poslova")]
         public List<Posao> DajZavrsenePoslove()
         {
             var q = _dbPomocnik.IzvrsiProceduru<Posao, Posao>(Konstante.DAJ_ZAVRSENE_POSLOVE, null);
@@ -154,8 +157,11 @@ namespace NWT_projekat.Controllers
 
         }
 
+        /// <summary>
+        /// Servis za dobavljanje završenih poslova
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        //[Description("Servis za dobavljanje završenih poslova")]
         public System.Net.Http.HttpResponseMessage DajZavrsenePosloveJson()
         {
             try
@@ -173,14 +179,17 @@ namespace NWT_projekat.Controllers
             }
             return new HttpResponseMessage()
             {
-                Content = new JsonContent("{greska:'Greska u izvrsavanju servisa!'}")
+                Content = new JsonContent("{\"greska\":\"Greska u izvrsavanju servisa!\"}")
             };
         }
 
-
+        /// <summary>
+        /// Servis za unos montaze
+        /// </summary>
+        /// <param name="m"></param>
+        /// <returns></returns>
         [System.Web.Http.HttpPost]
-        //[Description("Servis za unos montaze")]
-        public System.Net.Http.HttpResponseMessage UnesiMontazu(Montaza m)
+        public System.Net.Http.HttpResponseMessage UnesiMontazuJson(Montaza m)
         {
             try
             {
@@ -197,13 +206,17 @@ namespace NWT_projekat.Controllers
             }
             return new HttpResponseMessage()
             {
-                Content = new JsonContent("{greska:'Greska u izvrsavanju servisa!'}")
+                Content = new JsonContent("{\"greska\":\"Greska u izvrsavanju servisa!\"}")
             };
         }
 
+        /// <summary>
+        /// Servis za unos repromaterijala
+        /// </summary>
+        /// <param name="r"></param>
+        /// <returns></returns>
         [System.Web.Http.HttpPost]
-        //[Description("Servis za unos repromaterijala")]
-        public System.Net.Http.HttpResponseMessage UnesiRepromaterijal(Repromaterijal r)
+        public System.Net.Http.HttpResponseMessage UnesiRepromaterijalJson(Repromaterijal r)
         {
             try
             {
@@ -220,14 +233,17 @@ namespace NWT_projekat.Controllers
             }
             return new HttpResponseMessage()
             {
-                Content = new JsonContent("{greska:'Greska u izvrsavanju servisa!'}")
+                Content = new JsonContent("{\"greska\":\"Greska u izvrsavanju servisa!\"}")
             };
         }
 
-
+        /// <summary>
+        /// Servis za unos knjigovodstvene dorade
+        /// </summary>
+        /// <param name="k"></param>
+        /// <returns></returns>
         [System.Web.Http.HttpPost]
-        //[Description("Servis za unos knjigovodstvene dorade")]
-        public System.Net.Http.HttpResponseMessage UnesiKnjigovodstvenuDoradu(Knjigovodstvena_dorada k)
+        public System.Net.Http.HttpResponseMessage UnesiKnjigovodstvenuDoraduJson(Knjigovodstvena_dorada k)
         {
             try
             {
@@ -244,13 +260,17 @@ namespace NWT_projekat.Controllers
             }
             return new HttpResponseMessage()
             {
-                Content = new JsonContent("{greska:'Greska u izvrsavanju servisa!'}")
+                Content = new JsonContent("{\"greska\":\"Greska u izvrsavanju servisa!\"}")
             };
         }
 
+        /// <summary>
+        /// Servis za unos rucnog rada
+        /// </summary>
+        /// <param name="r"></param>
+        /// <returns></returns>
         [System.Web.Http.HttpPost]
-        //[Description("Servis za unos rucnog rada")]
-        public System.Net.Http.HttpResponseMessage UnesiRucniRad(Rucni_rad r)
+        public System.Net.Http.HttpResponseMessage UnesiRucniRadJson(Rucni_rad r)
         {
             try
             {
@@ -267,13 +287,17 @@ namespace NWT_projekat.Controllers
             }
             return new HttpResponseMessage()
             {
-                Content = new JsonContent("{greska:'Greska u izvrsavanju servisa!'}")
+                Content = new JsonContent("{\"greska\":\"Greska u izvrsavanju servisa!\"}")
             };
         }
 
+        /// <summary>
+        /// Servis za unos stampe
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
         [System.Web.Http.HttpPost]
-        //[Description("Servis za unos stampe")]
-        public System.Net.Http.HttpResponseMessage UnesiStampu(Stampa s)
+        public System.Net.Http.HttpResponseMessage UnesiStampuJson(Stampa s)
         {
             try
             {
@@ -290,13 +314,17 @@ namespace NWT_projekat.Controllers
             }
             return new HttpResponseMessage()
             {
-                Content = new JsonContent("{greska:'Greska u izvrsavanju servisa!'}")
+                Content = new JsonContent("{\"greska\":\"Greska u izvrsavanju servisa!\"}")
             };
         }
 
+        /// <summary>
+        /// Servis za unos vanjske usluge
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
         [System.Web.Http.HttpPost]
-        //[Description("Servis za unos vanjske usluge")]
-        public System.Net.Http.HttpResponseMessage UnesiVanjskuUslugu(Vanjska_usluga v)
+        public System.Net.Http.HttpResponseMessage UnesiVanjskuUsluguJson(Vanjska_usluga v)
         {
             try
             {
@@ -313,12 +341,16 @@ namespace NWT_projekat.Controllers
             }
             return new HttpResponseMessage()
             {
-                Content = new JsonContent("{greska:'Greska u izvrsavanju servisa!'}")
+                Content = new JsonContent("{\"greska\":\"Greska u izvrsavanju servisa!\"}")
             };
         }
 
+        /// <summary>
+        /// Servis za unos DTP
+        /// </summary>
+        /// <param name="dtp"></param>
+        /// <returns></returns>
         [System.Web.Http.HttpPost]
-        //[Description("Servis za unos DTP")]
         public System.Net.Http.HttpResponseMessage UnesiDtpJson(DTP dtp)
         {
             try
@@ -336,7 +368,7 @@ namespace NWT_projekat.Controllers
             }
             return new HttpResponseMessage()
             {
-                Content = new JsonContent("{greska:'Greska u izvrsavanju servisa!'}")
+                Content = new JsonContent("{\"greska\":\"Greska u izvrsavanju servisa!\"}")
             };
         }
 

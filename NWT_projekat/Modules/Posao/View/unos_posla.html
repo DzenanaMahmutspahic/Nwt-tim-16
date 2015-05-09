@@ -186,7 +186,7 @@
             <br />
             <a href="javascript:pokaziSakrij('T1')"><span id="T1s">+</span> 1.DTP</a>
             <div id="T1" class="placeholder">
-                <form name="form" ng-submit="dodajDTP()" role="form" style="float:left">
+                <form name="form_DTP" ng-submit="dodajDTP()" role="form" style="float:left">
                     <table width="990" class="table table-striped" id="T1">
                         <tr>
                             <th>1.DTP</th>
@@ -246,38 +246,44 @@
             <br />
             <a href="javascript:pokaziSakrij('T2')"><span id="T2s">+</span> 2.MONTAŽA</a>
             <div id="T2" class="placeholder">
-                <table width="990" class="table table-striped">
-                    <tr>
-                        <th>2.MONTAZA</th>
-                        <th>&nbsp</th>
-                        <th>Sati rada</th>
-                        <th>Ukupno</th>
-                    </tr>
-                    <tr>
-                        <td>  Snimanje i obrada ploča 12 na sat</td>
-                        <td><input type="text" name="t4c1" style="width:100%" /></td>
-                        <td><input type="text" name="t4c2" style="width:100%" /></td>
-                        <td align="right"><input type="text" name="t4c4" style="width:80%" />KM</td>
-                    </tr>
-                    <tr>
-                        <td>  Montaža</td>
-                        <td><input type="text" name="t3c5" style="width:100%" /></td>
-                        <td><input type="text" name="t3c6" style="width:100%" value="Minuta=stranica" /></td>
-                        <td align="right"><input type="text" name="t3c7" style="width:80%" />KM</td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" name="t3c8" style="width:100%" /></td>
-                        <td><input type="text" name="t3c8" style="width:100%" /></td>
-                        <td><input type="text" name="t3c9" style="width:100%" /></td>
-                        <td><input type="text" name="t3c10" style="width:100%" /></td>
-                    </tr>
-                    <tr>
-                        <td>UKUPNO MONTAŽA</td>
-                        <td><input type="text" name="t3c8" style="width:100%" /></td>
-                        <td><input type="text" name="t3c9" style="width:100%" /></td>
-                        <td><input type="text" name="t3c10" style="width:100%" /></td>
-                    </tr>
-                </table>
+                <form name="form" ng-submit="dodajMontaza()" role="form" style="float:left">
+                    <table class="help-page-table">
+                        <tr>
+                            <th>2.MONTAZA</th>
+                            <th>&nbsp;</th>
+                            <th>Sati rada</th>
+                            <th>Ukupno</th>
+                        </tr>
+                        <tr>
+                            <td>  Snimanje i obrada ploča 12 na sat</td>
+                            <td><input type="text" name="t4c1" ng-model="t4c1" style="width:100%" /></td>
+                            <td><input type="text" name="t4c2" ng-model="t4c2" style="width:100%" /></td>
+                            <td align="right"><input type="text" name="t4c4" ng-model="t4c4" style="width:80%" />KM</td>
+                        </tr>
+                        <tr>
+                            <td>  Montaža</td>
+                            <td><input type="text" name="t4c5" ng-model="t4c5" style="width:100%" /></td>
+                            <td><input type="text" name="t4c6" ng-model="t4c6" style="width:100%" value="Minuta=stranica" /></td>
+                            <td align="right"><input type="text" name="t4c7" ng-model="t4c7" style="width:80%" />KM</td>
+                        </tr>
+                        <tr>
+                            <td><input type="text" name="t3c8" style="width:100%" /></td>
+                            <td><input type="text" name="t3c8" style="width:100%" /></td>
+                            <td><input type="text" name="t3c9" style="width:100%" /></td>
+                            <td><input type="text" name="t3c10" style="width:100%" /></td>
+                        </tr>
+                        <tr>
+                            <td>UKUPNO MONTAŽA</td>
+                            <td><input type="text" name="t3c8" style="width:100%" /></td>
+                            <td><input type="text" name="t3c9" style="width:100%" /></td>
+                            <td><input type="text" name="t3c10" style="width:100%" /></td>
+                        </tr>
+                    </table>
+                    <div style="float:right;">
+                        <button ng-show="pokaziMontaza()" type="submit" class="btn btn-success">Dodaj Montažu</button>
+                    </div>
+                    <input type="hidden" name="DTP_ID" ng-model="DTP_ID" value="{{data.posao.DTP_ID}}" />
+                </form>
             </div>
             <br />
             <a href="javascript:pokaziSakrij('T3')"><span id="T3s">+</span> 3.ŠTAMPA</a>
