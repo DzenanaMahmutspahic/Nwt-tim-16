@@ -3,11 +3,18 @@
 <head>
     <title>Welcome</title>    
     <script></script>
+    <script src="../../../Scripts/angular-translate.js"></script>
+    <script src="../../../Scripts/angular.js"></script>
+    <script src="../../../Scripts/app.js"></script>
+    <script src="../../../Scripts/angular-translate.min.js"></script>
+    <script src="/js/angular-translate-loader-url.min.js"></script>
 </head>
 
-<body>
+<body class="ng-scope" ng-app="angularTranslateApp">
     <h1>Dobrodošli!</h1>
+    <h1>{{ 'WELCOME' | translate }}</h1>
     <p>You're logged in!!</p>
+    <p>{{ 'LOGGED_IN' | translate }}</p>
     <p><a href="#/posao">Posao</a></a></p>
     <p><a href="#/login">Logout</a></a></p>
 </body>

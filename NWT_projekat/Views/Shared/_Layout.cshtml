@@ -16,14 +16,21 @@
         window.appInsights=appInsights;
         appInsights.trackPageView();
     </script>
+
+    <script src="../../../Scripts/angular-translate.js"></script>
+    <script src="../../../Scripts/angular.js"></script>
+    <script src="../../../Scripts/app.js"></script>
+    <script src="../../../Scripts/angular-translate.min.js"></script>
+    <script src="/js/angular-translate-loader-url.min.js"></script>
     <meta name="description" content="The description of my page" />
 </head>
-<body>
+<body class="ng-scope" ng-app="angularTranslateApp">
     <header>
         <div class="content-wrapper">
             <div class="float-left">
                 <p class="site-title">
-                    <a href="~/">Online kopirnica</a></p>
+                    <a href="~/">Online kopirnica</a>
+                </p>
             </div>
             <div class="float-right">
                 <nav>
@@ -31,9 +38,9 @@
                         <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
                         <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
 
-                        <li> <a href="~/index.html">Login</a> </li>
+                        <li> <a href="~/index.html">{{ 'LOGIN' | translate }}  </a> </li>
 
-                        <li><a href="~/index.html#/registration">Registration</a></li> 
+                        <li><a href="~/index.html#/registration">{{ 'REGISTER' | translate }} </a></li>
                     </ul>
                 </nav>
             </div>
