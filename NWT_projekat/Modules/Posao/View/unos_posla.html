@@ -14,10 +14,10 @@
             border: 1px solid black;
         }
 
-        table.troskovi {
-            border: 1px solid black;
-            right: 5px;
-        }
+            table.troskovi {
+                border: 1px solid black;
+                right: 5px;
+            }
 
         span {
             font-size: 23px;
@@ -25,7 +25,7 @@
 
         .placeholder {
             display: none;
-            width:100%;
+            width: 100%;
         }
     </style>
 
@@ -184,7 +184,7 @@
                 </tr>
             </table>
             <br />
-            <a href="javascript:pokaziSakrij('T1')"><span id="T1s">+</span> 1.DTP</a>
+            <a href="javascript:pokaziSakrij('T1')"><span id="T1s">+</span> 1. DTP</a>
             <div id="T1" class="placeholder">
                 <form name="form_DTP" ng-submit="dodajDTP()" role="form" style="float:left">
                     <table width="990" class="table table-striped" id="T1">
@@ -241,12 +241,11 @@
                         <button ng-show="pokaziDTP()" type="submit" class="btn btn-danger">Dodaj DTP</button>
                     </div>
                 </form>
-                <input type="hidden" name="DTP_ID" ng-model="DTP_ID" value="{{data.posao.DTP_ID}}" />
             </div>
             <br />
-            <a href="javascript:pokaziSakrij('T2')"><span id="T2s">+</span> 2.MONTAŽA</a>
+            <a href="javascript:pokaziSakrij('T2')"><span id="T2s">+</span> 2. MONTAŽA</a>
             <div id="T2" class="placeholder">
-                <form name="form" ng-submit="dodajMontaza()" role="form" style="float:left">
+                <form name="form_montaza" ng-submit="dodajMontazu()" role="form" style="float:left">
                     <table class="help-page-table">
                         <tr>
                             <th>2.MONTAZA</th>
@@ -256,37 +255,57 @@
                         </tr>
                         <tr>
                             <td>  Snimanje i obrada ploča 12 na sat</td>
-                            <td><input type="text" name="t4c1" ng-model="t4c1" style="width:100%" /></td>
-                            <td><input type="text" name="t4c2" ng-model="t4c2" style="width:100%" /></td>
-                            <td align="right"><input type="text" name="t4c4" ng-model="t4c4" style="width:80%" />KM</td>
+                            <td>
+                                <input ng-show="pokaziMontaza()" type="text" name="t4c1" ng-model="t4c1" style="width:100%" />
+                                <span>{{data.Montaza.Snimanje_materijal}}</span>
+                            </td>
+                            <td>
+                                <input ng-show="pokaziMontaza()" type="text" name="t4c2" ng-model="t4c2" style="width:100%" />
+                                <span>{{data.Montaza.Snimanje_sati}}</span>
+                            </td>
+                            <td align="right">
+                                <input ng-show="pokaziMontaza()" type="text" name="t4c4" ng-model="t4c4" style="width:80%" />
+                                <span>{{data.Montaza.Snimanje_cijena}}</span>KM
+                            </td>
                         </tr>
                         <tr>
                             <td>  Montaža</td>
-                            <td><input type="text" name="t4c5" ng-model="t4c5" style="width:100%" /></td>
-                            <td><input type="text" name="t4c6" ng-model="t4c6" style="width:100%" value="Minuta=stranica" /></td>
-                            <td align="right"><input type="text" name="t4c7" ng-model="t4c7" style="width:80%" />KM</td>
+                            <td>
+                                <input ng-show="pokaziMontaza()" type="text" name="t4c5" ng-model="t4c5" style="width:100%" />
+                                <span>{{data.Montaza.Montaza_materijal}}</span>
+                            </td>
+                            <td>
+                                <input ng-show="pokaziMontaza()" type="text" name="t4c6" ng-model="t4c6" style="width:100%" value="Minuta=stranica" />
+                                <span>{{data.Montaza.Montaza_sati}}</span>
+                            </td>
+                            <td align="right">
+                                <input ng-show="pokaziMontaza()" type="text" name="t4c7" ng-model="t4c7" style="width:80%" />
+                                <span>{{data.Montaza.Montaza_cijena}}</span>KM
+                            </td>
                         </tr>
                         <tr>
-                            <td><input type="text" name="t3c8" style="width:100%" /></td>
-                            <td><input type="text" name="t3c8" style="width:100%" /></td>
-                            <td><input type="text" name="t3c9" style="width:100%" /></td>
-                            <td><input type="text" name="t3c10" style="width:100%" /></td>
+                            <td><input ng-show="pokaziMontaza()" type="text" name="t3c8" style="width:100%" /></td>
+                            <td><input ng-show="pokaziMontaza()" type="text" name="t3c8" style="width:100%" /></td>
+                            <td><input ng-show="pokaziMontaza()" type="text" name="t3c9" style="width:100%" /></td>
+                            <td><input ng-show="pokaziMontaza()" type="text" name="t3c10" style="width:100%" /></td>
                         </tr>
                         <tr>
                             <td>UKUPNO MONTAŽA</td>
-                            <td><input type="text" name="t3c8" style="width:100%" /></td>
-                            <td><input type="text" name="t3c9" style="width:100%" /></td>
-                            <td><input type="text" name="t3c10" style="width:100%" /></td>
+                            <td><span>{{}}</span></td>
+                            <td><span>{{data.Montaza.Snimanje_sati + data.Montaza.Montaza_sati}}</span></td>
+                            <td>
+                                <input ng-show="pokaziMontaza()" type="text" name="t3c10" style="width:100%" />
+                                <span>{{data.Montaza.Snimanje_cijena + data.Montaza.Montaza_cijena}}</span>KM
+                            </td>
                         </tr>
                     </table>
                     <div style="float:right;">
                         <button ng-show="pokaziMontaza()" type="submit" class="btn btn-success">Dodaj Montažu</button>
                     </div>
-                    <input type="hidden" name="DTP_ID" ng-model="DTP_ID" value="{{data.posao.DTP_ID}}" />
                 </form>
             </div>
             <br />
-            <a href="javascript:pokaziSakrij('T3')"><span id="T3s">+</span> 3.ŠTAMPA</a>
+            <a href="javascript:pokaziSakrij('T3')"><span id="T3s">+</span> 3. ŠTAMPA</a>
             <div id="T3" class="placeholder">
                 <table width="990" class="table table-striped">
                     <tr>
@@ -578,9 +597,13 @@
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <div style="float:right;">
-                            <button type="submit" ng-disabled="form.$invalid || dataLoading" class="btn btn-danger">Spasi formular</button>
-                        </div>
+                        <form>
+                            <input type="hidden" name="DTP_ID" ng-model="DTP_ID" value="{{data.posao.DTP_ID}}" />
+                            <input type="hidden" name="Montaza_ID" ng-model="Montaza_ID" value="{{data.Montaza.ID}}" /> />
+                            <div style="float:right;">
+                                <button type="submit" ng-disabled="form.$invalid || dataLoading" class="btn btn-danger">Spasi formular</button>
+                            </div>
+                        </form>
                     </td>
                 </tr>
             </table>

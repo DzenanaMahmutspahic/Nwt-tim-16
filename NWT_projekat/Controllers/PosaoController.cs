@@ -110,7 +110,7 @@ namespace NWT_projekat.Controllers
             }
             return new HttpResponseMessage()
             {
-                Content = new JsonContent("{\"greska\":\"Greska u izvrsavanju servisa!\"}")
+                Content = new JsonContent("{\"message\":\"Greska u izvrsavanju servisa!\"}")
             };
         }
 
@@ -141,7 +141,7 @@ namespace NWT_projekat.Controllers
             }
             return new HttpResponseMessage()
             {
-                Content = new JsonContent("{\"greska\":\"Greska u izvrsavanju servisa!\"}")
+                Content = new JsonContent("{\"message\":\"Greska u izvrsavanju servisa!\"}")
             };
         }
 
@@ -179,7 +179,7 @@ namespace NWT_projekat.Controllers
             }
             return new HttpResponseMessage()
             {
-                Content = new JsonContent("{\"greska\":\"Greska u izvrsavanju servisa!\"}")
+                Content = new JsonContent("{\"message\":\"Greska u izvrsavanju servisa!\"}")
             };
         }
 
@@ -195,9 +195,17 @@ namespace NWT_projekat.Controllers
             {
                 var q = _dbPomocnik.IzvrsiProceduru<Montaza, Montaza>(Konstante.DODAJ_MONTAZU, m).FirstOrDefault();
 
+                if(q != null && q.ID != 0)
+                {
+                    m.ID = q.ID;
+                    return new HttpResponseMessage()
+                    {
+                        Content = new JsonContent(m)
+                    };
+                }
                 return new HttpResponseMessage()
                 {
-                    Content = new JsonContent(q)
+                    Content = new JsonContent(@"{'message':'Greška u dodavanju Montaže.'}")
                 };
             }
             catch(Exception ex)
@@ -206,7 +214,7 @@ namespace NWT_projekat.Controllers
             }
             return new HttpResponseMessage()
             {
-                Content = new JsonContent("{\"greska\":\"Greska u izvrsavanju servisa!\"}")
+                Content = new JsonContent("{\"message\":\"Greska u izvrsavanju servisa!\"}")
             };
         }
 
@@ -233,7 +241,7 @@ namespace NWT_projekat.Controllers
             }
             return new HttpResponseMessage()
             {
-                Content = new JsonContent("{\"greska\":\"Greska u izvrsavanju servisa!\"}")
+                Content = new JsonContent("{\"message\":\"Greska u izvrsavanju servisa!\"}")
             };
         }
 
@@ -260,7 +268,7 @@ namespace NWT_projekat.Controllers
             }
             return new HttpResponseMessage()
             {
-                Content = new JsonContent("{\"greska\":\"Greska u izvrsavanju servisa!\"}")
+                Content = new JsonContent("{\"message\":\"Greska u izvrsavanju servisa!\"}")
             };
         }
 
@@ -287,7 +295,7 @@ namespace NWT_projekat.Controllers
             }
             return new HttpResponseMessage()
             {
-                Content = new JsonContent("{\"greska\":\"Greska u izvrsavanju servisa!\"}")
+                Content = new JsonContent("{\"message\":\"Greska u izvrsavanju servisa!\"}")
             };
         }
 
@@ -314,7 +322,7 @@ namespace NWT_projekat.Controllers
             }
             return new HttpResponseMessage()
             {
-                Content = new JsonContent("{\"greska\":\"Greska u izvrsavanju servisa!\"}")
+                Content = new JsonContent("{\"message\":\"Greska u izvrsavanju servisa!\"}")
             };
         }
 
@@ -341,7 +349,7 @@ namespace NWT_projekat.Controllers
             }
             return new HttpResponseMessage()
             {
-                Content = new JsonContent("{\"greska\":\"Greska u izvrsavanju servisa!\"}")
+                Content = new JsonContent("{\"message\":\"Greska u izvrsavanju servisa!\"}")
             };
         }
 
@@ -368,7 +376,7 @@ namespace NWT_projekat.Controllers
             }
             return new HttpResponseMessage()
             {
-                Content = new JsonContent("{\"greska\":\"Greska u izvrsavanju servisa!\"}")
+                Content = new JsonContent("{\"message\":\"Greska u izvrsavanju servisa!\"}")
             };
         }
 
