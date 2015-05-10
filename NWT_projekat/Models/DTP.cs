@@ -7,14 +7,21 @@ namespace NWT_projekat.Models
 {
     public class DTP
     {
+        public DTP()
+        {
+            Vrijeme_cekanja = DateTime.Now;
+            Vrijeme_pocetka = DateTime.Now;
+            Vrijeme_zavrsetka = DateTime.Now;
+        }
+
         public int DTP_ID { get; set; }
         public int Korisnik_ID { get; set; }
         public string Sofp_materijal { get; set; }
         public decimal Sofp_sati { get; set; }
         public decimal Sofp_cijena { get; set; }
         public string Fotografija_materijal { get; set; }
-        public decimal Fotografija_sati { get; set; }
         public decimal Fotografija_cijena { get; set; }
+        public decimal Fotografija_sati { get; set; }
         public decimal Ukupno_sati { get; set; }
         public decimal Ukupno_cijena { get; set; }
         public int Status_DTP { get; set; }

@@ -120,7 +120,8 @@ namespace NWT_projekat.Controllers
                 {"Username", korisnik.Username},
                 {"Password", KriptoPomocnik.GetMd5Hash(korisnik.Password)}
             };
-                return _dbPomocnik.IzvrsiProceduru(Konstante.DAJ_KORISNIKA_UNAME_PASS, parametri).Rows.Count == 1;
+                var redovi = _dbPomocnik.IzvrsiProceduru(Konstante.DAJ_KORISNIKA_UNAME_PASS, parametri).Rows;
+                return redovi.Count == 1;
             }
             catch(Exception ex)
             {
@@ -144,7 +145,7 @@ namespace NWT_projekat.Controllers
         {
             var parametri = new Dictionary<string, object>{
                 {"Username", korisnik.Username},
-                {"Password", KriptoPomocnik.GetMd5Hash( korisnik.Password)},
+                {"Password", korisnik.Password},
                 {"Ime", korisnik.Ime},
                 {"Prezime", korisnik.Prezime},
                 {"Email", korisnik.Email},
@@ -180,7 +181,7 @@ namespace NWT_projekat.Controllers
             Guid tmpGuid = Guid.NewGuid();
             var parametri = new Dictionary<string, object>{
                 {"Username", korisnik.Username},
-                {"Password", KriptoPomocnik.GetMd5Hash( korisnik.Password)},
+                {"Password", korisnik.Password},
                 {"Ime", korisnik.Ime},
                 {"Prezime", korisnik.Prezime},
                 {"Email", korisnik.Email},
@@ -307,7 +308,7 @@ namespace NWT_projekat.Controllers
                 };
                 var noviKorisnik = _dbPomocnik.IzvrsiProceduru<Korisnik>(Konstante.DAJ_KORISNIKA_EMAIL, parametri);
 
-                if(noviKorisnik != null && noviKorisnik.ID != 0 && !string.IsNullOrEmpty(noviKorisnik.Email))
+                if(noviKorisnik != null && noviKorisnik.ID  != 0 && !string.IsNullOrEmpty(noviKorisnik.Email))
                 {
                     Guid noviGuid = Guid.NewGuid();
                     parametri = new Dictionary<string, object> { 
@@ -338,7 +339,7 @@ namespace NWT_projekat.Controllers
                     }
                 }
                 var response = new HttpResponseMessage();
-                if(noviKorisnik.ID != 0)
+                if(noviKorisnik.ID != 0)                
                 {
                     response.Content = new JsonContent(true);
                 }
@@ -385,15 +386,14 @@ namespace NWT_projekat.Controllers
                 };
                 var tmp = _dbPomocnik.IzvrsiProceduru(Konstante.PROMJENI_LOZINKU, parametri);
 
-                try
-                {
+                try {
                     string poruka = tmp.Rows[0]["Greska"].ToString();
                     _zapisnik.Zapisi(poruka, 2);
                 }
                 catch { /* Nothing to see here. Move along!*/ }
 
                 var response = Request.CreateResponse(HttpStatusCode.Moved);
-                response.Headers.Location = new Uri("index.html", UriKind.Relative);
+                response.Headers.Location = new Uri("index.html", UriKind.RelativeOrAbsolute);
                 return response;
             }
             catch(Exception ex)

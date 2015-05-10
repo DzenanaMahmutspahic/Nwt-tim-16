@@ -292,6 +292,7 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Content\ui-bootstrap-csp.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -316,6 +317,9 @@
     <Content Include="Modules\Authentication\Views\ResetPassword.html" />
     <Content Include="Modules\Home\controllers.js" />
     <Content Include="Modules\Home\Views\home.html" />
+    <Content Include="Modules\Posao\controllers.js" />
+    <Content Include="Modules\Posao\services.js" />
+    <Content Include="Modules\Posao\View\prikaz_posla.html" />
     <Content Include="Modules\Posao\View\unos_posla.html" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
@@ -338,6 +342,10 @@
     <Content Include="Scripts\angular-scenario.js" />
     <Content Include="Scripts\angular-touch.js" />
     <Content Include="Scripts\angular-touch.min.js" />
+    <Content Include="Scripts\angular-translate-loader-url.js" />
+    <Content Include="Scripts\angular-translate-loader-url.min.js" />
+    <Content Include="Scripts\angular-translate.js" />
+    <Content Include="Scripts\angular-translate.min.js" />
     <Content Include="Scripts\angular.js" />
     <Content Include="Scripts\angular.min.js" />
     <Content Include="Scripts\app.js" />
