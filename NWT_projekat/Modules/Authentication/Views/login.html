@@ -2,8 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 
-<body>
-   
+
+<body class="ng-scope" ng-app="angularTranslateApp">
+
+    <script src="../../../Scripts/angular-translate.js"></script>
+    <script src="../../../Scripts/angular.js"></script>
+    <script src="../../../Scripts/app.js"></script>
+    <script src="../../../Scripts/angular-translate.min.js"></script>
+    <script src="../../../Scripts/angular-translate-loader-url.js"></script>
+    <script src="../../../Scripts/angular-translate-loader-url.min.js"></script>
+
     <form name="form" ng-submit="login()" role="form">
         <div class="form-group">
             <label id="error" ng-if="error" style="float:right;color:red;">Pogrešni login podaci</label>
@@ -21,8 +29,13 @@
         <div class="form-actions">
             <button type="submit" ng-disabled="form.$invalid || dataLoading" class="btn btn-danger">Login</button>
             <img ng-if="dataLoading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-           <br /><br /> <a href="index.html#/resetPassword">Zaboravili ste šifru?</a>     
+            <br /><br /> <a href="index.html#/resetPassword">Zaboravili ste šifru?</a>
+
+         
+    
+           
         </div>
-    </form>
+    </form>    
+
 </body>
 </html>

@@ -1,5 +1,6 @@
 ﻿using NWT.Pomocnici;
 using NWT_projekat.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -8,11 +9,14 @@ using System.Web.Http;
 
 namespace NWT_projekat.Controllers
 {
-    public class PosaoController: ApiController {
+    public class PosaoController: ApiController
+    {
 
         #region *** Fields ***
 
         private readonly DbPomocnik _dbPomocnik = null;
+
+        private readonly Zapisnik _zapisnik = null;
 
         #endregion
 
@@ -21,8 +25,10 @@ namespace NWT_projekat.Controllers
         /// <summary>
         /// Kreira novu instancu klase <see cref="PosaoController"/>
         /// </summary>
-        public PosaoController() {
+        public PosaoController()
+        {
             _dbPomocnik = new DbPomocnik();
+            _zapisnik = new Zapisnik(_dbPomocnik);
         }
 
         #endregion
@@ -39,7 +45,8 @@ namespace NWT_projekat.Controllers
         /// <returns>Objekat sa podacima o poslu ili null ako posao nije nađen</returns>
         [HttpGet]
         //[Description("Servis za dobavljanje posla po ID")]
-        public Posao DajPosao(int ID) {
+        public Posao DajPosao(int ID)
+        {
             var parametri = new Dictionary<string, object>{
                 {"ID", ID}
             };
@@ -83,123 +90,293 @@ namespace NWT_projekat.Controllers
         /// <param name="ID"></param>
         /// <returns></returns>
         [HttpGet]
-        public System.Net.Http.HttpResponseMessage DajPosaoJson(int ID) {
-            var parametri = new Dictionary<string, object>{
+        public System.Net.Http.HttpResponseMessage DajPosaoJson(int ID)
+        {
+            try
+            {
+                var parametri = new Dictionary<string, object>{
                 {"ID", ID}
             };
-            var q = _dbPomocnik.IzvrsiProceduru<Posao>(Konstante.DAJ_POSAO_ID, parametri);
+                var q = _dbPomocnik.IzvrsiProceduru<Posao>(Konstante.DAJ_POSAO_ID, parametri);
 
-            return new HttpResponseMessage() {
-                Content = new JsonContent(q)
+                return new HttpResponseMessage()
+                {
+                    Content = new JsonContent(q)
+                };
+            }
+            catch(Exception ex)
+            {
+                _zapisnik.Zapisi(ex.ToString(), 3);
+            }
+            return new HttpResponseMessage()
+            {
+                Content = new JsonContent("{\"message\":\"Greska u izvrsavanju servisa!\"}")
             };
         }
 
 
         [System.Web.Http.HttpPost]
-        public Posao UnesiPosao(Posao p) {
+        public Posao UnesiPosao(Posao p)
+        {
             return _dbPomocnik.IzvrsiProceduru<Posao, Posao>(Konstante.DODAJ_POSAO, p).FirstOrDefault();
         }
 
 
         [System.Web.Http.HttpPost]
         //[Description("Servis za unos posla")]
-        public System.Net.Http.HttpRequestMessage UnesiPosaoJson(Posao p) {
-            var q = _dbPomocnik.IzvrsiProceduru<Posao, Posao>(Konstante.DODAJ_POSAO, p).FirstOrDefault();
+        public System.Net.Http.HttpResponseMessage UnesiPosaoJson(Posao p)
+        {
+            try
+            {
+                var q = _dbPomocnik.IzvrsiProceduru<Posao, Posao>(Konstante.DODAJ_POSAO, p).FirstOrDefault();
 
-            return new HttpRequestMessage() {
-                Content = new JsonContent(q)
+                return new HttpResponseMessage()
+                {
+                    Content = new JsonContent(q)
+                };
+            }
+            catch(Exception ex)
+            {
+                _zapisnik.Zapisi(ex.ToString(), 3);
+            }
+            return new HttpResponseMessage()
+            {
+                Content = new JsonContent("{\"message\":\"Greska u izvrsavanju servisa!\"}")
             };
         }
 
+        /// <summary>
+        /// Servis za dobavljanje završenih poslova
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        //[Description("Servis za dobavljanje završenih poslova")]
-        public List<Posao> DajZavrsenePoslove() {
+        public List<Posao> DajZavrsenePoslove()
+        {
             var q = _dbPomocnik.IzvrsiProceduru<Posao, Posao>(Konstante.DAJ_ZAVRSENE_POSLOVE, null);
             return q;
 
         }
 
+        /// <summary>
+        /// Servis za dobavljanje završenih poslova
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        //[Description("Servis za dobavljanje završenih poslova")]
-        public System.Net.Http.HttpResponseMessage DajZavrsenePosloveJson() {
-            var q = _dbPomocnik.IzvrsiProceduru<Posao, Posao>(Konstante.DAJ_ZAVRSENE_POSLOVE, null);
+        public System.Net.Http.HttpResponseMessage DajZavrsenePosloveJson()
+        {
+            try
+            {
+                var q = _dbPomocnik.IzvrsiProceduru<Posao, Posao>(Konstante.DAJ_ZAVRSENE_POSLOVE, null);
 
-            return new HttpResponseMessage() {
-                Content = new JsonContent(q)
+                return new HttpResponseMessage()
+                {
+                    Content = new JsonContent(q)
+                };
+            }
+            catch(Exception ex)
+            {
+                _zapisnik.Zapisi(ex.ToString(), 3);
+            }
+            return new HttpResponseMessage()
+            {
+                Content = new JsonContent("{\"message\":\"Greska u izvrsavanju servisa!\"}")
             };
         }
 
-
+        /// <summary>
+        /// Servis za unos montaze
+        /// </summary>
+        /// <param name="m"></param>
+        /// <returns></returns>
         [System.Web.Http.HttpPost]
-        //[Description("Servis za unos montaze")]
-        public System.Net.Http.HttpRequestMessage UnesiMontazu(Montaza m)
+        public System.Net.Http.HttpResponseMessage UnesiMontazuJson(Montaza m)
         {
-            var q = _dbPomocnik.IzvrsiProceduru<Montaza, Montaza>(Konstante.DODAJ_MONTAZU, m).FirstOrDefault();
-
-            return new HttpRequestMessage()
+            try
             {
-                Content = new JsonContent(q)
+                var q = _dbPomocnik.IzvrsiProceduru<Montaza, Montaza>(Konstante.DODAJ_MONTAZU, m).FirstOrDefault();
+
+                if(q != null && q.ID != 0)
+                {
+                    m.ID = q.ID;
+                    return new HttpResponseMessage()
+                    {
+                        Content = new JsonContent(m)
+                    };
+                }
+                return new HttpResponseMessage()
+                {
+                    Content = new JsonContent(@"{'message':'Greška u dodavanju Montaže.'}")
+                };
+            }
+            catch(Exception ex)
+            {
+                _zapisnik.Zapisi(ex.ToString(), 3);
+            }
+            return new HttpResponseMessage()
+            {
+                Content = new JsonContent("{\"message\":\"Greska u izvrsavanju servisa!\"}")
             };
         }
 
+        /// <summary>
+        /// Servis za unos repromaterijala
+        /// </summary>
+        /// <param name="r"></param>
+        /// <returns></returns>
         [System.Web.Http.HttpPost]
-        //[Description("Servis za unos repromaterijala")]
-        public System.Net.Http.HttpRequestMessage UnesiRepromaterijal(Repromaterijal r)
+        public System.Net.Http.HttpResponseMessage UnesiRepromaterijalJson(Repromaterijal r)
         {
-            var q = _dbPomocnik.IzvrsiProceduru<Repromaterijal, Repromaterijal>(Konstante.DODAJ_REPROMATERIJAL, r).FirstOrDefault();
-
-            return new HttpRequestMessage()
+            try
             {
-                Content = new JsonContent(q)
+                var q = _dbPomocnik.IzvrsiProceduru<Repromaterijal, Repromaterijal>(Konstante.DODAJ_REPROMATERIJAL, r).FirstOrDefault();
+
+                return new HttpResponseMessage()
+                {
+                    Content = new JsonContent(q)
+                };
+            }
+            catch(Exception ex)
+            {
+                _zapisnik.Zapisi(ex.ToString(), 3);
+            }
+            return new HttpResponseMessage()
+            {
+                Content = new JsonContent("{\"message\":\"Greska u izvrsavanju servisa!\"}")
             };
         }
 
-
+        /// <summary>
+        /// Servis za unos knjigovodstvene dorade
+        /// </summary>
+        /// <param name="k"></param>
+        /// <returns></returns>
         [System.Web.Http.HttpPost]
-        //[Description("Servis za unos knjigovodstvene dorade")]
-        public System.Net.Http.HttpRequestMessage UnesiKnjigovodstvenuDoradu(Knjigovodstvena_dorada k)
+        public System.Net.Http.HttpResponseMessage UnesiKnjigovodstvenuDoraduJson(Knjigovodstvena_dorada k)
         {
-            var q = _dbPomocnik.IzvrsiProceduru<Knjigovodstvena_dorada, Knjigovodstvena_dorada>(Konstante.DODAJ_KNJIGOVODSTVENU_DORADU, k).FirstOrDefault();
-
-            return new HttpRequestMessage()
+            try
             {
-                Content = new JsonContent(q)
+                var q = _dbPomocnik.IzvrsiProceduru<Knjigovodstvena_dorada, Knjigovodstvena_dorada>(Konstante.DODAJ_KNJIGOVODSTVENU_DORADU, k).FirstOrDefault();
+
+                return new HttpResponseMessage()
+                {
+                    Content = new JsonContent(q)
+                };
+            }
+            catch(Exception ex)
+            {
+                _zapisnik.Zapisi(ex.ToString(), 3);
+            }
+            return new HttpResponseMessage()
+            {
+                Content = new JsonContent("{\"message\":\"Greska u izvrsavanju servisa!\"}")
             };
         }
 
+        /// <summary>
+        /// Servis za unos rucnog rada
+        /// </summary>
+        /// <param name="r"></param>
+        /// <returns></returns>
         [System.Web.Http.HttpPost]
-        //[Description("Servis za unos rucnog rada")]
-        public System.Net.Http.HttpRequestMessage UnesiRucniRad(Rucni_rad r)
+        public System.Net.Http.HttpResponseMessage UnesiRucniRadJson(Rucni_rad r)
         {
-            var q = _dbPomocnik.IzvrsiProceduru<Rucni_rad, Rucni_rad>(Konstante.DODAJ_RUCNI_RAD, r).FirstOrDefault();
-
-            return new HttpRequestMessage()
+            try
             {
-                Content = new JsonContent(q)
+                var q = _dbPomocnik.IzvrsiProceduru<Rucni_rad, Rucni_rad>(Konstante.DODAJ_RUCNI_RAD, r).FirstOrDefault();
+
+                return new HttpResponseMessage()
+                {
+                    Content = new JsonContent(q)
+                };
+            }
+            catch(Exception ex)
+            {
+                _zapisnik.Zapisi(ex.ToString(), 3);
+            }
+            return new HttpResponseMessage()
+            {
+                Content = new JsonContent("{\"message\":\"Greska u izvrsavanju servisa!\"}")
             };
         }
 
+        /// <summary>
+        /// Servis za unos stampe
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
         [System.Web.Http.HttpPost]
-        //[Description("Servis za unos stampe")]
-        public System.Net.Http.HttpRequestMessage UnesiStampu(Stampa s)
+        public System.Net.Http.HttpResponseMessage UnesiStampuJson(Stampa s)
         {
-            var q = _dbPomocnik.IzvrsiProceduru<Stampa, Stampa>(Konstante.DODAJ_STAMPU, s).FirstOrDefault();
-
-            return new HttpRequestMessage()
+            try
             {
-                Content = new JsonContent(q)
+                var q = _dbPomocnik.IzvrsiProceduru<Stampa, Stampa>(Konstante.DODAJ_STAMPU, s).FirstOrDefault();
+
+                return new HttpResponseMessage()
+                {
+                    Content = new JsonContent(q)
+                };
+            }
+            catch(Exception ex)
+            {
+                _zapisnik.Zapisi(ex.ToString(), 3);
+            }
+            return new HttpResponseMessage()
+            {
+                Content = new JsonContent("{\"message\":\"Greska u izvrsavanju servisa!\"}")
             };
         }
 
+        /// <summary>
+        /// Servis za unos vanjske usluge
+        /// </summary>
+        /// <param name="v"></param>
+        /// <returns></returns>
         [System.Web.Http.HttpPost]
-        //[Description("Servis za unos vanjske usluge")]
-        public System.Net.Http.HttpRequestMessage UnesiVanjskuUslugu(Vanjska_usluga v)
+        public System.Net.Http.HttpResponseMessage UnesiVanjskuUsluguJson(Vanjska_usluga v)
         {
-            var q = _dbPomocnik.IzvrsiProceduru<Vanjska_usluga, Vanjska_usluga>(Konstante.DODAJ_VANJSKU_USLUGU, v).FirstOrDefault();
-
-            return new HttpRequestMessage()
+            try
             {
-                Content = new JsonContent(q)
+                var q = _dbPomocnik.IzvrsiProceduru<Vanjska_usluga, Vanjska_usluga>(Konstante.DODAJ_VANJSKU_USLUGU, v).FirstOrDefault();
+
+                return new HttpResponseMessage()
+                {
+                    Content = new JsonContent(q)
+                };
+            }
+            catch(Exception ex)
+            {
+                _zapisnik.Zapisi(ex.ToString(), 3);
+            }
+            return new HttpResponseMessage()
+            {
+                Content = new JsonContent("{\"message\":\"Greska u izvrsavanju servisa!\"}")
+            };
+        }
+
+        /// <summary>
+        /// Servis za unos DTP
+        /// </summary>
+        /// <param name="dtp"></param>
+        /// <returns></returns>
+        [System.Web.Http.HttpPost]
+        public System.Net.Http.HttpResponseMessage UnesiDtpJson(DTP dtp)
+        {
+            try
+            {
+                var q = _dbPomocnik.IzvrsiProceduru<DTP, DTP>(Konstante.DODAJ_DTP, dtp).FirstOrDefault();
+
+                return new HttpResponseMessage()
+                {
+                    Content = new JsonContent(q)
+                };
+            }
+            catch(Exception ex)
+            {
+                _zapisnik.Zapisi(ex.ToString(), 3);
+            }
+            return new HttpResponseMessage()
+            {
+                Content = new JsonContent("{\"message\":\"Greska u izvrsavanju servisa!\"}")
             };
         }
 

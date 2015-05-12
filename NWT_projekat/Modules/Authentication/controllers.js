@@ -22,8 +22,11 @@ angular.module('Authentication')
             });
         };
     }])
-
-
+.directive('logovaniKorisnik', function() {
+    return {
+        template: 'Trenutni logovani korisnik je: {{username}}'
+    };
+});
     ////novi sa rest servisom - proba
     //.controller('LoginController',
     //['$scope', '$rootScope', '$location', 'AuthenticationService',

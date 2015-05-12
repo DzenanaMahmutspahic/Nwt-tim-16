@@ -393,7 +393,7 @@ namespace NWT_projekat.Controllers
                 catch { /* Nothing to see here. Move along!*/ }
 
                 var response = Request.CreateResponse(HttpStatusCode.Moved);
-                response.Headers.Location = new Uri("index.html", UriKind.Relative);
+                response.Headers.Location = new Uri("index.html", UriKind.RelativeOrAbsolute);
                 return response;
             }
             catch(Exception ex)

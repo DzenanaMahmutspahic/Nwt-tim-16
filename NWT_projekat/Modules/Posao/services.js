@@ -1,45 +1,69 @@
 ﻿'use strict';
 
 angular.module('Posao')
-.factory('PosaoController',
+.factory('PosaoService',
         function (Base64, $http, $cookieStore, $rootScope, $timeout) {
-            service = {};
-            service.DajPosao = function (callback) {
-                $http.get('/api/Posao/DajPosaoJson/1')
+            var service = {};
+            service.dajPosao = function (posaoId, callback) {
+                $http.get('/api/Posao/DajPosaoJson/' + posaoId)
                .success(function (response) {
                    alert(response);
                    var a = { success: true, data: response };
                    callback(a);
-                })
+               })
                 .error(function (data, status, headers, config) {
                     alert("Login failed");
                 });
             };
             return service;
         }
-    ])
-    /*
+    );
+
+angular.module('Posao')
 .factory('PosaoService',
     ['Base64', '$http', '$cookieStore', '$rootScope', '$timeout',
     function (Base64, $http, $cookieStore, $rootScope, $timeout) {
         var service = {};
-        service.DodajPosao = function (posaoId, callback) {
-            $http.get('/api/Posao/DajPosaoJson/1')
-               .success(function (response) {
-                   alert(response);
-                   var a = { success: true, data: response };
-                   callback(a);
-               })
+        service.dodajMontazu = function (sM, sC, sS, mM, mS, mC, callback) {
+            $http.post('/api/Posao/UnesiMontazuJson', {
+                Snimanje_materijal: sM,
+                Snimanje_sati: sC,
+                Snimanje_cijena: sS,
+                Montaza_materijal: mM,
+                Montaza_cijena: mC,
+                Montaza_sati: mS,
+                Komentar: "",
+                Korisnik_ID: 1
+            })
+            .success(function (response) {
+                var a = { success: true, data: response };
+                callback(a);
+            })
             .error(function (data, status, headers, config) {
-                alert("Login failed");
-            }
-            );
+                alert("Neuspjelo postavljanje Montaze.");
+            });
+        };
+        service.dodajDTP = function (sM, sC, sS, mM, mS, mC, callback) {
+            $http.post('/api/Posao/UnesiDtpJson', {
+                Sofp_materijal: sM,
+                Sofp_sati: sC,
+                Sofp_cijena: sS,
+                Fotografija_materijal: mM,
+                Fotografija_cijena: mC,
+                Fotografija_sati: mS,
+                Komentar: "",
+                Korisnik_ID: 1
+            })
+            .success(function (response) {
+                var a = { success: true, data: response };
+                callback(a);
+            })
+            .error(function (data, status, headers, config) {
+                alert("Neuspjelo postavljanje DTP.");
+            });
         };
         return service;
     }])
-
-*/
-
 
 
 

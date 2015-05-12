@@ -8,9 +8,12 @@ angular.module('Posao', []);
 angular.module('BasicHttpAuthExample', [
     'Authentication',
     'Home',
+    'Posao',
     'ngRoute',
     'ngCookies'
 ])
+
+
 
 .config(['$routeProvider', function ($routeProvider) {
 
@@ -65,3 +68,54 @@ angular.module('BasicHttpAuthExample', [
             }
         });
     }]);
+
+
+
+
+angular.module('angularTranslateApp', ['pascalprecht.translate'])
+.config(function ($translateProvider) {
+    // Our translations will go in here
+
+    $translateProvider.translations('bos_BOS', {
+        'GREETING': 'Zdravo!',
+        'BUTTON_BOS': 'Bosanski',
+        'BUTTON_EN': 'Engleski',
+        'LOGIN': 'Loguj se',
+        'REGISTER': 'Registruj se',
+        'WELCOME': 'Dobrodošli!',
+        'LOGOUT': 'Odjavi se',
+        'LOGGED_IN': 'Uspješno ste logovani!',
+        'PromjenaLozinke': 'Promijeni lozinku'
+    });
+    // register english translation table
+    $translateProvider.translations('en_EN', {
+        'GREETING': 'Hello!',
+        'BUTTON_BOS': 'Bosnian',
+        'BUTTON_EN': 'English',
+        'LOGIN': 'Login',
+        'REGISTER': 'Registration',
+        'WELCOME': 'Welcome!',
+        'LOGOUT': 'Logout',
+        'LOGGED_IN': 'You are logged in!',
+        'PromjenaLozinke': 'Change password'
+    });
+    // which language to use?
+    $translateProvider.preferredLanguage('bos_BOS');
+});
+
+
+
+angular.module('angularTranslateApp').controller('Ctrl', ['$translate', '$scope', function ($translate, $scope) {
+
+   //$scope.changeLanguage = function () {
+   //    $translate.uses(($translate.uses() === 'en_EN') ? 'bos_BOS' : 'en_EN');
+   //};
+
+   $scope.changeLanguage = function (key) {
+              $translate.use(key);
+          };
+
+}]);
+
+angular.module('myModule', ['ui.bootstrap']);
+
