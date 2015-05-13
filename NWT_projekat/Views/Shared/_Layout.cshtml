@@ -29,7 +29,7 @@
     <style type="text/css">
         /* Custom Styles */
         ul.nav-tabs {
-            width: 140px;
+            width: 220px;
             margin-top: 20px;
             border-radius: 4px;
             border: 1px solid #ddd;
@@ -75,24 +75,6 @@
 </head>
 <body class="ng-scope" ng-app="angularTranslateApp" data-spy="scroll" data-target="#myScrollspy">
 
-    <div class="container">
-        <div class="jumbotron">
-            <h1>Bootstrap ScrollSpy</h1>
-        </div>
-        <div class="row">
-            <div class="col-xs-3" id="myScrollspy">
-                <ul class="nav nav-tabs nav-stacked affix-top" data-spy="affix" data-offset-top="125">
-                    <li class="active"><a href="#section-1">Section One</a></li>
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
-
-                    <li> <a href="~/index.html">{{ 'LOGIN' | translate }}  </a> </li>
-
-                    <li><a href="~/index.html#/registration">{{ 'REGISTER' | translate }} </a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
 
     @*<header>
             <div class="content-wrapper">
@@ -118,6 +100,20 @@
         </header>*@
     @RenderBody()
 
+    <div class="container">
+
+        <div class="row">
+            <div style="float:left" id="myScrollspy">
+                <ul class="nav nav-tabs nav-stacked affix-top" data-spy="affix" data-offset-top="125">
+                    <li class="active"><a href="#section-1" class="">Menu</a></li>
+                    <li><a href="/" class="">Home</a></li>
+                    <li><a href="/Help">API</a></li>
+                    <li> <a href="/index.html" class="ng-binding">Loguj se  </a> </li>
+                    <li><a href="/index.html#/registration" class="ng-binding">Registruj se </a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
     @Scripts.Render("~/bundles/jquery")
     @RenderSection("scripts", required: false)
 </body>
