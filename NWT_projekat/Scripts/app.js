@@ -95,6 +95,150 @@ app.controller('LoginController',
         };
     }]);
 
+app.controller('RegistrationController',
+    ['$scope', '$rootScope', '$location', '$sce', 'AuthenticationService',
+    function ($scope, $rootScope, $location, $sce, AuthenticationService) {
+
+        $scope.registration = function () {
+            $scope.dataLoading = true;
+            AuthenticationService.registracija($scope.name, $scope.lastname, $scope.email, $scope.username, $scope.password, function (response) {
+                if (response.success) {
+                    AuthenticationService.SetCredentials($scope.name, $scope.lastname);
+                    alert('Email za potvrdu registracije je poslan. Provjerite Vaš inbox!');
+                    $location.path('/login');
+                } else {
+                    $scope.error = response.message;
+                    $scope.errorMessage = $sce.trustAsHtml(response.message);
+                    $scope.dataLoading = false;
+                }
+            });
+        };
+        $scope.submitRegistration = function () {
+            $scope.dataLoading = true;
+            if ($scope.password != $scope.password_verify) {
+                $scope.error = "Razlicite vrijednosti lozinke!";
+                $scope.dataLoading = false;
+            } else {
+                AuthenticationService.registracija($scope.name, $scope.lastname, $scope.email, $scope.username, $scope.password, function (response) {
+                    if (response.success) {
+                        AuthenticationService.SetCredentials($scope.name, $scope.lastname);
+                        alert('Email za potvrdu registracije je poslan. Provjerite Vaš inbox!');
+                        $location.path('/login');
+                    } else {
+                        $scope.error = response.message;
+                        $scope.errorMessage = $sce.trustAsHtml(response.message);
+                        $scope.dataLoading = false;
+                    }
+                });
+            }
+            $scope.dataLoading = false;
+        };
+    }])
+.controller('ResetPasswordController',
+    ['$scope', '$rootScope', '$location', 'AuthenticationService',
+    function ($scope, $rootScope, $location, AuthenticationService) {
+       
+        AuthenticationService.ClearCredentials();
+
+        $scope.reset = function () {
+            $scope.dataLoading = true;
+            AuthenticationService.Reset($scope.email, function (response) {
+                alert(response.success);
+                if (response.success) {
+                    AuthenticationService.SetCredentials($scope.email);
+                    alert('Vaša šifra je poslana na Email adresu koju ste unijeli. Provjerite poštu!');
+                    $location.path('/login');
+                } else {
+                    alert(response.message);
+                    if (response.message === undefined || response.error === null || response.message == '')
+                        $scope.error = 'Desila se greška u promjeni lozinke. Kontaktirajte Administratora za detalje.';
+                    else
+                        $scope.error = response.message;
+                    $scope.dataLoading = false;
+                }
+            });
+        };
+    }])
+.factory('AuthenticationService',
+    ['Base64', '$http', '$cookieStore', '$rootScope', '$timeout',
+    function (Base64, $http, $cookieStore, $rootScope, $timeout) {
+        var service = {};
+        service.Login = function (username, password, callback) {
+            $http.post('/api/Account/Login', { username: username, password: password })
+               .success(function (response) {
+                   if (response !== true) {
+                       //response.message = 'Username or password is incorrect';
+                       callback({ success: false, message: 'Wrong credentials!' });
+                   } else {
+                       var newResponse = { success: true };
+                       callback(newResponse);
+                   }
+               })
+            .error(function (data, status, headers, config) {
+                alert("Login failed");
+            }
+            );
+        };
+        service.registracija = function (name, lastname, email, username, password, callback) {
+            $http.post('/api/Account/RegistracijaJson', { username: username, password: password, ime: name, prezime: lastname, Email: email })
+               .success(function (response) {
+                   if (response !== true) {
+                       callback({ success: false, message: response });
+                   } else {
+                       var newResponse = { success: true };
+                       callback(newResponse);
+                   }
+               })
+            .error(error12345(data, status, headers, config));
+        };
+
+        function error12345(data, status, headers, config) {
+            alert("Registration failed");
+        }
+
+        service.SetCredentials = function (username, password) {
+            var authdata = Base64.encode(username + ':' + password);
+
+            $rootScope.globals = {
+                currentUser: {
+                    username: username,
+                    authdata: authdata
+                }
+            };
+
+            $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata; //jshint ignore:line
+            $cookieStore.put('globals', $rootScope.globals);
+        };
+
+        service.ClearCredentials = function () {
+            $rootScope.globals = {};
+            $cookieStore.remove('globals');
+            $http.defaults.headers.common.Authorization = 'Basic ';
+        };
+        //RESET SERVICE
+        service.Reset = function (Email, callback) {
+            $http.post('/api/Account/PosaljiLozinkuJson', { Email: Email })
+               .success(function (response) {
+                   if (response !== true) {
+                       callback({ success: false, message: response });
+                   }
+                   else {
+                       var newResponse = { success: true };
+                       callback(newResponse);
+                   }
+               })
+            .error(function () {
+                alert("Reset failed");
+            }
+            );
+        };
+        return service;
+    }]);
+
+
+
+
+
 app
 .config(function ($translateProvider) {
     // Our translations will go in here
@@ -138,90 +282,7 @@ app.controller('Ctrl', ['$translate', '$scope', function ($translate, $scope) {
           };
 
 }]);
-
-app.factory('AuthenticationService',
-    [ 'Base64', '$http', '$cookieStore', '$rootScope', '$timeout',
-    function (Base64, $http, $cookieStore, $rootScope, $timeout) {
-        var service = {};
-        service.Login = function (username, password, callback) {
-            $http.post('/api/Account/Login', { username: username, password: password })
-               .success(function(response) {
-                   if (response !== 'true') {
-                       //response.message = 'Username or password is incorrect';
-                       callback({ success: false, message: 'Wrong credentials!' });
-                   } else {
-                       var newResponse = { success: true };
-                       callback(newResponse);
-                   }
-               })
-            .error(function (data, status, headers, config) {
-                alert("Login failed");
-            }
-            );
-        };
-        service.registracija = function (name, lastname, email, username, password, callback) {
-            $http.post('/api/Account/RegistracijaJson', { username: username, password: password, ime: name, prezime: lastname, Email: email })
-               .success(function (response) {
-                   if (response !== 'true') {
-                       callback({ success: false, message: response });
-                   } else {
-                       var newResponse = { success: true };
-                       callback(newResponse);
-                   }
-               })
-            .error(error12345(data, status, headers, config));
-        };
-
-        function error12345(data, status, headers, config) {
-            alert("Registration failed");
-        }
-
-        service.SetCredentials = function (username, password) {
-            var authdata = Base64.encode(username + ':' + password);
-
-            $rootScope.globals = {
-                currentUser: {
-                    username: username,
-                    authdata: authdata
-                }
-            };
-
-            $http.defaults.headers.common['Authorization'] = 'Basic ' + authdata; //jshint ignore:line
-            $cookieStore.put('globals', $rootScope.globals);
-        };
-
-        service.ClearCredentials = function () {
-            $rootScope.globals = {};
-            $cookieStore.remove('globals');
-            $http.defaults.headers.common.Authorization = 'Basic ';
-        };
-
-
-        //RESET SERVICE
-        service.Reset = function ( Email, callback) {
-            $http.post('/api/Account/PosaljiLozinkuJson', { Email: Email })
-               .success(function ( response ) {
-                   if ( response !== 'true' ) {                       
-                       callback ( { success: false, message: response} );
-                   }
-                   else {
-                       var newResponse = { success : true };
-                       callback( newResponse );
-                   }
-               })
-            .error( function  () {
-                alert( "Reset failed");
-            }
-            );
-        };
-
-
-
-        return service;
-
-
-    }])
-
+app
 .factory( 'Base64', function () {
     /* jshint ignore:start */
 
