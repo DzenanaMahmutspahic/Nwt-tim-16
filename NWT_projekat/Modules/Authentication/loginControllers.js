@@ -1,8 +1,33 @@
 ﻿'use strict';
 
-angular.module('Authentication')
+//angular.module('BasicHttpAuthExample')
+//.controller('LoginController',
+//    ['$scope', '$rootScope', '$location', 'AuthenticationService',
+//    function ($scope, $rootScope, $location, AuthenticationService) {
+//        // reset login status
+//        AuthenticationService.ClearCredentials();
 
-.controller('LoginController',
+//        $scope.login = function () {
+//            $scope.dataLoading = true;
+//            AuthenticationService.Login($scope.username, $scope.password, function (response) {
+//                if (response.success) {
+//                    AuthenticationService.SetCredentials($scope.username, $scope.password);
+//                    $location.path('/');
+//                } else {
+//                    $scope.error = response.message;
+//                    $scope.dataLoading = false;
+                   
+//                }
+//            });
+//        };
+//    }]);
+angular.module('BasicHttpAuthExample').directive('logovaniKorisnik', function () {
+    return {
+        template: 'Trenutni logovani korisnik je: {{username}}'
+    };
+});
+    //novi sa rest servisom - proba
+angular.module('BasicHttpAuthExample').controller('LoginController',
     ['$scope', '$rootScope', '$location', 'AuthenticationService',
     function ($scope, $rootScope, $location, AuthenticationService) {
         // reset login status
@@ -12,44 +37,18 @@ angular.module('Authentication')
             $scope.dataLoading = true;
             AuthenticationService.Login($scope.username, $scope.password, function (response) {
                 if (response.success) {
-                    AuthenticationService.SetCredentials($scope.username, $scope.password);
+                    AuthenticationService.login($scope.username, $scope.password);
+                    
                     $location.path('/');
                 } else {
                     $scope.error = response.message;
                     $scope.dataLoading = false;
-                   
                 }
             });
         };
     }])
-.directive('logovaniKorisnik', function() {
-    return {
-        template: 'Trenutni logovani korisnik je: {{username}}'
-    };
-});
-    ////novi sa rest servisom - proba
-    //.controller('LoginController',
-    //['$scope', '$rootScope', '$location', 'AuthenticationService',
-    //function ($scope, $rootScope, $location, AuthenticationService) {
-    //    // reset login status
-    //    AuthenticationService.ClearCredentials();
 
-    //    $scope.login = function () {
-    //        $scope.dataLoading = true;
-    //        AuthenticationService.Login($scope.username, $scope.password, function (response) {
-    //            if (response.success) {
-    //                AuthenticationService.login($scope.username, $scope.password);
-                    
-    //                $location.path('/');
-    //            } else {
-    //                $scope.error = response.message;
-    //                $scope.dataLoading = false;
-    //            }
-    //        });
-    //    };
-    //}])
-
-.controller('RegistrationController',
+angular.module('BasicHttpAuthExample').controller('RegistrationController',
     ['$scope', '$rootScope', '$location', '$sce', 'AuthenticationService',
     function ($scope, $rootScope, $location, $sce, AuthenticationService) {
 
@@ -67,8 +66,8 @@ angular.module('Authentication')
                 }
             });
         };
-    }])
-    .controller('RegistrationController',
+    }]);
+angular.module('BasicHttpAuthExample').controller('RegistrationController',
     ['$scope', '$rootScope', '$location', '$sce', 'AuthenticationService',
     function ($scope, $rootScope, $location, $sce, AuthenticationService) {
 
@@ -91,9 +90,9 @@ angular.module('Authentication')
                 });
             }
         };
-    }])
+    }]);
 
-.controller('ResetPasswordController',
+angular.module('BasicHttpAuthExample').controller('ResetPasswordController',
     ['$scope', '$rootScope', '$location', 'AuthenticationService',
     function ($scope, $rootScope, $location, AuthenticationService) {
        

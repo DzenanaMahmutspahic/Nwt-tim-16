@@ -36,7 +36,7 @@
 </head>
 
 
-<body class="ng-scope" ng-app="angularTranslateApp">
+<body class="ng-scope" ng-app="BasicHttpAuthExample">
     <div>
         <span id="tekstGreske" class="error"></span>
         <form id="Forma1" action="~/api/Account/PromjenaLozinke" method="post">
@@ -50,11 +50,11 @@
                 <button type="button" onclick="submitForm()" class="btn btn-primary" ng-model="singleModel" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
                     {{ 'PromjenaLozinke' | translate }}
                 </button>
-            </div> 
+            </div>
             @*<button type="button" onclick="submitForm()">{{ 'PromjenaLozinke' | translate }}</button>*@
-           
 
-            
+
+
 
 
         </form>
@@ -71,7 +71,7 @@
         </div>
 
 
-        
+
 
     </div>
 </body>

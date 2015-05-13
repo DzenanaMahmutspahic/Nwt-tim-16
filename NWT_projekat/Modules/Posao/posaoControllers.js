@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-angular.module('Posao')
+app
 .controller('PosaoController',
     ['$scope', '$rootScope', '$location', 'PosaoService',
     function ($scope, $rootScope, $location, PosaoService) {

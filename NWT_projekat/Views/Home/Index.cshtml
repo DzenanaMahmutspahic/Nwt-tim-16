@@ -1,4 +1,4 @@
-﻿<div id="body" class="ng-scope" ng-app="angularTranslateApp">
+﻿<div id="body" class="ng-scope" @*ng-app="angularTranslateApp"*@ >
     <section class="featured">
         <div class="content-wrapper">
             <hgroup class="title">
@@ -10,7 +10,7 @@
                 web directly over HTTP.
             </p>
             <p>
-               
+
             </p>
 
         </div>
@@ -18,16 +18,19 @@
 
 
 
-    <script src="../../../Scripts/angular-translate.js"></script>
+
     <script src="../../../Scripts/angular.js"></script>
+    <script src="../../../Scripts/angular-translate.js"></script>
     <script src="../../../Scripts/app.js"></script>
     <script src="../../../Scripts/angular-translate.min.js"></script>
+    <script src="../../../Scripts/angular-route.min.js"></script>
+    <script src="../../../Scripts/angular-cookies.min.js"></script>
     <script src="~/Scripts/angular-translate-loader-url.min.js"></script>
     <div ng-controller="Ctrl" class="ng-scope">
         <button class="btn ng-scope" ng-click="changeLanguage('bos_BOS')" translate="BUTTON_BOS">Bosanski</button>
         <button class="btn ng-scope" ng-click="changeLanguage('en_EN')" translate="BUTTON_EN">Engleski</button>
     </div>
-   
+
 
     <p>{{ 'GREETING' | translate }}</p>
 

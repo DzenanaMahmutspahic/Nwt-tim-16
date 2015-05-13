@@ -1,6 +1,6 @@
 ﻿'use strict';
 
-angular.module('Posao')
+app
 .factory('PosaoService',
         function (Base64, $http, $cookieStore, $rootScope, $timeout) {
             var service = {};
@@ -19,7 +19,7 @@ angular.module('Posao')
         }
     );
 
-angular.module('Posao')
+app
 .factory('PosaoService',
     ['Base64', '$http', '$cookieStore', '$rootScope', '$timeout',
     function (Base64, $http, $cookieStore, $rootScope, $timeout) {
