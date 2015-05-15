@@ -7,11 +7,10 @@
 ////angular.module('myModule', ['ui.bootstrap']);
 ////angular.module('angularTranslateApp', [])
 
-var app=angular.module('BasicHttpAuthExample', [
+var app = angular.module('BasicHttpAuthExample', [
     //'Authentication',
     //'Home',
     //'Posao',
-    'ngFileUpload',
     'pascalprecht.translate',
     'ngRoute',
     'ngCookies'
@@ -43,13 +42,18 @@ var app=angular.module('BasicHttpAuthExample', [
             templateUrl: 'modules/Posao/View/unos_posla.html',
             hideMenus: true
         })
+        .when('/upload', {
+            controller: 'UploadFileController',
+            templateUrl: 'modules/Upload/View/uploadFile.html',
+            hideMenus: true
+        })
 
         .when('/', {
             controller: 'HomeController',
             templateUrl: 'modules/home/views/home.html'
         })
 
-        //.otherwise({ redirectTo: '/login' });
+    //.otherwise({ redirectTo: '/login' });
 }])
 
 .run(['$rootScope', '$location', '$cookieStore', '$http',
@@ -67,6 +71,7 @@ var app=angular.module('BasicHttpAuthExample', [
                 $location.path() !== '/resetPassword' &&
                 $location.path() !== '/changePassword' &&
                 $location.path() !== '/posao' &&
+                $location.path() !== '/upload' &&
                 !$rootScope.globals.currentUser) {
                 $location.path('/login');
             }
@@ -77,11 +82,11 @@ var app=angular.module('BasicHttpAuthExample', [
 app.controller('LoginController',
     ['$scope', '$rootScope', '$location', 'AuthenticationService',
     function ($scope, $rootScope, $location, AuthenticationService) {
-        // reset login status
-        AuthenticationService.ClearCredentials();
 
         $scope.login = function () {
             $scope.dataLoading = true;
+            // reset login status
+            AuthenticationService.ClearCredentials();
             AuthenticationService.Login($scope.username, $scope.password, function (response) {
                 if (response.success) {
                     AuthenticationService.SetCredentials($scope.username, $scope.password);
@@ -89,7 +94,7 @@ app.controller('LoginController',
                 } else {
                     $scope.error = response.message;
                     $scope.dataLoading = false;
-                   
+
                 }
             });
         };
@@ -137,11 +142,10 @@ app.controller('RegistrationController',
 .controller('ResetPasswordController',
     ['$scope', '$rootScope', '$location', 'AuthenticationService',
     function ($scope, $rootScope, $location, AuthenticationService) {
-       
-        AuthenticationService.ClearCredentials();
 
         $scope.reset = function () {
             $scope.dataLoading = true;
+            AuthenticationService.ClearCredentials();
             AuthenticationService.Reset($scope.email, function (response) {
                 alert(response.success);
                 if (response.success) {
@@ -158,8 +162,40 @@ app.controller('RegistrationController',
                 }
             });
         };
-    }])
-.factory('AuthenticationService',
+    }]);
+app
+    .controller('UploadFileController', ['$scope', 'Upload', function ($scope, Upload) {
+        $scope.$watch('files', function () {
+            $scope.upload($scope.files);
+        });
+        $scope.log = '';
+
+        $scope.upload = function (files) {
+            if (files && files.length) {
+                for (var i = 0; i < files.length; i++) {
+                    var file = files[i];
+                    Upload
+                        .upload({
+                            url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
+                            fields: {
+                                'username': $scope.username
+                            },
+                            file: file
+                        })
+                       .progress(function (evt) {
+                           var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                           $scope.log = 'progress: ' + progressPercentage + '% ' +
+                                       evt.config.file.name + '\n' + $scope.log;
+                       })
+                        .success(function (data, status, headers, config) {
+                            $scope.log = 'file ' + config.file.name + 'uploaded. Response: ' + JSON.stringify(data) + '\n' + $scope.log;
+                            $scope.$apply();
+                        });
+                }
+            }
+        };
+    }]);
+app.factory('AuthenticationService',
     ['Base64', '$http', '$cookieStore', '$rootScope', '$timeout',
     function (Base64, $http, $cookieStore, $rootScope, $timeout) {
         var service = {};
@@ -273,52 +309,52 @@ app
 
 app.controller('Ctrl', ['$translate', '$scope', function ($translate, $scope) {
 
-   //$scope.changeLanguage = function () {
-   //    $translate.uses(($translate.uses() === 'en_EN') ? 'bos_BOS' : 'en_EN');
-   //};
+    //$scope.changeLanguage = function () {
+    //    $translate.uses(($translate.uses() === 'en_EN') ? 'bos_BOS' : 'en_EN');
+    //};
 
-   $scope.changeLanguage = function (key) {
-              $translate.use(key);
-          };
+    $scope.changeLanguage = function (key) {
+        $translate.use(key);
+    };
 
 }]);
 app
-.factory( 'Base64', function () {
+.factory('Base64', function () {
     /* jshint ignore:start */
 
     var keyStr = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=';
 
     return {
-        encode: function ( input) {
+        encode: function (input) {
             var output = "";
             var chr1, chr2, chr3 = "";
             var enc1, enc2, enc3, enc4 = "";
             var i = 0;
 
-            do{
-                chr1 = input.charCodeAt( i++);
-                chr2 = input.charCodeAt( i++);
-                chr3 = input.charCodeAt( i++);
+            do {
+                chr1 = input.charCodeAt(i++);
+                chr2 = input.charCodeAt(i++);
+                chr3 = input.charCodeAt(i++);
 
                 enc1 = chr1 >> 2;
-                enc2 = ( ( chr1 & 3) << 4) | ( chr2 >> 4);
-                enc3 = ( ( chr2 & 15) << 2) | ( chr3 >> 6);
+                enc2 = ((chr1 & 3) << 4) | (chr2 >> 4);
+                enc3 = ((chr2 & 15) << 2) | (chr3 >> 6);
                 enc4 = chr3 & 63;
 
-                if ( isNaN(chr2)) {
+                if (isNaN(chr2)) {
                     enc3 = enc4 = 64;
-                } else if (  isNaN(chr3)) {
+                } else if (isNaN(chr3)) {
                     enc4 = 64;
                 }
 
                 output = output +
-                    keyStr.charAt( enc1) +
-                    keyStr.charAt( enc2) +
-                    keyStr.charAt( enc3) +
-                    keyStr.charAt( enc4);
+                    keyStr.charAt(enc1) +
+                    keyStr.charAt(enc2) +
+                    keyStr.charAt(enc3) +
+                    keyStr.charAt(enc4);
                 chr1 = chr2 = chr3 = "";
                 enc1 = enc2 = enc3 = enc4 = "";
-            } while(i < input.length);
+            } while (i < input.length);
 
             return output;
         },
@@ -338,7 +374,7 @@ app
             }
             input = input.replace(/[^A-Za-z0-9\+\/\=]/g, "");
 
-            do{
+            do {
                 enc1 = keyStr.indexOf(input.charAt(i++));
                 enc2 = keyStr.indexOf(input.charAt(i++));
                 enc3 = keyStr.indexOf(input.charAt(i++));
@@ -360,7 +396,7 @@ app
                 chr1 = chr2 = chr3 = "";
                 enc1 = enc2 = enc3 = enc4 = "";
 
-            } while(i < input.length);
+            } while (i < input.length);
 
             return output;
         }
@@ -371,7 +407,7 @@ app
 
 
 
-    .factory('dataFactory', ['$http', function($http) {
+    .factory('dataFactory', ['$http', function ($http) {
 
         var urlBase = '/api/Korisnik';
         var dataFactory = {};

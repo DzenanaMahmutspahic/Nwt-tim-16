@@ -4,37 +4,50 @@
 <head>
     <meta charset="utf-8" />
     <title>Online kopirnica</title>
-    <link rel="stylesheet" href="Content/Site.css"/>
+    <link rel="stylesheet" href="Content/Site.css" />
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
 
-
-    <!--<script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
-    <script src="//code.angularjs.org/1.2.20/angular.js"></script>
-    <script src="//code.angularjs.org/1.2.20/angular-route.js"></script>
-    <script src="//code.angularjs.org/1.2.13/angular-cookies.js"></script>-->
     <script src="Scripts/angular.js"></script>
     <script src="Scripts/app.js"></script>
+    <script src="Modules/Upload/uploadController.js"></script>
     <script src="Modules/Authentication/loginControllers.js"></script>
     <script src="Modules/Authentication/loginServices.js"></script>
+    <script src="Modules/Home/homeControllers.js"></script>
+    <script src="Modules/Posao/posaoControllers.js"></script>
+    <script src="Modules/Posao/posaoServices.js"></script>
+
+    <style>
+        #menu tr td a {
+            display: inline-block;
+            max-width: 100px; /* 'X' minus gutter */
+            width: 100px; /* 'X' minus gutter */
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
+        #menu tr td {
+            margin: 0px;
+            padding: 0px;
+            list-style: none;
+            white-space: nowrap;
+            display: inline-block;
+            width: 100px; /* 'X' */
+            align-content:center;
+        }
+    </style>
+</head>
+
+<body class="ng-scope" ng-app="BasicHttpAuthExample">
+
     <script src="Scripts/angular-translate.js"></script>
     <script src="Scripts/angular-route.min.js"></script>
     <script src="Scripts/angular-cookies.min.js"></script>
     <script src="Scripts/angular-translate.min.js"></script>
     <script src="Scripts/angular-translate-loader-url.js"></script>
     <script src="Scripts/angular-translate-loader-url.min.js"></script>
-    <script src="Modules/Home/homeControllers.js"></script> 
-    <script src="Modules/Posao/posaoControllers.js"></script>
-    <script src="Modules/Posao/posaoServices.js"></script>
-</head>
-
-<body class="ng-scope" ng-app="BasicHttpAuthExample">
-
-    <script src="../../../Scripts/angular-translate.js"></script>
-    <script src="../../../Scripts/angular.js"></script>
-    <script src="../../../Scripts/app.js"></script>
-    <script src="../../../Scripts/angular-translate.min.js"></script>
-    <script src="../../../Scripts/angular-translate-loader-url.js"></script>
-    <script src="../../../Scripts/angular-translate-loader-url.min.js"></script>
+    <script src="Modules/Home/DzenyDirective.js"></script>
+    <script src="Modules/Direktive/meniDirektiva.js"></script>
 
     <header>
         <div class="content-wrapper">
@@ -43,21 +56,29 @@
                     <a href="">Online kopirnica</a>
                 </p>
             </div>
-            <div class="float-right">
-                <nav>
-                    <ul id="menu">
-                        <li><a href="Home/">Home</a></li>
-                        <li><a href="Help/">API</a></li>
-                        <li><a href="index.html"> Login</a></li>
-                        <li><a href="index.html#/registration">Registration</a></li>
-
-                    </ul>
-                </nav>
+            <div style="float:right; position:absolute; right:0" ng-controller="Ctrl">
+                <div meni-direktiva></div>
+                <!--<table id="menu">
+                    <tr>
+                        <td align="center"><a href="Home/">Home</a></td>
+                        <td align="center"><a href="Help/">API</a></td>
+                        <td align="center"><a href="index.html#/">{{'LOGIN' | translate }}</a></td>
+                        <td align="center"><a href="index.html#/registration">{{'REGISTER' | translate }}</a></td>
+                        <td align="center">
+                            <a class="btn-link ng-scope" ng-click="changeLanguage('bos_BOS')">
+                                <img src="Images/ba.png" />
+                            </a>
+                        </td>
+                        <td align="center">
+                            <a class="btn-link ng-scope" ng-click="changeLanguage('en_EN')">
+                                <img src="Images/eng.png" />
+                            </a>
+                        </td>
+                    </tr>
+                </table>-->
             </div>
-
         </div>
     </header>
-
     <div class="jumbotron">
         <div class="container">
             <div class="col-xs-offset-2 col-xs-8">

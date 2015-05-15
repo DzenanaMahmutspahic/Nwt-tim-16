@@ -28,13 +28,13 @@
     <script src="../uploadController.js"></script>
 </head>
 <body class="ng-scope" ng-app="BasicHttpAuthExample">
-    <div ng-controller="MyCtrl" class="ng-scope">
+    <div ng-controller="UploadFileController" class="ng-scope">
         Username:<input type="text" ng-model="username"></br></br>
         <input type="checkbox" ng-model="multiple">Upload multiple file<br><br>
         On file change:
         <div class="button" ngf-select ngf-change="upload($files)" ngf-multiple="multiple">Select File</div>
         Drop File:
-        <div ngf-drop ngf-select ng-model="files" class="drop-box" ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true"accept="image/*,application/pdf">Drop pdfs or images here or click to upload</div>
+        <div ngf-drop ngf-select ng-model="files" class="drop-box" ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true" accept="image/*,application/pdf">Drop pdfs or images here or click to upload</div>
         <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>
         Files:
         <ul>
@@ -42,6 +42,6 @@
         </ul>
         Upload Log:
         <pre>{{log}}</pre>
-     </div>
+    </div>
 </body>
 </html>

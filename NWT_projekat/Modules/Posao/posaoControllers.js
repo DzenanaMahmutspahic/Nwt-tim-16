@@ -27,19 +27,15 @@ app
                 if (response.success) {
                     if ($scope.data !== undefined && $scope.data !== null)
                     {
-                        if ($scope.data.posao !== undefined && $scope.data.posao !== null)
-                        {
-                            if ($scope.data.posao.DTP_ID !== undefined && $scope.data.posao.DTP_ID !== null)
-                            {
+                        if ($scope.data.posao !== undefined && $scope.data.posao !== null) {
+                            if ($scope.data.posao.DTP_ID !== undefined && $scope.data.posao.DTP_ID !== null) {
                                 $scope.data.posao.DTP_ID = response.data.DTP_ID;
                             }
-                            else
-                            {
+                            else {
                                 $scope.data.posao['DTP_ID'] = response.data.DTP_ID;
                             }
                         }
-                        else
-                        {
+                        else {
                             $scope.data['posao'] = { DTP_ID: response.data.DTP_ID };
                         }
                     }

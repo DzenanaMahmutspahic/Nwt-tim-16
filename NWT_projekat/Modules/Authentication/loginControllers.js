@@ -16,35 +16,34 @@
 //                } else {
 //                    $scope.error = response.message;
 //                    $scope.dataLoading = false;
-                   
+
 //                }
 //            });
 //        };
 //    }]);
-angular.module('BasicHttpAuthExample').directive('logovaniKorisnik', function () {
+angular.module('BasicHttpAuthExample').directive('logovaniKorisnik', function ($rootScope) {
     return {
-        template: 'Trenutni logovani korisnik je: {{username}}'
+        template: 'Trenutni logovani korisnik je: ' + $rootScope.globals.currentUser.username
     };
 });
-    //novi sa rest servisom - proba
+//novi sa rest servisom - proba
 //angular.module('BasicHttpAuthExample')
 app.controller('LoginController',
     ['$scope', '$rootScope', '$location', 'AuthenticationService',
     function ($scope, $rootScope, $location, AuthenticationService) {
-        // reset login status
-        AuthenticationService.ClearCredentials();
 
         $scope.login = function () {
+            // reset login status
+            AuthenticationService.ClearCredentials();
             $scope.dataLoading = true;
             AuthenticationService.Login($scope.username, $scope.password, function (response) {
                 if (response.success) {
-                    AuthenticationService.login($scope.username, $scope.password);
-
+                    AuthenticationService.SetCredentials($scope.username, $scope.password);
                     $location.path('/');
                 } else {
                     $scope.error = response.message;
-                    $scope.dataLoading = false;
                 }
+                $scope.dataLoading = false;
             });
         };
     }]);
@@ -96,7 +95,7 @@ app.controller('LoginController',
 //angular.module('BasicHttpAuthExample').controller('ResetPasswordController',
 //    ['$scope', '$rootScope', '$location', 'AuthenticationService',
 //    function ($scope, $rootScope, $location, AuthenticationService) {
-       
+
 //        AuthenticationService.ClearCredentials();
 
 //        $scope.reset = function () {
@@ -119,4 +118,4 @@ app.controller('LoginController',
 //        };
 //    }]);
 
-   
+

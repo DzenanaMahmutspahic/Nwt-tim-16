@@ -315,6 +315,8 @@
     <Content Include="Modules\Authentication\Views\login.html" />
     <Content Include="Modules\Authentication\Views\Registration.html" />
     <Content Include="Modules\Authentication\Views\ResetPassword.html" />
+    <Content Include="Modules\Direktive\meniDirektiva.js" />
+    <Content Include="Modules\Home\DzenyDirective.js" />
     <Content Include="Modules\Home\Views\home.html" />
     <Content Include="Modules\Posao\posaoControllers.js" />
     <Content Include="Modules\Posao\posaoServices.js" />
