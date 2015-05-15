@@ -11,7 +11,7 @@ var app=angular.module('BasicHttpAuthExample', [
     //'Authentication',
     //'Home',
     //'Posao',
-
+    'ngFileUpload',
     'pascalprecht.translate',
     'ngRoute',
     'ngCookies'

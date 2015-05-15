@@ -315,12 +315,13 @@
     <Content Include="Modules\Authentication\Views\login.html" />
     <Content Include="Modules\Authentication\Views\Registration.html" />
     <Content Include="Modules\Authentication\Views\ResetPassword.html" />
-    <Content Include="Modules\Home\homeControllers.js" />
     <Content Include="Modules\Home\Views\home.html" />
     <Content Include="Modules\Posao\posaoControllers.js" />
     <Content Include="Modules\Posao\posaoServices.js" />
     <Content Include="Modules\Posao\View\prikaz_posla.html" />
     <Content Include="Modules\Posao\View\unos_posla.html" />
+    <Content Include="Modules\Upload\uploadController.js" />
+    <Content Include="Modules\Upload\View\uploadFile.html" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />
