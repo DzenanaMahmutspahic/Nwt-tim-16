@@ -30,6 +30,9 @@ namespace NWT.Pomocnici
         public static readonly string DODAJ_RUCNI_RAD = "DodajRucniRad";
         public static readonly string DODAJ_MONTAZU = "DodajMontazu";
         public static readonly string DODAJ_KNJIGOVODSTVENU_DORADU = "DodajKnjigovodstvenuDoradu";
+        public static readonly string DAJ_PUTANjU_SLIKE = "DajSliku";
+        public static readonly string DODAJ_SLIKU = "DodajSliku";
+
         public static readonly string REGISTRACIJA_TEMPLATE = @"
 Dobro došli na našu stranicu i čestitamo na uspješnoj registraciji.
 Da biste potvrdili registraciju, kliknite na link ispod:

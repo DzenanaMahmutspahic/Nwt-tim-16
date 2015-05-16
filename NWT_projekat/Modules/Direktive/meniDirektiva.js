@@ -32,7 +32,7 @@
           } else {
               return {
                   template:
-'<table id="menu">q\
+'<table id="menu">\
     <tr>\
         <td align="center"><a href="Home/">Home</a></td>\
         <td align="center"><a href="Help/">API</a></td>\

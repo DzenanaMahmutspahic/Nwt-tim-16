@@ -1,15 +1,16 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Welcome</title>  
+    <title>Welcome</title>
 </head>
 
 <body class="ng-scope" ng-app="BasicHttpAuthExample">
-    
-    <h1>{{ 'WELCOME' | translate }} <span my-customer></span></h1>
+
+    <div style="position:static; left:0;">
+        <div my-profile></div>
+    </div>
+    <h1>{{ 'WELCOME' | translate }} </h1>
     <p>{{ 'LOGGED_IN' | translate }}</p>
     <p><a href="#/posao">Posao</a></p>
-    <p><a href="#/upload">Upload</a></p>
-    <p><a href="#/login">Logout</a></p>
 </body>
 </html>

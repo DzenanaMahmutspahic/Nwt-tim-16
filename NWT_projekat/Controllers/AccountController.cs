@@ -393,7 +393,8 @@ namespace NWT_projekat.Controllers
                 catch { /* Nothing to see here. Move along!*/ }
 
                 var response = Request.CreateResponse(HttpStatusCode.Moved);
-                response.Headers.Location = new Uri("index.html", UriKind.RelativeOrAbsolute);
+                var add = Request.RequestUri.GetLeftPart(UriPartial.Authority);
+                response.Headers.Location = new Uri(add + "/index.html", UriKind.Absolute);
                 return response;
             }
             catch(Exception ex)
@@ -409,6 +410,33 @@ namespace NWT_projekat.Controllers
             {
                 Content = new JsonContent("Doslo je do greske u procesiranju!")
             };
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [System.Web.Http.HttpGet]
+        public string DajPutanju(string Username)
+        {
+            try {
+                var parametri = new Dictionary<string, object> { { "Username", Username } };
+                var tmp = _dbPomocnik.IzvrsiProceduru(Konstante.DAJ_PUTANjU_SLIKE, parametri);
+                var url = Request.RequestUri.GetLeftPart(UriPartial.Authority);
+                var putanja = tmp.Rows[0]["Putanja"].ToString();
+                return url + "/Images/Profile/" + putanja;
+            }
+            catch(Exception ex)
+            {
+                _zapisnik.Zapisi(new Log()
+                {
+                    Datum = DateTime.Now,
+                    Sadrzaj = ex.ToString(),
+                    Tip = 3
+                });
+            }
+            return "";
         }
 
         #endregion

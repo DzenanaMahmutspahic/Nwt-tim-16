@@ -47,6 +47,11 @@ var app = angular.module('BasicHttpAuthExample', [
             templateUrl: 'modules/Upload/View/uploadFile.html',
             hideMenus: true
         })
+        .when('/profil', {
+            controller: 'Ctrl',
+            templateUrl: 'modules/home/views/Profil.html',
+            hideMenus: true
+        })
 
         .when('/', {
             controller: 'HomeController',
@@ -72,6 +77,7 @@ var app = angular.module('BasicHttpAuthExample', [
                 $location.path() !== '/changePassword' &&
                 $location.path() !== '/posao' &&
                 $location.path() !== '/upload' &&
+                $location.path() !== '/profil' &&
                 !$rootScope.globals.currentUser) {
                 $location.path('/login');
             }
@@ -89,7 +95,7 @@ app.controller('LoginController',
             AuthenticationService.ClearCredentials();
             AuthenticationService.Login($scope.username, $scope.password, function (response) {
                 if (response.success) {
-                    AuthenticationService.SetCredentials($scope.username, $scope.password);
+                    AuthenticationService.SetCredentials($scope.username, $scope.password, response.imageUrl);
                     $location.path('/');
                 } else {
                     $scope.error = response.message;
@@ -108,7 +114,6 @@ app.controller('RegistrationController',
             $scope.dataLoading = true;
             AuthenticationService.registracija($scope.name, $scope.lastname, $scope.email, $scope.username, $scope.password, function (response) {
                 if (response.success) {
-                    AuthenticationService.SetCredentials($scope.name, $scope.lastname);
                     alert('Email za potvrdu registracije je poslan. Provjerite Vaš inbox!');
                     $location.path('/login');
                 } else {
@@ -126,7 +131,6 @@ app.controller('RegistrationController',
             } else {
                 AuthenticationService.registracija($scope.name, $scope.lastname, $scope.email, $scope.username, $scope.password, function (response) {
                     if (response.success) {
-                        AuthenticationService.SetCredentials($scope.name, $scope.lastname);
                         alert('Email za potvrdu registracije je poslan. Provjerite Vaš inbox!');
                         $location.path('/login');
                     } else {
@@ -149,7 +153,6 @@ app.controller('RegistrationController',
             AuthenticationService.Reset($scope.email, function (response) {
                 alert(response.success);
                 if (response.success) {
-                    AuthenticationService.SetCredentials($scope.email);
                     alert('Vaša šifra je poslana na Email adresu koju ste unijeli. Provjerite poštu!');
                     $location.path('/login');
                 } else {
@@ -195,24 +198,30 @@ app
             }
         };
     }]);
+app.controller('PosaoController', []);
 app.factory('AuthenticationService',
     ['Base64', '$http', '$cookieStore', '$rootScope', '$timeout',
     function (Base64, $http, $cookieStore, $rootScope, $timeout) {
         var service = {};
         service.Login = function (username, password, callback) {
-            $http.post('/api/Account/Login', { username: username, password: password })
-               .success(function (response) {
-                   if (response !== true) {
-                       //response.message = 'Username or password is incorrect';
-                       callback({ success: false, message: 'Wrong credentials!' });
-                   } else {
-                       var newResponse = { success: true };
-                       callback(newResponse);
-                   }
-               })
-            .error(function (data, status, headers, config) {
-                alert("Login failed");
-            }
+
+            $http.get('/api/Account/DajPutanju?Username=' + username).success(
+                function (imgUrl) {
+                    $http.post('/api/Account/Login', { username: username, password: password })
+                       .success(function (response) {
+                           if (response !== true) {
+                               //response.message = 'Username or password is incorrect';
+                               callback({ success: false, message: 'Wrong credentials!' });
+                           } else {
+                               var newResponse = { success: true, imageUrl:imgUrl };
+                               callback(newResponse);
+                           }
+                       })
+                    .error(function (data, status, headers, config) {
+                        alert("Login failed");
+                    }
+                    )
+                }
             );
         };
         service.registracija = function (name, lastname, email, username, password, callback) {
@@ -232,13 +241,14 @@ app.factory('AuthenticationService',
             alert("Registration failed");
         }
 
-        service.SetCredentials = function (username, password) {
+        service.SetCredentials = function (username, password, imageUrl) {
             var authdata = Base64.encode(username + ':' + password);
 
             $rootScope.globals = {
                 currentUser: {
                     username: username,
-                    authdata: authdata
+                    authdata: authdata,
+                    imgUrl: imageUrl
                 }
             };
 
@@ -288,7 +298,8 @@ app
         'WELCOME': 'Dobrodošli!',
         'LOGOUT': 'Odjavi se',
         'LOGGED_IN': 'Uspješno ste logovani!',
-        'PromjenaLozinke': 'Promijeni lozinku'
+        'PromjenaLozinke': 'Promijeni lozinku',
+        'CHANGEPICTURE': 'Promijeni sliku'
     });
     // register english translation table
     $translateProvider.translations('en_EN', {
@@ -300,14 +311,16 @@ app
         'WELCOME': 'Welcome!',
         'LOGOUT': 'Logout',
         'LOGGED_IN': 'You are logged in!',
-        'PromjenaLozinke': 'Change password'
+        'PromjenaLozinke': 'Change password',
+        'CHANGEPICTURE': 'Change picture'
     });
     // which language to use?
     $translateProvider.preferredLanguage('bos_BOS');
 });
 
 
-app.controller('Ctrl', ['$translate', '$scope', function ($translate, $scope) {
+app.controller('Ctrl', ['$translate', '$scope', '$rootScope', '$cookieStore', '$location',
+    function ($translate, $scope, $rootScope, $cookieStore, $location) {
 
     //$scope.changeLanguage = function () {
     //    $translate.uses(($translate.uses() === 'en_EN') ? 'bos_BOS' : 'en_EN');
@@ -315,6 +328,11 @@ app.controller('Ctrl', ['$translate', '$scope', function ($translate, $scope) {
 
     $scope.changeLanguage = function (key) {
         $translate.use(key);
+    };
+    $scope.logout = function () {
+        $rootScope.globals = {};
+        $cookieStore.remove('globals');
+        $location.path('/login');
     };
 
 }]);

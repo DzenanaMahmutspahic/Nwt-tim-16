@@ -9,12 +9,26 @@
 
     <script src="Scripts/angular.js"></script>
     <script src="Scripts/app.js"></script>
+    <script src="Modules/Posao/posaoControllers.js"></script>
+    <script src="Modules/Posao/posaoServices.js"></script>
     <script src="Modules/Upload/uploadController.js"></script>
     <script src="Modules/Authentication/loginControllers.js"></script>
     <script src="Modules/Authentication/loginServices.js"></script>
     <script src="Modules/Home/homeControllers.js"></script>
-    <script src="Modules/Posao/posaoControllers.js"></script>
-    <script src="Modules/Posao/posaoServices.js"></script>
+
+    <script type="text/javascript">
+        function pokaziSakrij(objectId) {
+            var O = document.getElementById(objectId);
+            var S = document.getElementById(objectId + 's');
+            if (O.style.display == 'inline-block') {
+                O.style.display = 'none';
+                S.innerText = '+';
+            } else {
+                O.style.display = 'inline-block';
+                S.innerText = '-';
+            }
+        }
+    </script>
 
     <style>
         #menu tr td a {
@@ -46,7 +60,7 @@
     <script src="Scripts/angular-translate.min.js"></script>
     <script src="Scripts/angular-translate-loader-url.js"></script>
     <script src="Scripts/angular-translate-loader-url.min.js"></script>
-    <script src="Modules/Home/DzenyDirective.js"></script>
+    <script src="Modules/Direktive/DzenyDirective.js"></script>
     <script src="Modules/Direktive/meniDirektiva.js"></script>
 
     <header>

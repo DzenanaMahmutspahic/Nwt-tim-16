@@ -309,6 +309,16 @@
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <Content Include="ApplicationInsights.config" />
     <Content Include="Icon.png" />
+    <Content Include="Images\301.GIF" />
+    <Content Include="Images\ba.png" />
+    <Content Include="Images\Captcha\c1.png" />
+    <Content Include="Images\Captcha\c2.png" />
+    <Content Include="Images\Captcha\c3.png" />
+    <Content Include="Images\Captcha\c4.png" />
+    <Content Include="Images\Captcha\c5.png" />
+    <Content Include="Images\eng.png" />
+    <Content Include="Images\Profile\user.png" />
+    <Content Include="Images\Profile\user2.png" />
     <Content Include="index.html" />
     <Content Include="Modules\Authentication\loginControllers.js" />
     <Content Include="Modules\Authentication\loginServices.js" />
@@ -316,8 +326,9 @@
     <Content Include="Modules\Authentication\Views\Registration.html" />
     <Content Include="Modules\Authentication\Views\ResetPassword.html" />
     <Content Include="Modules\Direktive\meniDirektiva.js" />
-    <Content Include="Modules\Home\DzenyDirective.js" />
+    <Content Include="Modules\Direktive\DzenyDirective.js" />
     <Content Include="Modules\Home\Views\home.html" />
+    <Content Include="Modules\Home\Views\Profil.html" />
     <Content Include="Modules\Posao\posaoControllers.js" />
     <Content Include="Modules\Posao\posaoServices.js" />
     <Content Include="Modules\Posao\View\prikaz_posla.html" />
@@ -362,7 +373,6 @@
     <Content Include="Scripts\angular-messages.min.js.map" />
     <Content Include="Scripts\angular-loader.min.js.map" />
     <Content Include="Scripts\angular-cookies.min.js.map" />
-    <Content Include="Scripts\angular-aria.min.js.map" />
     <Content Include="Scripts\angular-animate.min.js.map" />
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
