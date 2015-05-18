@@ -330,6 +330,7 @@
     <Content Include="Modules\Direktive\DzenyDirective.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Modules\Direktive\posaoDirective.js" />
     <Content Include="Modules\Home\Views\home.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
