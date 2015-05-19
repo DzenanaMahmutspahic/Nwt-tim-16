@@ -28,9 +28,77 @@
 </head>
 <body class="ng-scope" ng-app="BasicHttpAuthExample">
     <header>
-        <div class="content-wrapper">
+
+
+        <script src="../../../Scripts/angular.js"></script>
+        <script src="../../../Scripts/angular-translate.js"></script>
+        <script src="../../../Scripts/app.js"></script>
+        <script src="../../../Scripts/angular-translate.min.js"></script>
+        <script src="../../../Scripts/angular-route.min.js"></script>
+        <script src="../../../Scripts/angular-cookies.min.js"></script>
+        <script src="~/Scripts/angular-translate-loader-url.min.js"></script>
+
+
+        <script>
+            $('#nav').affix({
+            });</script>
+
+        <style type="text/css">
+            #con .well {
+                height: 400px;
+            }
+
+            #nav.affix {
+                position: fixed;
+                top: 0;
+                width: 100%;
+            }
+        </style>
+
+        <div ng-style="{'background-color':'gray','height':'40px'} " ng-controller="Ctrl" class="ng-scope" style=" position: fixed;
+                top: 15px;
+                margin-left:2px;
+                height:32px;
+                width: 100%;">
+            
+
+            <div>
+
+                <button class="btn ng-scope" ng-click="changeLanguage('bos_BOS')" translate="BUTTON_BOS" ng-style="{'background-color':'#7debbc', 'float':'left','width':'100px','height':'38px'}" >Bosanski</button>
+                <button class="btn ng-scope" ng-click="changeLanguage('en_EN')" translate="BUTTON_EN" ng-style="{'background-color':'#7debbc', 'float':'left','width':'100px','height':'38px'}">Engleski</button>
+
+            </div>
+            <div class="container" data-spy="affix" data-offset-top="400" id="nav" style=" position: fixed;
+                top: 3px;
+                margin-left:300px;
+                width: 100%;">
+                <div class="navbar">
+                    <div class="navbar-inner">
+                        <div class="container">
+                            <div class="span12">
+
+                                <ul class="nav">
+                                    <li style="display:inline-block;float:left;background-color:#7debbc;width:180px;height:32px;border:solid;border-color:#808080;text-align:center;border-width:3px;">@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
+                                    <li style="display:inline-block;float:left;background-color:#7debbc;width:180px;height:32px;border:solid;border-color:#808080;text-align:center;border-width:3px;">@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
+                                    <li style="display:inline-block;float:left;background-color:#7debbc;width:180px;height:32px;border:solid;border-color:#808080;text-align:center;border-width:3px;"><a href="~/index.html">{{ 'LOGIN' | translate }}  </a></li>
+                                    <li style="display:inline-block;float:left;background-color:#7debbc;width:180px;height:32px;border:solid;border-color:#808080;text-align:center;border-width:3px;"><a href="~/index.html#/registration">{{ 'REGISTER' | translate }} </a></li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="content-wrapper" style="margin-top:45px;">
             <div class="float-left">
                 <p class="site-title">
+                    <h3>{{ 'GREETING' | translate }}</h3>
                     <a href="~/">Online kopirnica</a>
                 </p>
             </div>
@@ -49,6 +117,7 @@
             </div>
         </div>
     </header>
+
     @RenderBody()
 
     @Scripts.Render("~/bundles/jquery")

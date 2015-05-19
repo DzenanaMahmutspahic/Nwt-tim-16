@@ -68,8 +68,10 @@
     </script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"> </script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"> </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    <script src="Modules/Direktive/brojeviDirektiva.js"></script>
+
 </head>
 <body>
     <div ng-app="BasicHttpAuthExample">
@@ -111,127 +113,127 @@
                 <form name="form_ReproMaterijal" ng-submit="dodajReproMaterijal()" role="form">
                     <table class="formular-sekcija table table-striped">
                         <tr><th> REPRO MATERIJAL</th> <th> MATERIJAL</th> <th> KOLICINA</th> <th> UKUPNO</th></tr>
-                        <tr>
+                <tr>
                             <td> 1 Papir</td>
                             <td> <input autocomplete="off" type="text" name="t2c1" ng-model="t2c1" style="width:100%" /> </td>
                             <td> <input autocomplete="off" type="text" name="t2c2" ng-model="t2c2" style="width:100%" /> </td>
                             <td align="right">
                                 <input autocomplete="off" type="text" name="t2c3" ng-model="t2c3" style="width:80%" /> <span><span>KM</span></span>
                             </td>
-                        </tr>
-                        <tr>
+                </tr>
+                <tr>
                             <td> PAPIR ZA KORICE</td>
                             <td> <input autocomplete="off" type="text" name="t2c4" ng-model="t2c4" style="width:100%" /> </td>
                             <td> <input autocomplete="off" type="text" name="t2c5" ng-model="t2c5" style="width:100%" /> </td>
                             <td align="right">
                                 <input autocomplete="off" type="text" name="t2c6" ng-model="t2c6" style="width:80%" /> <span><span>KM</span></span>
                             </td>
-                        </tr>
-                        <tr>
+                </tr>
+                <tr>
                             <td> Materijal za XEIKON METARA</td>
                             <td> <input autocomplete="off" type="text" name="t2c7" ng-model="t2c7" style="width:100%" /> </td>
                             <td> <input autocomplete="off" type="text" name="t2c8" ng-model="t2c8" style="width:100%" /> </td>
                             <td align="right">
                                 <input autocomplete="off" type="text" name="t2c9" ng-model="t2c9" style="width:80%" /> <span><span>KM</span></span>
                             </td>
-                        </tr>
-                        <tr>
+                </tr>
+                <tr>
                             <td> Materijal za XEIKON METARA</td>
                             <td> <input autocomplete="off" type="text" name="t2c10" ng-model="t2c10" style="width:100%" /> </td>
                             <td> <input autocomplete="off" type="text" name="t2c11" ng-model="t2c11" style="width:100%" /> </td>
                             <td align="right">
                                 <input autocomplete="off" type="text" name="t2c12" ng-model="t2c12" style="width:80%" /> <span><span>KM</span></span>
                             </td>
-                        </tr>
-                        <tr>
+                </tr>
+                <tr>
                             <td> BojaKG</td>
                             <td> <input autocomplete="off" type="text" name="t2c13" ng-model="t2c13" style="width:100%" /> </td>
                             <td> <input autocomplete="off" type="text" name="t2c14" ng-model="t2c14" style="width:100%" /> </td>
                             <td align="right">
                                 <input autocomplete="off" type="text" name="t2c15" ng-model="t2c15" style="width:80%" /> <span><span>KM</span></span>
                             </td>
-                        </tr>
-                        <tr>
+                </tr>
+                <tr>
                             <td> B3 Četverobojna/kom.</td>
                             <td> <input autocomplete="off" type="text" name="t2c16" ng-model="t2c16" style="width:100%" /> </td>
                             <td> <input autocomplete="off" type="text" name="t2c17" ng-model="t2c17" style="width:100%" /> </td>
                             <td align="right">
                                 <input autocomplete="off" type="text" name="t2c18" ng-model="t2c18" style="width:80%" /> <span><span>KM</span></span>
                             </td>
-                        </tr>
-                        <tr>
+                </tr>
+                <tr>
                             <td> Film B2/kom.</td>
                             <td> <input autocomplete="off" type="text" name="t2c19" ng-model="t2c19" style="width:100%" /> </td>
                             <td> <input autocomplete="off" type="text" name="t2c20" ng-model="t2c20" style="width:100%" /> </td>
                             <td align="right">
                                 <input autocomplete="off" type="text" name="t2c21" ng-model="t2c21" style="width:80%" /> <span><span>KM</span></span>
                             </td>
-                        </tr>
-                        <tr>
+                </tr>
+                <tr>
                             <td> Film B3 GTO/kom.</td>
                             <td> <input autocomplete="off" type="text" name="t2c22" ng-model="t2c22" style="width:100%" /> </td>
                             <td> <input autocomplete="off" type="text" name="t2c23" ng-model="t2c23" style="width:100%" /> </td>
                             <td align="right">
                                 <input autocomplete="off" type="text" name="t2c24" ng-model="t2c24" style="width:80%" /> <span><span>KM</span></span>
                             </td>
-                        </tr>
-                        <tr>
+                </tr>
+                <tr>
                             <td> Offset ploče B-3 Četverobojna/kom.</td>
                             <td> <input autocomplete="off" type="text" name="t2c25" ng-model="t2c25" style="width:100%" /> </td>
                             <td> <input autocomplete="off" type="text" name="t2c26" ng-model="t2c26" style="width:100%" /> </td>
                             <td align="right">
                                 <input autocomplete="off" type="text" name="t2c27" ng-model="t2c27" style="width:80%" /> <span><span>KM</span></span>
                             </td>
-                        </tr>
-                        <tr>
+                </tr>
+                <tr>
                             <td> Offset ploče B-2/kom.</td>
                             <td> <input autocomplete="off" type="text" name="t2c28" ng-model="t2c28" style="width:100%" /> </td>
                             <td> <input autocomplete="off" type="text" name="t2c29" ng-model="t2c29" style="width:100%" /> </td>
                             <td align="right">
                                 <input autocomplete="off" type="text" name="t2c30" ng-model="t2c30" style="width:80%" /> <span><span>KM</span></span>
                             </td>
-                        </tr>
-                        <tr>
+                </tr>
+                <tr>
                             <td> Offset ploče B-3 GTO/kom.</td>
                             <td> <input autocomplete="off" type="text" name="t2c31" ng-model="t2c31" style="width:100%" /> </td>
                             <td> <input autocomplete="off" type="text" name="t2c32" ng-model="t2c32" style="width:100%" /> </td>
                             <td align="right">
                                 <input autocomplete="off" type="text" name="t2c33" ng-model="t2c33" style="width:80%" /> <span><span>KM</span></span>
                             </td>
-                        </tr>
-                        <tr>
+                </tr>
+                <tr>
                             <td> Folija metara</td>
                             <td> <input autocomplete="off" type="text" name="t2c34" ng-model="t2c34" style="width:100%" /> </td>
                             <td> <input autocomplete="off" type="text" name="t2c35" ng-model="t2c35" style="width:100%" /> </td>
                             <td align="right">
                                 <input autocomplete="off" type="text" name="t2c36" ng-model="t2c36" style="width:80%" /> <span><span>KM</span></span>
                             </td>
-                        </tr>
-                        <tr>
+                </tr>
+                <tr>
                             <td> Toner, developer, ostalo xeikon</td>
                             <td> <input autocomplete="off" type="text" name="t2c37" ng-model="t2c37" style="width:100%" /> </td>
                             <td> <input autocomplete="off" type="text" name="t2c38" ng-model="t2c38" style="width:100%" /> </td>
                             <td align="right">
                                 <input autocomplete="off" type="text" name="t2c39" ng-model="t2c39" style="width:80%" /> <span><span>KM</span></span>
                             </td>
-                        </tr>
-                        <tr>
+                </tr>
+                <tr>
                             <td> Ostalo</td>
                             <td> <input autocomplete="off" type="text" name="t2c40" ng-model="t2c40" style="width:100%" /> </td>
                             <td> <input autocomplete="off" type="text" name="t2c41" ng-model="t2c41" style="width:100%" /> </td>
                             <td align="right">
                                 <input autocomplete="off" type="text" name="t2c42" ng-model="t2c42" style="width:80%" /> <span><span>KM</span></span>
                             </td>
-                        </tr>
-                        <tr>
+                </tr>
+                <tr>
                             <th> UKUPAN MATERIJAL</th>
                             <td> <input autocomplete="off" type="text" name="t2c43" ng-model="t2c43" style="width:100%" /> </td>
                             <td> <input autocomplete="off" type="text" name="t2c44" ng-model="t2c44" style="width:100%" /> </td>
                             <td align="right">
                                 <input autocomplete="off" type="text" name="t2c45" ng-model="t2c45" style="width:80%" /> <span><span>KM</span></span>
                             </td>
-                        </tr>
-                    </table>
+                </tr>
+            </table>
                     <div style="float:right;">
                         <button ng-show="pokaziReproMaterijal()" type="submit" class="btn btn-danger"> Dodaj Repro Materijal</button>
                     </div>

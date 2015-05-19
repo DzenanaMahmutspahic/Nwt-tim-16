@@ -292,6 +292,8 @@
     <Content Include="Content\themes\base\minified\jquery.ui.slider.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.tabs.min.css" />
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
+    <Content Include="Content\themes\bosnia-and-herzegovina-156191_640.png" />
+    <Content Include="Content\themes\united_kingdom_flag.png" />
     <Content Include="Content\ui-bootstrap-csp.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -317,6 +319,7 @@
     <Content Include="Images\Captcha\c4.png" />
     <Content Include="Images\Captcha\c5.png" />
     <Content Include="Images\eng.png" />
+    <Content Include="Images\kopirnica.jpg" />
     <Content Include="Images\Profile\user.png" />
     <Content Include="Images\Profile\user2.png" />
     <Content Include="index.html" />
@@ -325,6 +328,9 @@
     <Content Include="Modules\Authentication\Views\login.html" />
     <Content Include="Modules\Authentication\Views\Registration.html" />
     <Content Include="Modules\Authentication\Views\ResetPassword.html" />
+    <Content Include="Modules\Direktive\brojeviDirektiva.js" />
+    <Content Include="Modules\Direktive\IspisDirektiva.js" />
+    <Content Include="Modules\Direktive\meniDirektiva.js" />
     <Content Include="Modules\Direktive\DzenyDirective.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

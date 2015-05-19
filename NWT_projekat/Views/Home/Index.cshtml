@@ -1,37 +1,51 @@
-﻿<div id="body" class="ng-scope" @*ng-app="angularTranslateApp"*@ >
-    <section class="featured">
-        <div class="content-wrapper">
-            <hgroup class="title">
-                <h1>Online kopirnica</h1>
-                <h2>Modify the code in this template to jump-start your ASP.NET Web API development.</h2>
-            </hgroup>
-            <p>
-                ASP.NET Web API allows you to expose your applications, data and services to the
-                web directly over HTTP.
-            </p>
-            <p>
+﻿<div id="body" class="ng-scope" @*ng-app="angularTranslateApp"*@>
 
-            </p>
+  
 
+
+
+    <div class="content-wrapper" ng-style="{'background-color':'#7debbc', 'height':'700px'}">
+        <hgroup class=" title" ng-style="{'background-color':'lightgreen'; 'width':'100%'}">
+            <h1>Online kopirnica</h1>
+            <hr />
+            <h2>Online kopirnica is a website made by ETF students to improve their knowledge</h2>
+        </hgroup>
+        <p>
+            ASP.NET Web API allows you to expose your applications, data and services to the
+            web directly over HTTP.
+        </p>
+      
+     <div>   <img src="~/Images/kopirnica.jpg" alt="Description"  style="float:left;margin-top:35px;"/> </div>
+        <div style="margin-left:650px;margin-top:60px;margin-right:20px;border:dotted;border-color:gray"><h3>
+    Posebna ponuda za studente, samo 0.03 KM po stranici! Uvijek uz Vas, Vaša online kopirnica!
+</h3> </div>
+
+        <div style="margin-left:650px;margin-top:30px;margin-right:20px;border:dotted;border-color:gray">
+            <h3>
+               Novo u ponudi, izrada poklon rokovnika!
+            </h3>
         </div>
+
+        <div style="margin-left:650px;margin-top:30px;margin-right:20px;border:dotted;border-color:gray">
+            <h3>
+                Obavještavamo cijenjene klijente da je izdat novi cjenik usluga.
+            </h3>
+        </div>
+    </div>
+   
+    </div>
+
+
+
+    <section class="featured">
+
+
+
     </section>
 
 
 
 
-    <script src="../../../Scripts/angular.js"></script>
-    <script src="../../../Scripts/angular-translate.js"></script>
-    <script src="../../../Scripts/app.js"></script>
-    <script src="../../../Scripts/angular-translate.min.js"></script>
-    <script src="../../../Scripts/angular-route.min.js"></script>
-    <script src="../../../Scripts/angular-cookies.min.js"></script>
-    <script src="~/Scripts/angular-translate-loader-url.min.js"></script>
-    <div ng-controller="Ctrl" class="ng-scope">
-        <button class="btn ng-scope" ng-click="changeLanguage('bos_BOS')" translate="BUTTON_BOS">Bosanski</button>
-        <button class="btn ng-scope" ng-click="changeLanguage('en_EN')" translate="BUTTON_EN">Engleski</button>
-    </div>
 
-
-    <p>{{ 'GREETING' | translate }}</p>
 
 </div>
