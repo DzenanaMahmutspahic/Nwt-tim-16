@@ -9,7 +9,7 @@ using System.Web.Http;
 
 namespace NWT_projekat.Controllers
 {
-    public class PosaoController: ApiController
+    public class PosaoController : ApiController
     {
 
         #region *** Fields ***
@@ -104,12 +104,13 @@ namespace NWT_projekat.Controllers
                     Content = new JsonContent(q)
                 };
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _zapisnik.Zapisi(ex.ToString(), 3);
             }
             return new HttpResponseMessage()
             {
+                StatusCode = System.Net.HttpStatusCode.BadRequest,
                 Content = new JsonContent("{\"message\":\"Greska u izvrsavanju servisa!\"}")
             };
         }
@@ -130,18 +131,22 @@ namespace NWT_projekat.Controllers
             {
                 var q = _dbPomocnik.IzvrsiProceduru<Posao, Posao>(Konstante.DODAJ_POSAO, p).FirstOrDefault();
 
+                if (q.ID != 0)
+                    p.ID = q.ID;
+
                 return new HttpResponseMessage()
                 {
-                    Content = new JsonContent(q)
+                    Content = new JsonContent(p)
                 };
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _zapisnik.Zapisi(ex.ToString(), 3);
             }
             return new HttpResponseMessage()
             {
-                Content = new JsonContent("{\"message\":\"Greska u izvrsavanju servisa!\"}")
+                StatusCode = System.Net.HttpStatusCode.BadRequest,
+                Content = new JsonContent(new { message = "Greska u izvrsavanju servisa!", success = false })
             };
         }
 
@@ -173,12 +178,13 @@ namespace NWT_projekat.Controllers
                     Content = new JsonContent(q)
                 };
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _zapisnik.Zapisi(ex.ToString(), 3);
             }
             return new HttpResponseMessage()
             {
+                StatusCode = System.Net.HttpStatusCode.BadRequest,
                 Content = new JsonContent("{\"message\":\"Greska u izvrsavanju servisa!\"}")
             };
         }
@@ -195,7 +201,7 @@ namespace NWT_projekat.Controllers
             {
                 var q = _dbPomocnik.IzvrsiProceduru<Montaza, Montaza>(Konstante.DODAJ_MONTAZU, m).FirstOrDefault();
 
-                if(q != null && q.ID != 0)
+                if (q != null && q.ID != 0)
                 {
                     m.ID = q.ID;
                     return new HttpResponseMessage()
@@ -208,12 +214,13 @@ namespace NWT_projekat.Controllers
                     Content = new JsonContent(@"{'message':'Greška u dodavanju Montaže.'}")
                 };
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _zapisnik.Zapisi(ex.ToString(), 3);
             }
             return new HttpResponseMessage()
             {
+                StatusCode = System.Net.HttpStatusCode.BadRequest,
                 Content = new JsonContent("{\"message\":\"Greska u izvrsavanju servisa!\"}")
             };
         }
@@ -230,17 +237,20 @@ namespace NWT_projekat.Controllers
             {
                 var q = _dbPomocnik.IzvrsiProceduru<Repromaterijal, Repromaterijal>(Konstante.DODAJ_REPROMATERIJAL, r).FirstOrDefault();
 
+                if (q.ID != 0)
+                    r.ID = q.ID;
                 return new HttpResponseMessage()
                 {
-                    Content = new JsonContent(q)
+                    Content = new JsonContent(r)
                 };
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _zapisnik.Zapisi(ex.ToString(), 3);
             }
             return new HttpResponseMessage()
             {
+                StatusCode = System.Net.HttpStatusCode.BadRequest,
                 Content = new JsonContent("{\"message\":\"Greska u izvrsavanju servisa!\"}")
             };
         }
@@ -257,17 +267,20 @@ namespace NWT_projekat.Controllers
             {
                 var q = _dbPomocnik.IzvrsiProceduru<Knjigovodstvena_dorada, Knjigovodstvena_dorada>(Konstante.DODAJ_KNJIGOVODSTVENU_DORADU, k).FirstOrDefault();
 
+                if (q.ID != 0)
+                    k.ID = q.ID;
                 return new HttpResponseMessage()
                 {
-                    Content = new JsonContent(q)
+                    Content = new JsonContent(k)
                 };
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _zapisnik.Zapisi(ex.ToString(), 3);
             }
             return new HttpResponseMessage()
             {
+                StatusCode = System.Net.HttpStatusCode.BadRequest,
                 Content = new JsonContent("{\"message\":\"Greska u izvrsavanju servisa!\"}")
             };
         }
@@ -284,17 +297,21 @@ namespace NWT_projekat.Controllers
             {
                 var q = _dbPomocnik.IzvrsiProceduru<Rucni_rad, Rucni_rad>(Konstante.DODAJ_RUCNI_RAD, r).FirstOrDefault();
 
+                if (q.ID != 0)
+                    r.ID = q.ID;
+
                 return new HttpResponseMessage()
                 {
-                    Content = new JsonContent(q)
+                    Content = new JsonContent(r)
                 };
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _zapisnik.Zapisi(ex.ToString(), 3);
             }
             return new HttpResponseMessage()
             {
+                StatusCode = System.Net.HttpStatusCode.BadRequest,
                 Content = new JsonContent("{\"message\":\"Greska u izvrsavanju servisa!\"}")
             };
         }
@@ -311,12 +328,17 @@ namespace NWT_projekat.Controllers
             {
                 var q = _dbPomocnik.IzvrsiProceduru<Stampa, Stampa>(Konstante.DODAJ_STAMPU, s).FirstOrDefault();
 
+                if (q.Stampa_ID != 0)
+                {
+                    s.Stampa_ID = q.Stampa_ID;
+                }
+
                 return new HttpResponseMessage()
                 {
-                    Content = new JsonContent(q)
+                    Content = new JsonContent(s)
                 };
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _zapisnik.Zapisi(ex.ToString(), 3);
             }
@@ -338,12 +360,15 @@ namespace NWT_projekat.Controllers
             {
                 var q = _dbPomocnik.IzvrsiProceduru<Vanjska_usluga, Vanjska_usluga>(Konstante.DODAJ_VANJSKU_USLUGU, v).FirstOrDefault();
 
+                if (q.ID != 0)
+                    v.ID = q.ID;
+
                 return new HttpResponseMessage()
                 {
-                    Content = new JsonContent(q)
+                    Content = new JsonContent(v)
                 };
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _zapisnik.Zapisi(ex.ToString(), 3);
             }
@@ -370,7 +395,7 @@ namespace NWT_projekat.Controllers
                     Content = new JsonContent(q)
                 };
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _zapisnik.Zapisi(ex.ToString(), 3);
             }
