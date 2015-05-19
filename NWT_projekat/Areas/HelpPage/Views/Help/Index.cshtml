@@ -13,18 +13,10 @@
 
 <header>
 
-    <script src="../../../Scripts/angular-translate.js"></script>
-    <script src="../../../Scripts/angular.js"></script>
-    <script src="../../../Scripts/app.js"></script>
-    <script src="../../../Scripts/angular-translate.min.js"></script>
-    <script src="~/Scripts/angular-translate-loader-url.min.js"></script>
-    <div ng-controller="Ctrl" class="ng-scope">
-        <button class="btn ng-scope" ng-style="{'background-color':'lightgreen'}" ng-click="changeLanguage('bos_BOS')" translate="BUTTON_BOS" ng-style="{'background-color':'lightgreen'}">Bosanski</button>
-        <button class="btn ng-scope" ng-style="{'background-color':'lightgreen'}" ng-click="changeLanguage('en_EN')" translate="BUTTON_EN" ng-style="{'background-color':'lightgreen'}">Engleski</button>
-    </div>
+ 
 
 
-    <p>{{ 'GREETING' | translate }}</p>
+   
 
     <div class="content-wrapper" style="background-color:#ffffff">
      
@@ -32,25 +24,26 @@
 
     </div>
  
-    <div class="content-wrapper">
-   
+    <div class="content-wrapper" ng-style="{'background-color':'lightgreen'; 'width':'100%'}">
+
         <div class="float-left" style="margin-top:50px; float:left">
             <h3>@ViewBag.Title</h3>
         </div>
-   
-      
+
+
+    </div>
+    <div class="content-wrapper"  ng-style="{'background-color':'lightgreen'; 'width':'100%'}">
+        <h2>Introduction</h2>
+        <p>
+            Provide a general description of your APIs here.
+        </p>
     </div>
     </header>
 
 <div id="body">
    
     <section class="content-wrapper" style="margin-top:25px;">
-        <div class="content-wrapper" style="background-color:#0094ff">
-            <h2>Introduction</h2>
-            <p>
-                Provide a general description of your APIs here.
-            </p>
-        </div>
+    
     </section>
     <section class="content-wrapper main-content clear-fix">
         @foreach (var group in apiGroups)
