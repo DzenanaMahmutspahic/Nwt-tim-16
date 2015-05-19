@@ -109,6 +109,63 @@ angular.module('BasicHttpAuthExample')
                 alert("Neuspjelo postavljanje Štampe.");
             });
         };
+        service.dodajReproMaterijal = function (p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15,
+            p16, p17, p18, p19, p20, p21, p22, p23, p24, p25, p26, p27, p28, p29, p30, p31, p32, p33, p34, p35, p36, p37, p38, p39,
+            p40, p41, p42, callback) {
+            $http.post('/api/Posao/UnesiRepromaterijalJson', {
+                Papir1_materijal: p1,
+                 Papir1_sati : p2,
+                 Papir1_cijena : p3,
+                 Papir2_materijal : p4,
+                 Papir2_sati : p5,
+                 Papir2_cijena : p6,
+                 PapirZK_materijal : p7,
+                 PapirZK_sati : p8,
+                 PapirZK_cijena : p9,
+                 MaterijalZXM_materijal : p10,
+                 MaterijalZXM_sati : p11,
+                 MaterijalZXM_cijena : p12,
+                 MZXMBoja_materijal : p13,
+                 MZXMBoja_sati : p14,
+                 MZXMBoja_cijena : p15,
+                 MZXMB3_materijal : p16,
+                 MZXMB3_sati : p17,
+                 MZXMB3_cijena : p18,
+                 MZXMFilmB2_materijal : p19,
+                 MZXMFilmB2_sati : p20,
+                 MZXMFilmB2_cijena : p21,
+                 MZXMFilmB3_materijal : p22,
+                 MZXMFilmB3_sati : p23,
+                 MZXMFilmB3_cijena : p24,
+                 OffsetPloceB5_materijal : p25,
+                 OffsetPloceB5_sati : p26,
+                 OffsetPloceB5_cijena : p27,
+                 OffsetPloceB3_materijal : p29,
+                 OffsetPloceB3_sati : p29,
+                 OffsetPloceB3_cijena : p30,
+                 OffsetPloceB2_materijal : p31,
+                 OffsetPloceB2_sati : p32,
+                 OffsetPloceB2_cijena : p33,
+                 Folija_materijal : p34,
+                 Folija_sati : p35,
+                 Folija_cijena : p36,
+                 Toner_materijal : p37,
+                 Toner_sati : p38,
+                 Toner_cijena : p39,
+                 Ostalo_materijal : p40,
+                 Ostalo_sati : p41,
+                 Ostalo_cijena : p42,
+                Komentar: "",
+                Korisnik_ID: 1
+            })
+            .success(function (response) {
+                var a = { success: true, data: response };
+                callback(a);
+            })
+            .error(function (data, status, headers, config) {
+                alert("Neuspjelo postavljanje Repro Materijala.");
+            });
+        };
         service.dodajVanjskuUslugu = function (okM, okC, okS, pM, pS, pC, callback) {
             $http.post('/api/Posao/UnesiVanjskuUsluguJson', {
                 Obracun_kalkulacije_materijal: okM,
@@ -189,6 +246,26 @@ angular.module('BasicHttpAuthExample')
             })
             .error(function (data, status, headers, config) {
                 alert("Neuspjelo postavljanje Ručnog Rada.");
+            });
+        };
+        service.dodajPosao = function (p1, p2, p3, p4, p5, p6, callback) {
+            $http.post('/api/Posao/UnesiPosaoJson', {
+                Repromaterijal_ID: p1,
+                DTP_ID: p2,
+                Montaza_ID: p3,
+                Knjigovodstvena_dorada_ID: p4,
+                Rucni_rad_ID: p5,
+                Stampa_ID: p6,
+                Komentar: "",
+                Korisnik_ID: 1
+            })
+            .success(function (response) {
+                var a = { success: true, data: response };
+                callback(a);
+            })
+            .error(function (data, status, headers, config) {
+                alert("Neuspjelo postavljanje Ručnog Rada.");
+                callback(data);
             });
         };
         return service;

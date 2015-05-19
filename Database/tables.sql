@@ -408,3 +408,13 @@ CREATE TABLE KorisnikSlika(
 	KorisnikId INT NOT NULL,
 	Putanja VARCHAR(350) NOT NULL
 )
+
+if 1=2 -- Nece se nikad izvrsiti. Korisno za rucno brisanje tabele (Selektovanjem komande i F5
+	DROP TABLE PodaciZaGraf
+GO
+CREATE TABLE PodaciZaGraf(
+	ID INT IDENTITY(1,1),
+	Vrsta VARCHAR(20) NOT NULL,
+	VrijemeUpisa DATETIME DEFAULT GETUTCDATE(),
+	Podaci VARCHAR(20)
+)

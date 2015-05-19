@@ -94,36 +94,36 @@ angular.module('BasicHttpAuthExample')
         };
 
         $scope.dodajStampu = function () {
-            PosaoService.dodajStampu($scope.t4c1, $scope.t4c2, $scope.t4c3, $scope.t4c4, $scope.t4c5,
-                $scope.t4c6, $scope.t4c7, $scope.t4c8, $scope.t4c9, $scope.t4c10,
-                $scope.t4c11, $scope.t4c12, $scope.t4c13, $scope.t4c14, $scope.t4c15, $scope.t4c16, $scope.t4c17, $scope.t4c18,
-                $scope.t4c19, $scope.t4c20, $scope.t4c21, $scope.t4c22, $scope.t4c23, $scope.t4c24, $scope.t4c25, $scope.t4c26,
-                $scope.t4c27, $scope.t4c28, $scope.t4c29, $scope.t4c30, $scope.t4c31, $scope.t4c32, $scope.t4c33,
+            PosaoService.dodajStampu($scope.t5c1, $scope.t5c2, $scope.t5c3, $scope.t5c4, $scope.t5c5,
+                $scope.t5c6, $scope.t5c7, $scope.t5c8, $scope.t5c9, $scope.t5c10,
+                $scope.t5c11, $scope.t5c12, $scope.t5c13, $scope.t5c14, $scope.t5c15, $scope.t5c16, $scope.t5c17, $scope.t5c18,
+                $scope.t5c19, $scope.t5c20, $scope.t5c21, $scope.t5c22, $scope.t5c23, $scope.t5c24, $scope.t5c25, $scope.t5c26,
+                $scope.t5c27, $scope.t5c28, $scope.t5c29, $scope.t5c30, $scope.t5c31, $scope.t5c32, $scope.t5c33,
                 function (response) {
-                if (response.success) {
-                    if ($scope.data !== undefined && $scope.data !== null) {
-                        if ($scope.data.posao !== undefined && $scope.data.posao !== null) {
-                            if ($scope.data.posao.Stampa_ID !== undefined && $scope.data.posao.Stampa_ID !== null) {
-                                $scope.data.posao.Stampa_ID = response.data.ID;
+                    if (response.success) {
+                        if ($scope.data !== undefined && $scope.data !== null) {
+                            if ($scope.data.posao !== undefined && $scope.data.posao !== null) {
+                                if ($scope.data.posao.Stampa_ID !== undefined && $scope.data.posao.Stampa_ID !== null) {
+                                    $scope.data.posao.Stampa_ID = response.data.Stampa_ID;
+                                }
+                                else {
+                                    $scope.data.posao['Stampa_ID'] = response.data.Stampa_ID;
+                                }
                             }
                             else {
-                                $scope.data.posao['Stampa_ID'] = response.data.ID;
+                                $scope.data['posao'] = { Stampa_ID: response.data.Stampa_ID };
                             }
                         }
                         else {
-                            $scope.data['posao'] = { Stampa_ID: response.data.ID };
+                            $scope['data'] = { posao: { Stampa_ID: response.data.Stampa_ID } };
                         }
+                        $scope.data['Stampa'] = response.data;
+                    } else {
+                        $scope.error = response.message;
+                        $scope.errorMessage = $sce.trustAsHtml(response.message);
                     }
-                    else {
-                        $scope['data'] = { posao: { Stampa_ID: response.data.ID } };
-                    }
-                    $scope.data['Stampa'] = response.data;
-                } else {
-                    $scope.error = response.message;
-                    $scope.errorMessage = $sce.trustAsHtml(response.message);
-                }
-                //$scope.dataLoading = false;
-            })
+                    //$scope.dataLoading = false;
+                })
         };
         $scope.pokaziStampu = function () {
             if ($scope.data !== undefined && $scope.data !== null)
@@ -133,8 +133,50 @@ angular.module('BasicHttpAuthExample')
             return true;
         };
 
+        $scope.dodajReproMaterijal = function () {
+            $scope.dataLoading = true;
+            PosaoService.dodajReproMaterijal($scope.t2c1, $scope.t2c2, $scope.t2c3, $scope.t2c4, $scope.t2c5,
+                $scope.t2c6, $scope.t2c7, $scope.t2c8, $scope.t2c9, $scope.t2c10,
+                $scope.t2c11, $scope.t2c12, $scope.t2c13, $scope.t2c14, $scope.t2c15, $scope.t2c16, $scope.t2c17, $scope.t2c18,
+                $scope.t2c19, $scope.t2c20, $scope.t2c21, $scope.t2c22, $scope.t2c23, $scope.t2c24, $scope.t2c25, $scope.t2c26,
+                $scope.t2c27, $scope.t2c28, $scope.t2c29, $scope.t2c30, $scope.t2c31, $scope.t2c32, $scope.t2c33, $scope.t2c34,
+                $scope.t2c35, $scope.t2c36, $scope.t2c37, $scope.t2c38, $scope.t2c39, $scope.t2c40, $scope.t2c41, $scope.t2c42,
+                function (response) {
+                    if (response.success) {
+                        if ($scope.data !== undefined && $scope.data !== null) {
+                            if ($scope.data.posao !== undefined && $scope.data.posao !== null) {
+                                if ($scope.data.posao.ReproMaterijal_ID !== undefined && $scope.data.posao.ReproMaterijal_ID !== null) {
+                                    $scope.data.posao.ReproMaterijal_ID = response.data.ID;
+                                }
+                                else {
+                                    $scope.data.posao['ReproMaterijal_ID'] = response.data.ID;
+                                }
+                            }
+                            else {
+                                $scope.data['posao'] = { ReproMaterijal_ID: response.data.ID };
+                            }
+                        }
+                        else {
+                            $scope['data'] = { posao: { ReproMaterijal_ID: response.data.ID } };
+                        }
+                        $scope.data['ReproMaterijal'] = response.data;
+                    } else {
+                        $scope.error = response.message;
+                        $scope.errorMessage = $sce.trustAsHtml(response.message);
+                    }
+                    $scope.dataLoading = false;
+                })
+        };
+        $scope.pokaziReproMaterijal = function () {
+            if ($scope.data !== undefined && $scope.data !== null)
+                if ($scope.data.posao !== undefined && $scope.data.posao !== null)
+                    if ($scope.data.posao.ReproMaterijal_ID !== undefined && $scope.data.posao.ReproMaterijal_ID !== null)
+                        return $scope.data.posao.ReproMaterijal_ID == 0;
+            return true;
+        };
+
         $scope.dodajVanjskuUslugu = function () {
-            PosaoService.dodajVanjskuUslugu($scope.t5c1, $scope.t5c2, $scope.t5c3, $scope.t5c5, $scope.t5c6, $scope.t5c7, function (response) {
+            PosaoService.dodajVanjskuUslugu($scope.t6c1, $scope.t6c2, $scope.t6c3, $scope.t6c5, $scope.t6c6, $scope.t6c7, function (response) {
                 if (response.success) {
                     if ($scope.data !== undefined && $scope.data !== null) {
                         if ($scope.data.posao !== undefined && $scope.data.posao !== null) {
@@ -169,35 +211,35 @@ angular.module('BasicHttpAuthExample')
         };
 
         $scope.dodajKnjigovDoradu = function () {
-            PosaoService.dodajKnjigovDoradu($scope.t6c1, $scope.t6c2, $scope.t6c3, $scope.t6c4, $scope.t6c5,
-                $scope.t6c6, $scope.t6c7, $scope.t6c8, $scope.t6c9, $scope.t6c10,
-                $scope.t6c11, $scope.t6c12, $scope.t6c13, $scope.t6c14, $scope.t6c15, $scope.t6c16, $scope.t6c17, $scope.t6c18,
-                $scope.t6c19, $scope.t6c20, $scope.t6c21,
+            PosaoService.dodajKnjigovDoradu($scope.t7c1, $scope.t7c2, $scope.t7c3, $scope.t7c4, $scope.t7c5,
+                $scope.t7c6, $scope.t7c7, $scope.t7c8, $scope.t7c9, $scope.t7c10,
+                $scope.t7c11, $scope.t7c12, $scope.t7c13, $scope.t7c14, $scope.t7c15, $scope.t7c16, $scope.t7c17, $scope.t7c18,
+                $scope.t7c19, $scope.t7c20, $scope.t7c21,
                 function (response) {
-                if (response.success) {
-                    if ($scope.data !== undefined && $scope.data !== null) {
-                        if ($scope.data.posao !== undefined && $scope.data.posao !== null) {
-                            if ($scope.data.posao.KnjigovDrada_ID !== undefined && $scope.data.posao.KnjigovDrada_ID !== null) {
-                                $scope.data.posao.KnjigovDrada_ID = response.data.ID;
+                    if (response.success) {
+                        if ($scope.data !== undefined && $scope.data !== null) {
+                            if ($scope.data.posao !== undefined && $scope.data.posao !== null) {
+                                if ($scope.data.posao.KnjigovDrada_ID !== undefined && $scope.data.posao.KnjigovDrada_ID !== null) {
+                                    $scope.data.posao.KnjigovDrada_ID = response.data.ID;
+                                }
+                                else {
+                                    $scope.data.posao['KnjigovDrada_ID'] = response.data.ID;
+                                }
                             }
                             else {
-                                $scope.data.posao['KnjigovDrada_ID'] = response.data.ID;
+                                $scope.data['posao'] = { KnjigovDrada_ID: response.data.ID };
                             }
                         }
                         else {
-                            $scope.data['posao'] = { KnjigovDrada_ID: response.data.ID };
+                            $scope['data'] = { posao: { KnjigovDrada_ID: response.data.ID } };
                         }
+                        $scope.data['KnjigovDrada'] = response.data;
+                    } else {
+                        $scope.error = response.message;
+                        $scope.errorMessage = $sce.trustAsHtml(response.message);
                     }
-                    else {
-                        $scope['data'] = { posao: { KnjigovDrada_ID: response.data.ID } };
-                    }
-                    $scope.data['KnjigovDrada'] = response.data;
-                } else {
-                    $scope.error = response.message;
-                    $scope.errorMessage = $sce.trustAsHtml(response.message);
-                }
-                //$scope.dataLoading = false;
-            })
+                    //$scope.dataLoading = false;
+                })
         };
         $scope.pokaziKnjigovDoradu = function () {
             if ($scope.data !== undefined && $scope.data !== null)
@@ -212,30 +254,30 @@ angular.module('BasicHttpAuthExample')
                 $scope.t7c6, $scope.t7c7, $scope.t7c8, $scope.t7c9, $scope.t7c10,
                 $scope.t7c11, $scope.t7c12, $scope.t7c13, $scope.t7c14, $scope.t7c15,
                 function (response) {
-                if (response.success) {
-                    if ($scope.data !== undefined && $scope.data !== null) {
-                        if ($scope.data.posao !== undefined && $scope.data.posao !== null) {
-                            if ($scope.data.posao.RucniRad_ID !== undefined && $scope.data.posao.RucniRad_ID !== null) {
-                                $scope.data.posao.RucniRad_ID = response.data.ID;
+                    if (response.success) {
+                        if ($scope.data !== undefined && $scope.data !== null) {
+                            if ($scope.data.posao !== undefined && $scope.data.posao !== null) {
+                                if ($scope.data.posao.RucniRad_ID !== undefined && $scope.data.posao.RucniRad_ID !== null) {
+                                    $scope.data.posao.RucniRad_ID = response.data.ID;
+                                }
+                                else {
+                                    $scope.data.posao['RucniRad_ID'] = response.data.ID;
+                                }
                             }
                             else {
-                                $scope.data.posao['RucniRad_ID'] = response.data.ID;
+                                $scope.data['posao'] = { RucniRad_ID: response.data.ID };
                             }
                         }
                         else {
-                            $scope.data['posao'] = { RucniRad_ID: response.data.ID };
+                            $scope['data'] = { posao: { RucniRad_ID: response.data.ID } };
                         }
+                        $scope.data['RucniRad'] = response.data;
+                    } else {
+                        $scope.error = response.message;
+                        $scope.errorMessage = $sce.trustAsHtml(response.message);
                     }
-                    else {
-                        $scope['data'] = { posao: { RucniRad_ID: response.data.ID } };
-                    }
-                    $scope.data['RucniRad'] = response.data;
-                } else {
-                    $scope.error = response.message;
-                    $scope.errorMessage = $sce.trustAsHtml(response.message);
-                }
-                //$scope.dataLoading = false;
-            })
+                    //$scope.dataLoading = false;
+                })
         };
         $scope.pokaziRucniRad = function () {
             if ($scope.data !== undefined && $scope.data !== null)
@@ -243,5 +285,19 @@ angular.module('BasicHttpAuthExample')
                     if ($scope.data.posao.RucniRad_ID !== undefined && $scope.data.posao.RucniRad_ID !== null)
                         return $scope.data.posao.RucniRad_ID == 0;
             return true;
+        };
+
+        $scope.dodajPosao = function () {
+            PosaoService.dodajPosao($scope.data.posao.ReproMaterijal_ID, $scope.data.posao.DTP_ID,$scope.data.posao.Montaza_ID,
+                 $scope.data.posao.KnjigovDrada_ID, $scope.data.posao.RucniRad_ID, $scope.data.posao.Stampa_ID,
+                function (response) {
+                    if (response.success) {
+                        $location.path('/');
+                    } else {
+                        $scope.error = response.message;
+                        $scope.errorMessage = $sce.trustAsHtml(response.message);
+                    }
+                    //$scope.dataLoading = false;
+                })
         };
     }])

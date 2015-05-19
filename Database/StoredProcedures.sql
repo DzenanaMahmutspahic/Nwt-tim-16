@@ -843,13 +843,16 @@ BEGIN
 	 @Vrijeme_cekanja,
 	 @Komentar        
 	)
-	SELECT SCOPE_IDENTITY();
+	SELECT SCOPE_IDENTITY() as Stampa_ID;
 	RETURN SCOPE_IDENTITY();
 END
 
 
 GO
 
+IF OBJECT_ID('DodajVanjskuUslugu', 'P') IS NOT NULL
+	DROP PROCEDURE DodajVanjskuUslugu;
+GO
 
 CREATE PROCEDURE  dbo.DodajVanjskuUslugu  
 		@Korisnik_ID INT,
@@ -903,11 +906,15 @@ BEGIN
 	@Vrijeme_cekanja ,
 	@Komentar 
 	)
-	SELECT SCOPE_IDENTITY();
+	SELECT SCOPE_IDENTITY() as ID;
 	RETURN SCOPE_IDENTITY();
 END
 GO
 
+
+IF OBJECT_ID('DodajKnjigovodstvenuDoradu', 'P') IS NOT NULL
+	DROP PROCEDURE DodajKnjigovodstvenuDoradu;
+GO
 
 CREATE PROCEDURE  dbo.DodajKnjigovodstvenuDoradu 
 	
@@ -1007,11 +1014,10 @@ BEGIN
 	 @Vrijeme_cekanja,
 	 @Komentar   
 	)
-	SELECT SCOPE_IDENTITY();
+	SELECT SCOPE_IDENTITY() as ID;
 	RETURN SCOPE_IDENTITY();
 END
 GO
-
 
 IF OBJECT_ID('DajSliku', 'P') IS NOT NULL
 	DROP PROCEDURE DajSliku;
@@ -1024,6 +1030,7 @@ BEGIN
 	INNER JOIN Korisnik k on k.Id = ks.KorisnikId
 	Where k.Username = @Username
 END
+
 
 IF OBJECT_ID('[DodajSliku]', 'P') IS NOT NULL
 	DROP PROCEDURE [DodajSliku];
