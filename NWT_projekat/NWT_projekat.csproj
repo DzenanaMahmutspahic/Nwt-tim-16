@@ -311,18 +311,40 @@
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <Content Include="ApplicationInsights.config" />
     <Content Include="Icon.png" />
+    <Content Include="Images\301.GIF" />
+    <Content Include="Images\ba.png" />
+    <Content Include="Images\Captcha\c1.png" />
+    <Content Include="Images\Captcha\c2.png" />
+    <Content Include="Images\Captcha\c3.png" />
+    <Content Include="Images\Captcha\c4.png" />
+    <Content Include="Images\Captcha\c5.png" />
+    <Content Include="Images\eng.png" />
+    <Content Include="Images\Profile\user.png" />
+    <Content Include="Images\Profile\user2.png" />
     <Content Include="index.html" />
-    <Content Include="Modules\Authentication\controllers.js" />
-    <Content Include="Modules\Authentication\services.js" />
+    <Content Include="Modules\Authentication\loginControllers.js" />
+    <Content Include="Modules\Authentication\loginServices.js" />
     <Content Include="Modules\Authentication\Views\login.html" />
     <Content Include="Modules\Authentication\Views\Registration.html" />
     <Content Include="Modules\Authentication\Views\ResetPassword.html" />
-    <Content Include="Modules\Home\controllers.js" />
-    <Content Include="Modules\Home\Views\home.html" />
-    <Content Include="Modules\Posao\controllers.js" />
-    <Content Include="Modules\Posao\services.js" />
+    <Content Include="Modules\Direktive\IspisDirektiva.js" />
+    <Content Include="Modules\Direktive\meniDirektiva.js" />
+    <Content Include="Modules\Direktive\DzenyDirective.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\Direktive\posaoDirective.js" />
+    <Content Include="Modules\Home\Views\home.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\Home\Views\Profil.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Modules\Posao\posaoControllers.js" />
+    <Content Include="Modules\Posao\posaoServices.js" />
     <Content Include="Modules\Posao\View\prikaz_posla.html" />
     <Content Include="Modules\Posao\View\unos_posla.html" />
+    <Content Include="Modules\Upload\uploadController.js" />
+    <Content Include="Modules\Upload\View\uploadFile.html" />
     <Content Include="Scripts\angular-animate.js" />
     <Content Include="Scripts\angular-animate.min.js" />
     <Content Include="Scripts\angular-aria.js" />
@@ -361,7 +383,6 @@
     <Content Include="Scripts\angular-messages.min.js.map" />
     <Content Include="Scripts\angular-loader.min.js.map" />
     <Content Include="Scripts\angular-cookies.min.js.map" />
-    <Content Include="Scripts\angular-aria.min.js.map" />
     <Content Include="Scripts\angular-animate.min.js.map" />
     <Content Include="Scripts\angular.min.js.map" />
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -1135,7 +1156,6 @@
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\npm.js" />
-    <Content Include="Views\Home\RadniNalog.html" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>

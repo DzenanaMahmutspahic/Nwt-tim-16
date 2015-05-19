@@ -1,70 +1,37 @@
-﻿
-<header>
-
-
-    <script src="../../../Scripts/angular-translate.js"></script>
-    <script src="../../../Scripts/angular.js"></script>
-    <script src="../../../Scripts/app.js"></script>
-    <script src="../../../Scripts/angular-translate.min.js"></script>
-    <script src="~/Scripts/angular-translate-loader-url.min.js"></script>
-    <div ng-controller="Ctrl" class="ng-scope">
-        <button class="btn ng-scope" ng-click="changeLanguage('bos_BOS')" translate="BUTTON_BOS" ng-style="{ backgroundImage: Content/themes/bosnia-and-herzegovina-156191_640.png}">Bosanski</button>
-        <button class="btn ng-scope" ng-click="changeLanguage('en_EN')" translate="BUTTON_EN">Engleski</button>
-    </div>
-
-
-    <p>{{ 'GREETING' | translate }}</p>
-
-
-    <div class="content-wrapper" style="background-color:#ffffff">
-        <div class="float-left">
-            <p class="site-title">
-                <a href="">Online kopirnica</a>
-            </p>
-        </div>
-        <div class="float-right" style="background-color:#ffffff">
-            <nav>
-                <ul id="menu">
-                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
-
-                    <li> <a href="~/index.html">{{ 'LOGIN' | translate }}  </a> </li>
-
-                    <li><a href="~/index.html#/registration">{{ 'REGISTER' | translate }} </a></li>
-
-                </ul>
-            </nav>
-        </div>
-
-    </div>
-</header>
-
-<div id="body" class="ng-scope" ng-app="angularTranslateApp">
-
-
-    
-
-    <section class="featured" style="margin-top:10px;">
-        <div class="content-wrapper" style="margin-top:10px;">
-            <hgroup class="title" style="width:100%">
+﻿<div id="body" class="ng-scope" @*ng-app="angularTranslateApp"*@ >
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
                 <h1>Online kopirnica</h1>
-                <h2>Welcome to Online kopirnica. Please register to get full support.</h2>
+                <h2>Modify the code in this template to jump-start your ASP.NET Web API development.</h2>
             </hgroup>
             <p>
-                By using web , Onine kopirnica allows you to expose your applications, data and services to the
-                web directly over HTTP. 
+                ASP.NET Web API allows you to expose your applications, data and services to the
+                web directly over HTTP.
+            </p>
+            <p>
+
+            </p>
 
         </div>
     </section>
 
 
 
-    @*<div ng-controller="Ctrl" class="ng-scope">
+
+    <script src="../../../Scripts/angular.js"></script>
+    <script src="../../../Scripts/angular-translate.js"></script>
+    <script src="../../../Scripts/app.js"></script>
+    <script src="../../../Scripts/angular-translate.min.js"></script>
+    <script src="../../../Scripts/angular-route.min.js"></script>
+    <script src="../../../Scripts/angular-cookies.min.js"></script>
+    <script src="~/Scripts/angular-translate-loader-url.min.js"></script>
+    <div ng-controller="Ctrl" class="ng-scope">
         <button class="btn ng-scope" ng-click="changeLanguage('bos_BOS')" translate="BUTTON_BOS">Bosanski</button>
         <button class="btn ng-scope" ng-click="changeLanguage('en_EN')" translate="BUTTON_EN">Engleski</button>
     </div>
 
 
-    <p>{{ 'GREETING' | translate }}</p>*@
+    <p>{{ 'GREETING' | translate }}</p>
 
 </div>

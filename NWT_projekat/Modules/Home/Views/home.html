@@ -1,26 +1,16 @@
 ﻿<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <title>Welcome</title>    
-    <script></script>
-    <script src="../../../Scripts/angular-translate.js"></script>
-    <script src="../../../Scripts/angular.js"></script>
-    <script src="../../../Scripts/app.js"></script>
-    <script src="../../../Scripts/angular-translate.min.js"></script>
-    <script src="../../../Scripts/angular-translate-loader-url.js"></script>
-    <script src="../../../Scripts/angular-translate-loader-url.min.js"></script>
+    <title>Welcome</title>
 </head>
 
-<body class="ng-scope" ng-app="angularTranslateApp">
-    <div ng-controller="Ctrl" class="ng-scope">
-        <button class="btn ng-scope" ng-click="changeLanguage('bos_BOS')" translate="BUTTON_BOS">Bosanski</button>
-        <button class="btn ng-scope" ng-click="changeLanguage('en_EN')" translate="BUTTON_EN">Engleski</button>
+<body class="ng-scope" ng-app="BasicHttpAuthExample">
+
+    <div style="position:static; left:0;">
+        <div my-profile></div>
     </div>
-    <h1>Dobrodošli!</h1>
-    <h1>{{ 'WELCOME' | translate }}</h1>
-    <p>You're logged in!!</p>
+    <h1>{{ 'WELCOME' | translate }} </h1>
     <p>{{ 'LOGGED_IN' | translate }}</p>
-    <p><a href="#/posao">Posao</a></a></p>
-    <p><a href="#/login">Logout</a></a></p>
+    <p><a href="#/posao">Posao</a></p>
 </body>
 </html>

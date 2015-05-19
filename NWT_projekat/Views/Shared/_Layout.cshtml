@@ -7,113 +7,50 @@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
     <script type="text/javascript">
-        var appInsights = window.appInsights || function (config) {
-            function s(config) { t[config] = function () { var i = arguments; t.queue.push(function () { t[config].apply(t, i) }) } } var t = { config: config }, r = document, f = window, e = "script", o = r.createElement(e), i, u; for (o.src = config.url || "//az416426.vo.msecnd.net/scripts/a/ai.0.js", r.getElementsByTagName(e)[0].parentNode.appendChild(o), t.cookie = r.cookie, t.queue = [], i = ["Event", "Exception", "Metric", "PageView", "Trace"]; i.length;) s("track" + i.pop()); return config.disableExceptionTracking || (i = "onerror", s("_" + i), u = f[i], f[i] = function (config, r, f, e, o) { var s = u && u(config, r, f, e, o); return s !== !0 && t["_" + i](config, r, f, e, o), s }), t
+        var appInsights=window.appInsights||function(config){
+            function s(config){t[config]=function(){var i=arguments;t.queue.push(function(){t[config].apply(t,i)})}}var t={config:config},r=document,f=window,e="script",o=r.createElement(e),i,u;for(o.src=config.url||"//az416426.vo.msecnd.net/scripts/a/ai.0.js",r.getElementsByTagName(e)[0].parentNode.appendChild(o),t.cookie=r.cookie,t.queue=[],i=["Event","Exception","Metric","PageView","Trace"];i.length;)s("track"+i.pop());return config.disableExceptionTracking||(i="onerror",s("_"+i),u=f[i],f[i]=function(config,r,f,e,o){var s=u&&u(config,r,f,e,o);return s!==!0&&t["_"+i](config,r,f,e,o),s}),t
         }({
-            instrumentationKey: "85183dcf-3643-49e7-a1ee-2a80603da660"
+            instrumentationKey:"85183dcf-3643-49e7-a1ee-2a80603da660"
         });
-
-        window.appInsights = appInsights;
+        
+        window.appInsights=appInsights;
         appInsights.trackPageView();
     </script>
-
-    <script src="../../../Scripts/angular-translate.js"></script>
     <script src="../../../Scripts/angular.js"></script>
+    <script src="../../../Scripts/angular-translate.js"></script>
+
     <script src="../../../Scripts/app.js"></script>
     <script src="../../../Scripts/angular-translate.min.js"></script>
     <script src="~/Scripts/angular-translate-loader-url.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap-theme.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-    <style type="text/css">
-        /* Custom Styles */
-        ul.nav-tabs {
-            width: 220px;
-            margin-top: 20px;
-            border-radius: 4px;
-            border: 1px solid #ddd;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
-        }
-
-            ul.nav-tabs li {
-                margin: 0;
-                border-top: 1px solid #ddd;
-            }
-
-                ul.nav-tabs li:first-child {
-                    border-top: none;
-                }
-
-                ul.nav-tabs li a {
-                    margin: 0;
-                    padding: 8px 16px;
-                    border-radius: 0;
-                }
-
-                ul.nav-tabs li.active a, ul.nav-tabs li.active a:hover {
-                    color: #fff;
-                    background: #0088cc;
-                    border: 1px solid #0088cc;
-                }
-
-                ul.nav-tabs li:first-child a {
-                    border-radius: 4px 4px 0 0;
-                }
-
-                ul.nav-tabs li:last-child a {
-                    border-radius: 0 0 4px 4px;
-                }
-
-            ul.nav-tabs.affix {
-                top: 30px; /* Set the top position of pinned element */
-            }
-    </style>
 
 
     <meta name="description" content="The description of my page" />
 </head>
-<body class="ng-scope" ng-app="angularTranslateApp" data-spy="scroll" data-target="#myScrollspy">
-
-
-    @*<header>
-            <div class="content-wrapper">
-                <div class="float-left">
-                    <p class="site-title">
-                        <a href="~/">Online kopirnica</a>
-                    </p>
-                </div>
-                <div class="float-right">
-                    <nav>
-                        <ul id="menu">
-                            <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
-                            <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
-
-                            <li> <a href="~/index.html">{{ 'LOGIN' | translate }}  </a> </li>
-
-                            <li><a href="~/index.html#/registration">{{ 'REGISTER' | translate }} </a></li>
-                        </ul>
-
-                    </nav>
-                </div>
+<body class="ng-scope" ng-app="BasicHttpAuthExample">
+    <header>
+        <div class="content-wrapper">
+            <div class="float-left">
+                <p class="site-title">
+                    <a href="~/">Online kopirnica</a>
+                </p>
             </div>
-        </header>*@
-    @RenderBody()
+            <div class="float-right">
+                <nav>
+                    <ul id="menu">
+                        <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, null)</li>
+                        <li>@Html.ActionLink("API", "Index", "Help", new { area = "" }, null)</li>
 
-    <div class="container">
+                        <li> <a href="~/index.html">{{ 'LOGIN' | translate }}  </a> </li>
 
-        <div class="row">
-            <div style="float:left" id="myScrollspy">
-                <ul class="nav nav-tabs nav-stacked affix-top" data-spy="affix" data-offset-top="125">
-                    <li class="active"><a href="#section-1" class="">Menu</a></li>
-                    <li><a href="/" class="">Home</a></li>
-                    <li><a href="/Help">API</a></li>
-                    <li> <a href="/index.html" class="ng-binding">Loguj se  </a> </li>
-                    <li><a href="/index.html#/registration" class="ng-binding">Registruj se </a></li>
-                </ul>
+                        <li><a href="~/index.html#/registration">{{ 'REGISTER' | translate }} </a></li>
+                    </ul>
+
+                </nav>
             </div>
         </div>
-    </div>
+    </header>
+    @RenderBody()
+
     @Scripts.Render("~/bundles/jquery")
     @RenderSection("scripts", required: false)
 </body>
