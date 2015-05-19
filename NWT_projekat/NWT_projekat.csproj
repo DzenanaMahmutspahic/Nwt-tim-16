@@ -319,6 +319,7 @@
     <Content Include="Images\Captcha\c4.png" />
     <Content Include="Images\Captcha\c5.png" />
     <Content Include="Images\eng.png" />
+    <Content Include="Images\kopirnica.jpg" />
     <Content Include="Images\Profile\user.png" />
     <Content Include="Images\Profile\user2.png" />
     <Content Include="index.html" />
