@@ -327,12 +327,12 @@
     <Content Include="Modules\Authentication\Views\login.html" />
     <Content Include="Modules\Authentication\Views\Registration.html" />
     <Content Include="Modules\Authentication\Views\ResetPassword.html" />
+    <Content Include="Modules\Direktive\brojeviDirektiva.js" />
     <Content Include="Modules\Direktive\IspisDirektiva.js" />
     <Content Include="Modules\Direktive\meniDirektiva.js" />
     <Content Include="Modules\Direktive\DzenyDirective.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Modules\Direktive\posaoDirective.js" />
     <Content Include="Modules\Home\Views\home.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
