@@ -444,8 +444,9 @@
             </div> <br />
             <a href="javascript:pokaziSakrij('T4')"> <span id="T4s"> + </span> 4.VANJSKA USLUGA</a>
             <div id="T4" class="placeholder">
+                <div vanjska-usluga-direktiva></div>
                 <form name="form_vanjskaUsluga" ng-submit="dodajVanjskuUslugu()" role="form">
-                    <table class="ormular-sekcija table table-striped">
+                    <table class="ormular-sekcija table table-striped" ng-show="pokaziVanjskuUslugu()">
                         <tr>
                             <th> 4. VANjSKA USLUGA</th>
                             <td> &nbsp;</td>

@@ -335,6 +335,7 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Modules\Direktive\meniDirektiva.js" />
+    <Content Include="Modules\Direktive\VanjskaUslugaDirektiva.js" />
     <Content Include="Modules\Home\Views\home.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

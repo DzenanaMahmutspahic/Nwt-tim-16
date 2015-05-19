@@ -111,7 +111,7 @@ namespace NWT_projekat.Controllers
             return new HttpResponseMessage()
             {
                 StatusCode = System.Net.HttpStatusCode.BadRequest,
-                Content = new JsonContent("{\"message\":\"Greska u izvrsavanju servisa!\"}")
+                Content = new JsonContent( new { message = "Greska u izvrsavanju servisa!", success = false})
             };
         }
 
@@ -131,11 +131,7 @@ namespace NWT_projekat.Controllers
             {
                 var q = _dbPomocnik.IzvrsiProceduru<Posao, Posao>(Konstante.DODAJ_POSAO, p).FirstOrDefault();
 
-<<<<<<< HEAD
-                if(q.ID != 0)
-=======
                 if (q.ID != 0)
->>>>>>> 0833e9b6c5d6e3bdda704124ed80b0ac980c1cda
                     p.ID = q.ID;
 
                 return new HttpResponseMessage()
@@ -150,11 +146,7 @@ namespace NWT_projekat.Controllers
             return new HttpResponseMessage()
             {
                 StatusCode = System.Net.HttpStatusCode.BadRequest,
-<<<<<<< HEAD
-                Content = new JsonContent( new {message = "Greska u izvrsavanju servisa!", success = false})
-=======
                 Content = new JsonContent(new { message = "Greska u izvrsavanju servisa!", success = false })
->>>>>>> 0833e9b6c5d6e3bdda704124ed80b0ac980c1cda
             };
         }
 
@@ -193,7 +185,7 @@ namespace NWT_projekat.Controllers
             return new HttpResponseMessage()
             {
                 StatusCode = System.Net.HttpStatusCode.BadRequest,
-                Content = new JsonContent("{\"message\":\"Greska u izvrsavanju servisa!\"}")
+                Content = new JsonContent(new { message = "Greska u izvrsavanju servisa!", success = false })
             };
         }
 
@@ -219,7 +211,7 @@ namespace NWT_projekat.Controllers
                 }
                 return new HttpResponseMessage()
                 {
-                    Content = new JsonContent(@"{'message':'Greška u dodavanju Montaže.'}")
+                    Content = new JsonContent(new { message = "Greska u dodavanju Montaže!", success = false })
                 };
             }
             catch (Exception ex)
@@ -229,7 +221,7 @@ namespace NWT_projekat.Controllers
             return new HttpResponseMessage()
             {
                 StatusCode = System.Net.HttpStatusCode.BadRequest,
-                Content = new JsonContent("{\"message\":\"Greska u izvrsavanju servisa!\"}")
+                Content = new JsonContent(new { message = "Greska u izvrsavanju servisa!", success = false })
             };
         }
 
@@ -245,11 +237,8 @@ namespace NWT_projekat.Controllers
             {
                 var q = _dbPomocnik.IzvrsiProceduru<Repromaterijal, Repromaterijal>(Konstante.DODAJ_REPROMATERIJAL, r).FirstOrDefault();
 
-<<<<<<< HEAD
+
                 if(q.ID != 0)
-=======
-                if (q.ID != 0)
->>>>>>> 0833e9b6c5d6e3bdda704124ed80b0ac980c1cda
                     r.ID = q.ID;
                 return new HttpResponseMessage()
                 {
@@ -263,7 +252,7 @@ namespace NWT_projekat.Controllers
             return new HttpResponseMessage()
             {
                 StatusCode = System.Net.HttpStatusCode.BadRequest,
-                Content = new JsonContent("{\"message\":\"Greska u izvrsavanju servisa!\"}")
+                Content = new JsonContent(new { message = "Greska u izvrsavanju servisa!", success = false })
             };
         }
 
@@ -278,12 +267,8 @@ namespace NWT_projekat.Controllers
             try
             {
                 var q = _dbPomocnik.IzvrsiProceduru<Knjigovodstvena_dorada, Knjigovodstvena_dorada>(Konstante.DODAJ_KNJIGOVODSTVENU_DORADU, k).FirstOrDefault();
-
-<<<<<<< HEAD
-                if(q.ID != 0)
-=======
+                
                 if (q.ID != 0)
->>>>>>> 0833e9b6c5d6e3bdda704124ed80b0ac980c1cda
                     k.ID = q.ID;
                 return new HttpResponseMessage()
                 {
@@ -297,7 +282,7 @@ namespace NWT_projekat.Controllers
             return new HttpResponseMessage()
             {
                 StatusCode = System.Net.HttpStatusCode.BadRequest,
-                Content = new JsonContent("{\"message\":\"Greska u izvrsavanju servisa!\"}")
+                Content = new JsonContent(new { message = "Greska u izvrsavanju servisa!", success = false })
             };
         }
 
@@ -313,11 +298,7 @@ namespace NWT_projekat.Controllers
             {
                 var q = _dbPomocnik.IzvrsiProceduru<Rucni_rad, Rucni_rad>(Konstante.DODAJ_RUCNI_RAD, r).FirstOrDefault();
 
-<<<<<<< HEAD
-                if(q.ID != 0)
-=======
                 if (q.ID != 0)
->>>>>>> 0833e9b6c5d6e3bdda704124ed80b0ac980c1cda
                     r.ID = q.ID;
 
                 return new HttpResponseMessage()
@@ -332,7 +313,7 @@ namespace NWT_projekat.Controllers
             return new HttpResponseMessage()
             {
                 StatusCode = System.Net.HttpStatusCode.BadRequest,
-                Content = new JsonContent("{\"message\":\"Greska u izvrsavanju servisa!\"}")
+                Content = new JsonContent(new { message = "Greska u izvrsavanju servisa!", success = false })
             };
         }
 
@@ -348,11 +329,7 @@ namespace NWT_projekat.Controllers
             {
                 var q = _dbPomocnik.IzvrsiProceduru<Stampa, Stampa>(Konstante.DODAJ_STAMPU, s).FirstOrDefault();
 
-<<<<<<< HEAD
-                if(q.Stampa_ID != 0)
-=======
                 if (q.Stampa_ID != 0)
->>>>>>> 0833e9b6c5d6e3bdda704124ed80b0ac980c1cda
                 {
                     s.Stampa_ID = q.Stampa_ID;
                 }
@@ -368,7 +345,8 @@ namespace NWT_projekat.Controllers
             }
             return new HttpResponseMessage()
             {
-                Content = new JsonContent("{\"message\":\"Greska u izvrsavanju servisa!\"}")
+                StatusCode = System.Net.HttpStatusCode.BadRequest,
+                Content = new JsonContent(new { message = "Greska u izvrsavanju servisa!", success = false })
             };
         }
 
@@ -384,11 +362,7 @@ namespace NWT_projekat.Controllers
             {
                 var q = _dbPomocnik.IzvrsiProceduru<Vanjska_usluga, Vanjska_usluga>(Konstante.DODAJ_VANJSKU_USLUGU, v).FirstOrDefault();
 
-<<<<<<< HEAD
-                if(q.ID != 0)
-=======
                 if (q.ID != 0)
->>>>>>> 0833e9b6c5d6e3bdda704124ed80b0ac980c1cda
                     v.ID = q.ID;
 
                 return new HttpResponseMessage()
@@ -402,7 +376,8 @@ namespace NWT_projekat.Controllers
             }
             return new HttpResponseMessage()
             {
-                Content = new JsonContent("{\"message\":\"Greska u izvrsavanju servisa!\"}")
+                StatusCode = System.Net.HttpStatusCode.BadRequest,
+                Content = new JsonContent(new { message = "Greska u izvrsavanju servisa!", success = false })
             };
         }
 
@@ -429,7 +404,8 @@ namespace NWT_projekat.Controllers
             }
             return new HttpResponseMessage()
             {
-                Content = new JsonContent("{\"message\":\"Greska u izvrsavanju servisa!\"}")
+                StatusCode = System.Net.HttpStatusCode.BadRequest,
+                Content = new JsonContent(new { message = "Greska u izvrsavanju servisa!", success = false })
             };
         }
 
