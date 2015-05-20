@@ -329,7 +329,7 @@
     <Content Include="Modules\Authentication\Views\Registration.html" />
     <Content Include="Modules\Authentication\Views\ResetPassword.html" />
     <Content Include="Modules\Direktive\brojeviDirektiva.js" />
-    <Content Include="Modules\Direktive\IspisDirektiva.js" />
+    <Content Include="Modules\Direktive\ispisDirektiva.js" />
     <Content Include="Modules\Direktive\meniDirektiva.js" />
     <Content Include="Modules\Direktive\DzenyDirective.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
