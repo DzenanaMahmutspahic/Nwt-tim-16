@@ -34,28 +34,47 @@
     <script src="../../../Scripts/ng-file-upload-shim.js"></script>
     <script src="../../../Scripts/FileAPI.js"></script>
     <script src="../../../Scripts/FileAPI.min.js"></script>
-    
+    <script>document.write('<base href="' + document.location + '" />');</script>
+    <link rel="stylesheet" href="style.css" />
+    <script data-require="angular.js@1.0.x" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js" data-semver="1.0.8"></script>
+  
+    <script src="/Modules/Upload/uploadController.js"></script>
+   
     
     
 </head>
 <body ng-app="BasicHttpAuthExample">
-    <div ng-controller="UploadFileController">
-
-
-            <input type="file" ng-file-select="onFileSelect($files, myModelObj)">
-            <!--<input type="file" ng-file-select="onMultiFileSelect($files, myModelObj)" multiple>-->
-        </div>
-        <!--Change your picture:
-        <div class="button" ngf-select ngf-change="upload($files)" ngf-multiple="multiple">Select File</div>
-        Files:
-        <ul>
-            <li ng-repeat="file in files" style="font:smaller">{{file.name}}</li>
-        </ul>
-        Upload Log:
-        <pre>{{log}}</pre>-->
+    <!--<div ng-controller="UploadFileController">
 
 
 
-   
+
+         <input type="file" accept="image/*" image="image" />
+         <img ng-show="image" ng-src="{{image.url}}" type="{{image.file.type}}" />
+
+         </div>-->
+    <!--Change your picture:
+    <div class="button" ngf-select ngf-change="upload($files)" ngf-multiple="multiple">Select File</div>
+    Files:
+    <ul>
+        <li ng-repeat="file in files" style="font:smaller">{{file.name}}</li>
+    </ul>
+    Upload Log:
+    <pre>{{log}}</pre>-->
+
+    <div ng-controller="UploadController ">
+        <form>
+            <input type="file" ng-file-select="onFileSelect($files)">
+            <!--  <input type="file" ng-file-select="onFileSelect($files)" multiple> -->
+
+        </form>
+        <b>Preview:</b><br />
+        <i ng-hide="imageSrc">No image choosed</i>
+        <img ng-src="{{imageSrc}}" /><br />
+        <b>Progress:</b>
+        <progress value="{{progress}}"></progress>
+    </div>
+
+
 </body>
 </html>
