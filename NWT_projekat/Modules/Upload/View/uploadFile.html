@@ -25,22 +25,37 @@
         }*/
     </style>
     <title>Upload File</title>
-    <script src="../uploadController.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="../../../Scripts/app.js"></script>
+    <script src="../../../Scripts/ng-file-upload.js"></script>
+    <script src="../../../Scripts/ng-file-upload.min.js"></script>
+    <script src="../../../Scripts/ng-file-upload-all.js"></script>
+    <script src="../../../Scripts/ng-file-upload-all.min.js"></script>
+    <script src="../../../Scripts/ng-file-upload-shim.js"></script>
+    <script src="../../../Scripts/FileAPI.js"></script>
+    <script src="../../../Scripts/FileAPI.min.js"></script>
+    
+    
+    
 </head>
-<body>
-    <div ng-app="BasicHttpAuthExample" ng-controller="MyCtrl">
-        <!--<input type="checkbox" ng-model="multiple">Upload multiple file<br><br>-->
-        Change your picture:
-        <div class="button" ngf-select ngf-change="upload($files)">Select File</div>
-        <!--Drop File:
-        <div ngf-drop ngf-select ng-model="files" class="drop-box" ngf-drag-over-class="dragover" ngf-multiple="true" ngf-allow-dir="true" accept="image/*,application/pdf">Drop pdfs or images here or click to upload</div>
-        <div ngf-no-file-drop>File Drag/Drop is not supported for this browser</div>-->
+<body ng-app="BasicHttpAuthExample">
+    <div ng-controller="UploadFileController">
+
+
+            <input type="file" ng-file-select="onFileSelect($files, myModelObj)">
+            <!--<input type="file" ng-file-select="onMultiFileSelect($files, myModelObj)" multiple>-->
+        </div>
+        <!--Change your picture:
+        <div class="button" ngf-select ngf-change="upload($files)" ngf-multiple="multiple">Select File</div>
         Files:
         <ul>
             <li ng-repeat="file in files" style="font:smaller">{{file.name}}</li>
         </ul>
         Upload Log:
-        <pre>{{log}}</pre>
-    </div>
+        <pre>{{log}}</pre>-->
+
+
+
+   
 </body>
 </html>
