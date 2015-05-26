@@ -41,6 +41,9 @@ var app = angular.module('BasicHttpAuthExample', [
     'pascalprecht.translate',
     'ngRoute',
     'ngCookies'
+ //   'angularFileUpload'
+
+    
 ])
 
 
@@ -101,22 +104,21 @@ var app = angular.module('BasicHttpAuthExample', [
         if ($rootScope.globals.currentUser) {
             $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
         }
-        $location.path() !== '/posao' &&
 
-$rootScope.$on('$locationChangeStart', function (event, next, current) {
-    // redirect to login page if not logged in
-    if ($location.path() !== '/login' &&
-        $location.path() !== '/registration' &&
-        $location.path() !== '/resetPassword' &&
-        $location.path() !== '/changePassword' &&
-        $location.path() !== '/posao' &&
+        $rootScope.$on('$locationChangeStart', function (event, next, current) {
+            // redirect to login page if not logged in
+            if ($location.path() !== '/login' &&
+                $location.path() !== '/registration' &&
+                $location.path() !== '/resetPassword' &&
+                $location.path() !== '/changePassword' &&
+                $location.path() !== '/posao' &&
         $location.path() !== '/posao/nezavrseniPoslovi' &&
-        $location.path() !== '/upload' &&
-        $location.path() !== '/profil' &&
-        !$rootScope.globals.currentUser) {
-        $location.path('/login');
-    }
-});
+                $location.path() !== '/upload' &&
+                $location.path() !== '/profil' &&
+                !$rootScope.globals.currentUser) {
+                $location.path('/login');
+            }
+        });
     }]);
 
 
@@ -200,7 +202,92 @@ app.controller('ResetPasswordController',
                 }
             });
         };
+    }])
+
+
+//app.controller('UploadFileController', ['$scope', $upload, function ($scope, $upload) {
+//        $scope.$watch('files', function () {
+//            $scope.upload($scope.files);
+//        });
+//        $scope.log = '';
+
+//        $scope.upload = function (files) {
+//            if (files && files.length) {
+//                for (var i = 0; i < files.length; i++) {
+//                    var file = files[i];
+//                    Upload
+//                        .upload({
+//                            url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
+//                            fields: {
+//                                'username': $scope.username
+//                            },
+//                            file: file
+//                        })
+//                       .progress(function (evt) {
+//                           var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+//                           $scope.log = 'progress: ' + progressPercentage + '% ' +
+//                                       evt.config.file.name + '\n' + $scope.log;
+//                       })
+//                        .success(function (data, status, headers, config) {
+//                            $scope.log = 'file ' + config.file.name + 'uploaded. Response: ' + JSON.stringify(data) + '\n' + $scope.log;
+//                            $scope.$apply();
+//                        });
+//                }
+//            }
+//        };
+//}]);
+
+.controller('UploadFileController', ['$scope', '$http', function ($scope, $http) {
+    //var myModelObj = {};
+
+    $scope.onFileSelect = function ($files, myModelObj) {
+        $http.uploadFile({
+            url: 'D:\\',
+            file: $file[0] // for single file
+            //files: $files  // for multiple files
+        }).then(function (data) {
+            myModelObj.fileId = data;
+        });
+        //return myModelObj;
+    }
     }]);
+
+
+//novi kontroler za upload slike DZenana
+app.controller('UploadController',function($scope, fileReader) {
+    console.log(fileReader)
+    $scope.getFile = function () {
+        $scope.progress = 0;
+        fileReader.readAsDataUrl($scope.file, $scope)
+                      .then(function (result) {
+                          $scope.imageSrc = result;
+                      });
+    };
+
+    $scope.$on("fileProgress", function (e, progress) {
+        $scope.progress = progress.loaded / progress.total;
+    });
+
+});
+
+app.directive("ngFileSelect", function () {
+
+    return {
+        link: function ($scope, el) {
+
+            el.bind("change", function (e) {
+
+                $scope.file = (e.srcElement || e.target).files[0];
+                $scope.getFile();
+            })
+
+        }
+
+    }
+
+
+})
+
 app.controller('PosaoController', []);
 app.factory('AuthenticationService',
     ['Base64', '$http', '$cookieStore', '$rootScope', '$timeout',
@@ -329,20 +416,20 @@ app
 app.controller('Ctrl', ['$translate', '$scope', '$rootScope', '$cookieStore', '$location',
     function ($translate, $scope, $rootScope, $cookieStore, $location) {
 
-        //$scope.changeLanguage = function () {
-        //    $translate.uses(($translate.uses() === 'en_EN') ? 'bos_BOS' : 'en_EN');
-        //};
+    //$scope.changeLanguage = function () {
+    //    $translate.uses(($translate.uses() === 'en_EN') ? 'bos_BOS' : 'en_EN');
+    //};
 
-        $scope.changeLanguage = function (key) {
-            $translate.use(key);
-        };
-        $scope.logout = function () {
-            $rootScope.globals = {};
-            $cookieStore.remove('globals');
-            $location.path('/login');
-        };
+    $scope.changeLanguage = function (key) {
+        $translate.use(key);
+    };
+    $scope.logout = function () {
+        $rootScope.globals = {};
+        $cookieStore.remove('globals');
+        $location.path('/login');
+    };
 
-    }]);
+}]);
 app
 .factory('Base64', function () {
     /* jshint ignore:start */
