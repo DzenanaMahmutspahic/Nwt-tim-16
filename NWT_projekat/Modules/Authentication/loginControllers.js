@@ -38,7 +38,7 @@ app.controller('LoginController',
             $scope.dataLoading = true;
             AuthenticationService.Login($scope.username, $scope.password, function (response) {
                 if (response.success) {
-                    AuthenticationService.SetCredentials($scope.username, $scope.password, response.imageUrl);
+                    AuthenticationService.SetCredentials(response.user, response.imageUrl);
                     $location.path('/');
                 } else {
                     $scope.error = response.message;

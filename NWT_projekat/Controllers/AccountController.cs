@@ -6,6 +6,8 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Mail;
 using System.Web.Http;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace NWT_projekat.Controllers
 {
@@ -60,7 +62,7 @@ namespace NWT_projekat.Controllers
                 Ime = k["Ime"].ToString(),
                 Password = k["Password"].ToString(),
                 ConfirmPassword = k["ConfirmPassword"].ToString(),
-                Pozicija = k["Pozicija"].ToString(),
+                Pozicija = Convert.ToInt32(k["Pozicija"]),
                 Prezime = k["Prezime"].ToString(),
                 Username = k["Username"].ToString()
             };
@@ -80,17 +82,8 @@ namespace NWT_projekat.Controllers
                 var parametri = new Dictionary<string, object>{
                 {"ID", ID}
             };
-                var k = _dbPomocnik.IzvrsiProceduru(Konstante.DAJ_KORISNIKA_ID, parametri).Rows[0];
-                var response = new Korisnik
-                {
-                    ID = Convert.ToInt32(k["ID"]),
-                    Ime = k["Ime"].ToString(),
-                    Password = k["Password"].ToString(),
-                    ConfirmPassword = k["ConfirmPassword"].ToString(),
-                    Pozicija = k["Pozicija"].ToString(),
-                    Prezime = k["Prezime"].ToString(),
-                    Username = k["Username"].ToString()
-                };
+                var response = _dbPomocnik.IzvrsiProceduru<Korisnik>(Konstante.DAJ_KORISNIKA_ID, parametri);
+
                 return new HttpResponseMessage()
                 {
                     Content = new JsonContent(response)
@@ -101,6 +94,169 @@ namespace NWT_projekat.Controllers
                 _zapisnik.Zapisi(new Log { Datum = DateTime.Now, Sadrzaj = ex.ToString(), Tip = 3 }); ;
                 return new HttpResponseMessage()
                 {
+                    StatusCode = System.Net.HttpStatusCode.BadRequest,
+                    Content = new JsonContent(ex.Message)
+                };
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="adminId"></param>
+        /// <param name="authInfo"></param>
+        /// <returns></returns>
+        [System.Web.Http.HttpGet]
+        public System.Net.Http.HttpResponseMessage BanujKorisnikaJson(int Id, int adminId, string authInfo)
+        {
+            try
+            {
+                var parametri = new Dictionary<string, object>{
+                    {"ID", adminId}
+                };
+                var trenutniKorisnik = _dbPomocnik.IzvrsiProceduru<Korisnik>(Konstante.DAJ_KORISNIKA_ID, parametri);
+
+                if(trenutniKorisnik.ID != 0 && !trenutniKorisnik.Banovan)
+                {
+                    var kod = KriptoPomocnik.Base64Encode(string.Format("{0}:{1}",
+                        trenutniKorisnik.Username, trenutniKorisnik.Password));
+
+                    if(authInfo == kod && trenutniKorisnik.Pozicija >= 3)
+                    {
+                        parametri["ID"] = Id;
+                        var response = _dbPomocnik.IzvrsiProceduru<Korisnik>(Konstante.BANUJ_KORISNIKA, parametri);
+                        return new HttpResponseMessage()
+                        {
+                            Content = new JsonContent(response.Banovan)
+                        };
+                    }
+                } return new HttpResponseMessage()
+                {
+                    StatusCode = HttpStatusCode.Unauthorized
+                };
+            }
+            catch(Exception ex)
+            {
+                _zapisnik.Zapisi(new Log { Datum = DateTime.Now, Sadrzaj = ex.ToString(), Tip = 3 }); ;
+                return new HttpResponseMessage()
+                {
+                    StatusCode = System.Net.HttpStatusCode.BadRequest,
+                    Content = new JsonContent(ex.Message)
+                };
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        [System.Web.Http.HttpGet]
+        public System.Net.Http.HttpResponseMessage OdbanujKorisnikaJson(int Id, int adminId, string authInfo)
+        {
+            try
+            {
+                var parametri = new Dictionary<string, object>{
+                    {"ID", adminId}
+                };
+                var trenutniKorisnik = _dbPomocnik.IzvrsiProceduru<Korisnik>(Konstante.DAJ_KORISNIKA_ID, parametri);
+
+                if(trenutniKorisnik.ID != 0 && !trenutniKorisnik.Banovan)
+                {
+                    var kod = KriptoPomocnik.Base64Encode(string.Format("{0}:{1}",
+                        trenutniKorisnik.Username, trenutniKorisnik.Password));
+
+                    if(authInfo == kod && trenutniKorisnik.Pozicija >= 3)
+                    {
+                        parametri["ID"] = Id;
+                        var response = _dbPomocnik.IzvrsiProceduru<Korisnik>(Konstante.ODBANUJ_KORISNIKA, parametri);
+                        return new HttpResponseMessage()
+                        {
+                            Content = new JsonContent(response.Banovan)
+                        };
+                    }
+                } return new HttpResponseMessage()
+                {
+                    StatusCode = HttpStatusCode.Unauthorized
+                };
+            }
+            catch(Exception ex)
+            {
+                _zapisnik.Zapisi(new Log { Datum = DateTime.Now, Sadrzaj = ex.ToString(), Tip = 3 }); ;
+                return new HttpResponseMessage()
+                {
+                    StatusCode = System.Net.HttpStatusCode.BadRequest,
+                    Content = new JsonContent(ex.Message)
+                };
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        [System.Web.Http.HttpGet]
+        public System.Net.Http.HttpResponseMessage UnaprijediKorisnikaJson(int Id, int adminId, string authInfo)
+        {
+            try
+            {
+                if(AutorizovanKorisnik(adminId, authInfo))
+                {
+                    var parametri = new Dictionary<string, object> { { "ID", Id } };
+                    var response = _dbPomocnik.IzvrsiProceduru<Korisnik>(Konstante.UNAPRIJEDI_KORISNIKA, parametri);
+                    return new HttpResponseMessage()
+                    {
+                        Content = new JsonContent(new { pozicija = response.Pozicija })
+                    };
+                }
+                return new HttpResponseMessage()
+                {
+                    StatusCode = HttpStatusCode.Unauthorized
+                };
+            }
+            catch(Exception ex)
+            {
+                _zapisnik.Zapisi(new Log { Datum = DateTime.Now, Sadrzaj = ex.ToString(), Tip = 3 }); ;
+                return new HttpResponseMessage()
+                {
+                    StatusCode = System.Net.HttpStatusCode.BadRequest,
+                    Content = new JsonContent(ex.Message)
+                };
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        [System.Web.Http.HttpGet]
+        public System.Net.Http.HttpResponseMessage UnazadiKorisnikaJson(int Id, int adminId, string authInfo)
+        {
+            try
+            {
+                if(AutorizovanKorisnik(adminId, authInfo))
+                {
+                    var parametri = new Dictionary<string, object> { { "ID", Id } };
+                    var response = _dbPomocnik.IzvrsiProceduru<Korisnik>(Konstante.NAZADUJ_KORISNIKA, parametri);
+                    return new HttpResponseMessage()
+                    {
+                        Content = new JsonContent(new { pozicija = response.Pozicija })
+                    };
+                }
+                return new HttpResponseMessage()
+                {
+                    StatusCode = HttpStatusCode.Unauthorized
+                };
+            }
+            catch(Exception ex)
+            {
+                _zapisnik.Zapisi(new Log { Datum = DateTime.Now, Sadrzaj = ex.ToString(), Tip = 3 }); ;
+                return new HttpResponseMessage()
+                {
+                    StatusCode = System.Net.HttpStatusCode.BadRequest,
                     Content = new JsonContent(ex.Message)
                 };
             }
@@ -112,7 +268,7 @@ namespace NWT_projekat.Controllers
         /// <param name="korisnik">Objekat sa popunjenom podacima o korisniku</param>
         /// <returns>Logičku vrijednost true ako je prijavljivanje uspješno</returns>
         [System.Web.Mvc.HttpPost]
-        public bool Login(Korisnik korisnik)
+        public System.Net.Http.HttpResponseMessage Login(Korisnik korisnik)
         {
             try
             {
@@ -120,8 +276,28 @@ namespace NWT_projekat.Controllers
                 {"Username", korisnik.Username},
                 {"Password", KriptoPomocnik.GetMd5Hash(korisnik.Password)}
             };
-                var redovi = _dbPomocnik.IzvrsiProceduru(Konstante.DAJ_KORISNIKA_UNAME_PASS, parametri).Rows;
-                return redovi.Count == 1;
+                var odgovor = _dbPomocnik.IzvrsiProceduru<Korisnik>(Konstante.DAJ_KORISNIKA_UNAME_PASS, parametri);
+
+                if(odgovor != null && odgovor.ID != 0)
+                {
+                    return new HttpResponseMessage()
+                    {
+                        Content = new JsonContent(new
+                        {
+                            Successfull = true,
+                            User = odgovor
+                        })
+                    };
+                }
+                return new HttpResponseMessage()
+                {
+                    StatusCode = System.Net.HttpStatusCode.BadRequest,
+                    Content = new JsonContent(new
+                    {
+                        Successfull = false,
+                        Message = "Pogrešni login podaci!"
+                    })
+                };
             }
             catch(Exception ex)
             {
@@ -131,7 +307,16 @@ namespace NWT_projekat.Controllers
                                         Sadrzaj = ex.ToString(),
                                         Tip = 3
                                     });
-                return false;
+
+                return new HttpResponseMessage()
+                {
+                    StatusCode = System.Net.HttpStatusCode.BadRequest,
+                    Content = new JsonContent(new
+                    {
+                        Successfull = false,
+                        Message = "Greška u izvršavanju Login servisa!"
+                    })
+                };
             }
         }
 
@@ -211,6 +396,7 @@ namespace NWT_projekat.Controllers
                 );
                 return new HttpResponseMessage()
                 {
+                    StatusCode = System.Net.HttpStatusCode.BadRequest,
                     Content = new JsonContent(ex.Message)
                 };
             }
@@ -250,6 +436,7 @@ namespace NWT_projekat.Controllers
                 );
                 return new HttpResponseMessage()
                 {
+                    StatusCode = System.Net.HttpStatusCode.BadRequest,
                     Content = new JsonContent(ex.Message)
                 };
             }
@@ -289,6 +476,7 @@ namespace NWT_projekat.Controllers
                 );
                 return new HttpResponseMessage()
                 {
+                    StatusCode = System.Net.HttpStatusCode.BadRequest,
                     Content = new JsonContent(ex.Message)
                 };
             }
@@ -308,7 +496,7 @@ namespace NWT_projekat.Controllers
                 };
                 var noviKorisnik = _dbPomocnik.IzvrsiProceduru<Korisnik>(Konstante.DAJ_KORISNIKA_EMAIL, parametri);
 
-                if(noviKorisnik != null && noviKorisnik.ID  != 0 && !string.IsNullOrEmpty(noviKorisnik.Email))
+                if(noviKorisnik != null && noviKorisnik.ID != 0 && !string.IsNullOrEmpty(noviKorisnik.Email))
                 {
                     Guid noviGuid = Guid.NewGuid();
                     parametri = new Dictionary<string, object> { 
@@ -334,17 +522,19 @@ namespace NWT_projekat.Controllers
                         _zapisnik.Zapisi(ex.ToString(), 2);
                         return new HttpResponseMessage()
                         {
+                            StatusCode = System.Net.HttpStatusCode.BadRequest,
                             Content = new JsonContent("Greška pri slanju email poruke.")
                         };
                     }
                 }
                 var response = new HttpResponseMessage();
-                if(noviKorisnik.ID != 0)                
+                if(noviKorisnik.ID != 0)
                 {
                     response.Content = new JsonContent(true);
                 }
                 else
                 {
+                    response.StatusCode = System.Net.HttpStatusCode.BadRequest;
                     response.Content = new JsonContent("Pogrešan korisnik.");
                 }
                 return response;
@@ -361,6 +551,7 @@ namespace NWT_projekat.Controllers
                 );
                 return new HttpResponseMessage()
                 {
+                    StatusCode = System.Net.HttpStatusCode.BadRequest,
                     Content = new JsonContent(ex.Message)
                 };
             }
@@ -386,7 +577,8 @@ namespace NWT_projekat.Controllers
                 };
                 var tmp = _dbPomocnik.IzvrsiProceduru(Konstante.PROMJENI_LOZINKU, parametri);
 
-                try {
+                try
+                {
                     string poruka = tmp.Rows[0]["Greska"].ToString();
                     _zapisnik.Zapisi(poruka, 2);
                 }
@@ -408,6 +600,7 @@ namespace NWT_projekat.Controllers
             }
             return new HttpResponseMessage()
             {
+                StatusCode = System.Net.HttpStatusCode.BadRequest,
                 Content = new JsonContent("Doslo je do greske u procesiranju!")
             };
         }
@@ -420,7 +613,8 @@ namespace NWT_projekat.Controllers
         [System.Web.Http.HttpGet]
         public string DajPutanju(string Username)
         {
-            try {
+            try
+            {
                 var parametri = new Dictionary<string, object> { { "Username", Username } };
                 var tmp = _dbPomocnik.IzvrsiProceduru(Konstante.DAJ_PUTANjU_SLIKE, parametri);
                 var url = Request.RequestUri.GetLeftPart(UriPartial.Authority);
@@ -437,6 +631,57 @@ namespace NWT_projekat.Controllers
                 });
             }
             return "";
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="Id"></param>
+        /// <param name="authInfo"></param>
+        /// <returns></returns>
+        [System.Web.Http.HttpGet]
+        public System.Net.Http.HttpResponseMessage DajKorisnikeJson(int Id, string authInfo)
+        {
+            try
+            {
+                var redovi = _dbPomocnik.IzvrsiProceduru<Korisnik, Korisnik>(Konstante.DAJ_SVE_KORISNIKE, null);
+                var trenutniKorisnik = redovi.FirstOrDefault(x => x.ID == Id);
+                if(trenutniKorisnik != null)
+                {
+                    var kod = KriptoPomocnik.Base64Encode(string.Format("{0}:{1}", trenutniKorisnik.Username, trenutniKorisnik.Password));
+                    if(authInfo == kod && trenutniKorisnik.Pozicija >= 3)
+                    {
+                        redovi.Remove(trenutniKorisnik);
+                        redovi.AsParallel().ForAll(x => x.Password = "");
+                        return new HttpResponseMessage()
+                        {
+                            StatusCode = System.Net.HttpStatusCode.Accepted,
+                            Content = new JsonContent(redovi)
+                        };
+                    }
+                }
+                return new HttpResponseMessage()
+                {
+                    StatusCode = System.Net.HttpStatusCode.Unauthorized,
+                    Content = new JsonContent(redovi)
+                };
+            }
+            catch(Exception ex)
+            {
+                _zapisnik.Zapisi(
+                    new Log
+                    {
+                        Datum = DateTime.Now,
+                        Sadrzaj = ex.ToString(),
+                        Tip = 3
+                    }
+                );
+                return new HttpResponseMessage()
+                {
+                    StatusCode = System.Net.HttpStatusCode.BadRequest,
+                    Content = new JsonContent(ex.Message)
+                };
+            }
         }
 
         #endregion
@@ -479,6 +724,24 @@ namespace NWT_projekat.Controllers
             }
 
             return true;
+        }
+
+        private bool AutorizovanKorisnik(int Id, string authInfo)
+        {
+
+            var parametri = new Dictionary<string, object>{
+                    {"ID", Id}
+                };
+            var trenutniKorisnik = _dbPomocnik.IzvrsiProceduru<Korisnik>(Konstante.DAJ_KORISNIKA_ID, parametri);
+
+            if(trenutniKorisnik.ID != 0 && !trenutniKorisnik.Banovan)
+            {
+                var kod = KriptoPomocnik.Base64Encode(string.Format("{0}:{1}",
+                    trenutniKorisnik.Username, trenutniKorisnik.Password));
+
+                return authInfo == kod && trenutniKorisnik.Pozicija >= 3;
+            }
+            return false;
         }
 
         #endregion

@@ -14,7 +14,10 @@
     <script src="Modules/Upload/uploadController.js"></script>
     <script src="Modules/Authentication/loginControllers.js"></script>
     <script src="Modules/Authentication/loginServices.js"></script>
+    <script src="Modules/Upload/uploadController.js"></script>
     <script src="Modules/Home/homeControllers.js"></script>
+    <script src="Modules/Direktive/AdminDashboardDirektiva.js"></script>
+
 
     <script type="text/javascript">
         function pokaziSakrij(objectId) {
@@ -63,7 +66,12 @@
     <script src="Modules/Direktive/DzenyDirective.js"></script>
     <script src="Modules/Direktive/meniDirektiva.js"></script>
     <script src="Modules/Direktive/VanjskaUslugaDirektiva.js"></script>
-    <script src="Modules/Direktive/ispisDirektiva.js"></script>
+    <script src="Modules/Direktive/DtpDirektiva.js"></script>
+    <script src="Modules/Direktive/MontazaDirektiva.js"></script>
+    <script src="Modules/Direktive/StampaDirektiva.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <!--<script src="Scripts/app.js"></script>-->
+    <!--<script src="Modules/Direktive/IspisDirektiva.js"></script>-->
 
     <header>
         <div class="content-wrapper">
@@ -81,11 +89,7 @@
         <div class="container">
             <!--<div class="col-xs-offset-2 col-xs-8">-->
             <div ng-view>
-                <div ng-if="dataLoading" style="position:fixed; left:0; top:0; width:100%; height:100%; background:rgba(18, 51, 84, 0.25)">
-                    <div style="position:fixed; margin-left:auto; margin-right:auto; width:35%; height:35%; background:grey">
-                        <img src="../../../Images/301.GIF" />
-                    </div>
-                </div>
+                
             </div>
             <!--</div>-->
         </div>

@@ -5,8 +5,61 @@ angular.module('BasicHttpAuthExample')
     ['$scope', '$rootScope', '$location', 'PosaoService',
     function ($scope, $rootScope, $location, PosaoService) {
 
-        $scope.dajPosao = function () {
+        $scope.DajNezavrsenePoslove = function () {
             $scope.dataLoading = true;
+            PosaoService.DajNezavrsenePoslove(function (response) {
+                if (response.success) {
+                    $scope.poslovi = response.poslovi;
+                }
+            })
+        };
+
+        if ($rootScope.globals !== undefined && $rootScope.globals !== null
+            && $rootScope.globals.currentUser !== undefined && $rootScope.globals.currentUser !== null
+            && $rootScope.globals.currentUser.ID !== undefined && $rootScope.globals.currentUser.ID !== null) {
+            if ($rootScope.globals.currentUser.pozicija >= 3) {
+                $scope.DajNezavrsenePoslove();
+            }
+        } else {
+            $location.path('/');
+        }
+
+        $scope.PokaziPosao = function (id) {
+            var i = IndexOf($scope.poslovi, function (posao) { return posao.ID == id });
+            if (i >= 0) {
+                $scope.data = { posao: $scope.poslovi[i] };
+                PosaoService.DajDTP($scope.data.posao.DTP_ID, function (response) {
+                    if (response.success) {
+                        $scope.data['DTP'] = response.data;
+                    }
+                });
+                PosaoService.DajMontazu($scope.data.posao.Montaza_ID, function (response) {
+                    if (response.success) {
+                        $scope.data['Montaza'] = response.data;
+                    }
+                });
+                PosaoService.DajStampu($scope.data.posao.Stampa_ID, function (response) {
+                    if (response.success) {
+                        $scope.data['Stampa'] = response.data;
+                    }
+                });
+            }
+        };
+        $scope.potvrdiPosao = function () {
+            PosaoService.potvrdiPosao($scope.data.posao.ID, function (response) {
+                var i = IndexOf($scope.poslovi, function (posao) { return posao.ID == $scope.data.posao.ID });
+                if (response.success) {
+                    $scope.poslovi.splice(i, 1);
+                    $scope.posao = {};
+                    $scope.data = {};
+                } else {
+                    $scope.error = response.message;
+                    $scope.errorMessage = $scope.trustAsHtml(response.message);
+                }
+                //$scope.dataLoading = false;
+            })
+        };
+        $scope.dajPosao = function () {
             PosaoService.dajPosao(1, function (response) {
                 if (response.success) {
                     $scope['data'] = { posao: response.posao };
@@ -16,12 +69,7 @@ angular.module('BasicHttpAuthExample')
                 }
                 //$scope.dataLoading = false;
             })
-        }
-    }])
-
-.controller('PosaoController',
-    ['$scope', '$rootScope', '$location', 'PosaoService',
-    function ($scope, $rootScope, $location, PosaoService) {
+        };
         $scope.dodajDTP = function () {
             PosaoService.dodajDTP($scope.t3c1, $scope.t3c2, $scope.t3c4, $scope.t3c5, $scope.t3c6, $scope.t3c7, function (response) {
                 if (response.success) {
@@ -288,7 +336,7 @@ angular.module('BasicHttpAuthExample')
         };
 
         $scope.dodajPosao = function () {
-            PosaoService.dodajPosao($scope.data.posao.ReproMaterijal_ID, $scope.data.posao.DTP_ID,$scope.data.posao.Montaza_ID,
+            PosaoService.dodajPosao($scope.data.posao.ReproMaterijal_ID, $scope.data.posao.DTP_ID, $scope.data.posao.Montaza_ID,
                  $scope.data.posao.KnjigovDrada_ID, $scope.data.posao.RucniRad_ID, $scope.data.posao.Stampa_ID,
                 function (response) {
                     if (response.success) {

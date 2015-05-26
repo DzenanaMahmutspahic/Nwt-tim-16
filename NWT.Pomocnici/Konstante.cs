@@ -15,6 +15,7 @@ namespace NWT.Pomocnici
         public static readonly string DAJ_POSAO_ID = "DajPosao_ID";
         public static readonly string DODAJ_POSAO = "UnesiPosao";
         public static readonly string DAJ_ZAVRSENE_POSLOVE = "DajZavrsenePoslove";
+        public static readonly string DAJ_NEZAVRSENE_POSLOVE = "DajNezavrsenePoslove";
         public static readonly string DODAJ_DTP = "DodajDTP";
         public static readonly string POTVRDI_REGISTRACIJU = "PotvrdiRegistraciju";
         public static readonly string PROMJENA_LOZINKE = "PromjeniLozinku";
@@ -32,6 +33,15 @@ namespace NWT.Pomocnici
         public static readonly string DODAJ_KNJIGOVODSTVENU_DORADU = "DodajKnjigovodstvenuDoradu";
         public static readonly string DAJ_PUTANjU_SLIKE = "DajSliku";
         public static readonly string DODAJ_SLIKU = "DodajSliku";
+        public static readonly string DAJ_SVE_KORISNIKE = "DajSveKorisnike";
+        public static readonly string BANUJ_KORISNIKA = "BanujKorisnika";
+        public static readonly string ODBANUJ_KORISNIKA = "OdbanujKorisnika";
+        public static readonly string UNAPRIJEDI_KORISNIKA = "UnaprijediKorisnika";
+        public static readonly string NAZADUJ_KORISNIKA = "UnazadiKorisnika";
+        public static readonly string DAJ_DTP = "DajDtp";
+        public static readonly string DAJ_MONAZU = "DajMontazu";
+        public static readonly string DAJ_STAMPU = "DajStampu";
+        public static readonly string POTVRDI_POSAO = "PotvrdiPosao";
 
         public static readonly string REGISTRACIJA_TEMPLATE = @"
 Dobro došli na našu stranicu i čestitamo na uspješnoj registraciji.

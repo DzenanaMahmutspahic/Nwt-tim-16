@@ -7,6 +7,33 @@
 ////angular.module('myModule', ['ui.bootstrap']);
 ////angular.module('angularTranslateApp', [])
 
+var pozicijeEnum = {
+    Zaposlenik: 0,
+    Menadzer: 1,
+    Administrator: 2,
+    properties: {
+        1: "Zaposlenik",
+        2: "Menadzer",
+        3: "Administrator"
+    }
+};
+
+function FirstOrDefault(niz, uslov) {
+    var i = 0;
+    for (i = 0; i < niz.length; i++)
+        if (uslov(niz[i]))
+            return niz[i];
+    return null;
+}
+
+function IndexOf(niz, uslov) {
+    var i = 0;
+    for (i = 0; i < niz.length; i++)
+        if (uslov(niz[i]))
+            return i;
+    return -1;
+}
+
 var app = angular.module('BasicHttpAuthExample', [
     //'Authentication',
     //'Home',
@@ -14,6 +41,9 @@ var app = angular.module('BasicHttpAuthExample', [
     'pascalprecht.translate',
     'ngRoute',
     'ngCookies'
+ //   'angularFileUpload'
+
+    
 ])
 
 
@@ -40,6 +70,12 @@ var app = angular.module('BasicHttpAuthExample', [
         .when('/posao', {
             controller: 'PosaoController',
             templateUrl: 'modules/Posao/View/unos_posla.html',
+            hideMenus: true
+        })
+        //.when('/nezavrseniPoslovi', {
+        .when('/posao/nezavrseniPoslovi', {
+            controller: 'PosaoController',
+            templateUrl: 'modules/Posao/View/prikaz_posla.html',
             hideMenus: true
         })
         .when('/upload', {
@@ -76,6 +112,7 @@ var app = angular.module('BasicHttpAuthExample', [
                 $location.path() !== '/resetPassword' &&
                 $location.path() !== '/changePassword' &&
                 $location.path() !== '/posao' &&
+        $location.path() !== '/posao/nezavrseniPoslovi' &&
                 $location.path() !== '/upload' &&
                 $location.path() !== '/profil' &&
                 !$rootScope.globals.currentUser) {
@@ -142,8 +179,8 @@ app.controller('RegistrationController',
             }
             $scope.dataLoading = false;
         };
-    }])
-.controller('ResetPasswordController',
+    }]);
+app.controller('ResetPasswordController',
     ['$scope', '$rootScope', '$location', 'AuthenticationService',
     function ($scope, $rootScope, $location, AuthenticationService) {
 
@@ -165,39 +202,92 @@ app.controller('RegistrationController',
                 }
             });
         };
-    }]);
-app
-    .controller('UploadFileController', ['$scope', 'Upload', function ($scope, Upload) {
-        $scope.$watch('files', function () {
-            $scope.upload($scope.files);
-        });
-        $scope.log = '';
+    }])
 
-        $scope.upload = function (files) {
-            if (files && files.length) {
-                for (var i = 0; i < files.length; i++) {
-                    var file = files[i];
-                    Upload
-                        .upload({
-                            url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
-                            fields: {
-                                'username': $scope.username
-                            },
-                            file: file
-                        })
-                       .progress(function (evt) {
-                           var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                           $scope.log = 'progress: ' + progressPercentage + '% ' +
-                                       evt.config.file.name + '\n' + $scope.log;
-                       })
-                        .success(function (data, status, headers, config) {
-                            $scope.log = 'file ' + config.file.name + 'uploaded. Response: ' + JSON.stringify(data) + '\n' + $scope.log;
-                            $scope.$apply();
-                        });
-                }
-            }
-        };
+
+//app.controller('UploadFileController', ['$scope', $upload, function ($scope, $upload) {
+//        $scope.$watch('files', function () {
+//            $scope.upload($scope.files);
+//        });
+//        $scope.log = '';
+
+//        $scope.upload = function (files) {
+//            if (files && files.length) {
+//                for (var i = 0; i < files.length; i++) {
+//                    var file = files[i];
+//                    Upload
+//                        .upload({
+//                            url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
+//                            fields: {
+//                                'username': $scope.username
+//                            },
+//                            file: file
+//                        })
+//                       .progress(function (evt) {
+//                           var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+//                           $scope.log = 'progress: ' + progressPercentage + '% ' +
+//                                       evt.config.file.name + '\n' + $scope.log;
+//                       })
+//                        .success(function (data, status, headers, config) {
+//                            $scope.log = 'file ' + config.file.name + 'uploaded. Response: ' + JSON.stringify(data) + '\n' + $scope.log;
+//                            $scope.$apply();
+//                        });
+//                }
+//            }
+//        };
+//}]);
+
+.controller('UploadFileController', ['$scope', '$http', function ($scope, $http) {
+    //var myModelObj = {};
+
+    $scope.onFileSelect = function ($files, myModelObj) {
+        $http.uploadFile({
+            url: 'D:\\',
+            file: $file[0] // for single file
+            //files: $files  // for multiple files
+        }).then(function (data) {
+            myModelObj.fileId = data;
+        });
+        //return myModelObj;
+    }
     }]);
+
+
+//novi kontroler za upload slike DZenana
+app.controller('UploadController',function($scope, fileReader) {
+    console.log(fileReader)
+    $scope.getFile = function () {
+        $scope.progress = 0;
+        fileReader.readAsDataUrl($scope.file, $scope)
+                      .then(function (result) {
+                          $scope.imageSrc = result;
+                      });
+    };
+
+    $scope.$on("fileProgress", function (e, progress) {
+        $scope.progress = progress.loaded / progress.total;
+    });
+
+});
+
+app.directive("ngFileSelect", function () {
+
+    return {
+        link: function ($scope, el) {
+
+            el.bind("change", function (e) {
+
+                $scope.file = (e.srcElement || e.target).files[0];
+                $scope.getFile();
+            })
+
+        }
+
+    }
+
+
+})
+
 app.controller('PosaoController', []);
 app.factory('AuthenticationService',
     ['Base64', '$http', '$cookieStore', '$rootScope', '$timeout',
@@ -209,11 +299,11 @@ app.factory('AuthenticationService',
                 function (imgUrl) {
                     $http.post('/api/Account/Login', { username: username, password: password })
                        .success(function (response) {
-                           if (response !== true) {
+                           if (response.Successfull !== true) {
                                //response.message = 'Username or password is incorrect';
-                               callback({ success: false, message: 'Wrong credentials!' });
+                               callback(response);
                            } else {
-                               var newResponse = { success: true, imageUrl:imgUrl };
+                               var newResponse = { success: true, imageUrl: imgUrl, user: response.User };
                                callback(newResponse);
                            }
                        })
@@ -241,14 +331,18 @@ app.factory('AuthenticationService',
             alert("Registration failed");
         }
 
-        service.SetCredentials = function (username, password, imageUrl) {
-            var authdata = Base64.encode(username + ':' + password);
+        service.SetCredentials = function (user, imageUrl) {
+            var authdata = Base64.encode(user.Username + ':' + user.Password);
 
             $rootScope.globals = {
                 currentUser: {
-                    username: username,
+                    ID: user.ID,
+                    username: user.Username,
                     authdata: authdata,
-                    imgUrl: imageUrl
+                    imgUrl: imageUrl,
+                    ime: user.Ime,
+                    prezime: user.Prezime,
+                    pozicija: user.Pozicija
                 }
             };
 
