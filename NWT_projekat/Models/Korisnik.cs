@@ -7,13 +7,14 @@ namespace NWT_projekat.Models
 {
     public class Korisnik
     {
-            public int ID { get; set; }
-            public string Ime { get; set; }
-            public string Prezime { get; set; }
-            public string Username { get; set; }
-            public string Password { get; set; }
-            public string ConfirmPassword { get; set; }
-            public string Pozicija { get; set; }
-            public string Email { get; set; }
+        public int ID { get; set; }
+        public string Ime { get; set; }
+        public string Prezime { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public string ConfirmPassword { get; set; }
+        public int Pozicija { get; set; }
+        public string Email { get; set; }
+        public bool Banovan { get; set; }
     }
 }

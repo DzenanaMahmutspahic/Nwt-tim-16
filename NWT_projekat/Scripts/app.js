@@ -7,6 +7,33 @@
 ////angular.module('myModule', ['ui.bootstrap']);
 ////angular.module('angularTranslateApp', [])
 
+var pozicijeEnum = {
+    Zaposlenik: 0,
+    Menadzer: 1,
+    Administrator: 2,
+    properties: {
+        1: "Zaposlenik",
+        2: "Menadzer",
+        3: "Administrator"
+    }
+};
+
+function FirstOrDefault(niz, uslov) {
+    var i = 0;
+    for (i = 0; i < niz.length; i++)
+        if (uslov(niz[i]))
+            return niz[i];
+    return null;
+}
+
+function IndexOf(niz, uslov) {
+    var i = 0;
+    for (i = 0; i < niz.length; i++)
+        if (uslov(niz[i]))
+            return i;
+    return -1;
+}
+
 var app = angular.module('BasicHttpAuthExample', [
     //'Authentication',
     //'Home',
@@ -42,6 +69,12 @@ var app = angular.module('BasicHttpAuthExample', [
             templateUrl: 'modules/Posao/View/unos_posla.html',
             hideMenus: true
         })
+        //.when('/nezavrseniPoslovi', {
+        .when('/posao/nezavrseniPoslovi', {
+            controller: 'PosaoController',
+            templateUrl: 'modules/Posao/View/prikaz_posla.html',
+            hideMenus: true
+        })
         .when('/upload', {
             controller: 'UploadFileController',
             templateUrl: 'modules/Upload/View/uploadFile.html',
@@ -68,20 +101,22 @@ var app = angular.module('BasicHttpAuthExample', [
         if ($rootScope.globals.currentUser) {
             $http.defaults.headers.common['Authorization'] = 'Basic ' + $rootScope.globals.currentUser.authdata; // jshint ignore:line
         }
+        $location.path() !== '/posao' &&
 
-        $rootScope.$on('$locationChangeStart', function (event, next, current) {
-            // redirect to login page if not logged in
-            if ($location.path() !== '/login' &&
-                $location.path() !== '/registration' &&
-                $location.path() !== '/resetPassword' &&
-                $location.path() !== '/changePassword' &&
-                $location.path() !== '/posao' &&
-                $location.path() !== '/upload' &&
-                $location.path() !== '/profil' &&
-                !$rootScope.globals.currentUser) {
-                $location.path('/login');
-            }
-        });
+$rootScope.$on('$locationChangeStart', function (event, next, current) {
+    // redirect to login page if not logged in
+    if ($location.path() !== '/login' &&
+        $location.path() !== '/registration' &&
+        $location.path() !== '/resetPassword' &&
+        $location.path() !== '/changePassword' &&
+        $location.path() !== '/posao' &&
+        $location.path() !== '/posao/nezavrseniPoslovi' &&
+        $location.path() !== '/upload' &&
+        $location.path() !== '/profil' &&
+        !$rootScope.globals.currentUser) {
+        $location.path('/login');
+    }
+});
     }]);
 
 
@@ -142,8 +177,8 @@ app.controller('RegistrationController',
             }
             $scope.dataLoading = false;
         };
-    }])
-.controller('ResetPasswordController',
+    }]);
+app.controller('ResetPasswordController',
     ['$scope', '$rootScope', '$location', 'AuthenticationService',
     function ($scope, $rootScope, $location, AuthenticationService) {
 
@@ -166,38 +201,6 @@ app.controller('RegistrationController',
             });
         };
     }]);
-app
-    .controller('UploadFileController', ['$scope', 'Upload', function ($scope, Upload) {
-        $scope.$watch('files', function () {
-            $scope.upload($scope.files);
-        });
-        $scope.log = '';
-
-        $scope.upload = function (files) {
-            if (files && files.length) {
-                for (var i = 0; i < files.length; i++) {
-                    var file = files[i];
-                    Upload
-                        .upload({
-                            url: 'https://angular-file-upload-cors-srv.appspot.com/upload',
-                            fields: {
-                                'username': $scope.username
-                            },
-                            file: file
-                        })
-                       .progress(function (evt) {
-                           var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
-                           $scope.log = 'progress: ' + progressPercentage + '% ' +
-                                       evt.config.file.name + '\n' + $scope.log;
-                       })
-                        .success(function (data, status, headers, config) {
-                            $scope.log = 'file ' + config.file.name + 'uploaded. Response: ' + JSON.stringify(data) + '\n' + $scope.log;
-                            $scope.$apply();
-                        });
-                }
-            }
-        };
-    }]);
 app.controller('PosaoController', []);
 app.factory('AuthenticationService',
     ['Base64', '$http', '$cookieStore', '$rootScope', '$timeout',
@@ -209,11 +212,11 @@ app.factory('AuthenticationService',
                 function (imgUrl) {
                     $http.post('/api/Account/Login', { username: username, password: password })
                        .success(function (response) {
-                           if (response !== true) {
+                           if (response.Successfull !== true) {
                                //response.message = 'Username or password is incorrect';
-                               callback({ success: false, message: 'Wrong credentials!' });
+                               callback(response);
                            } else {
-                               var newResponse = { success: true, imageUrl:imgUrl };
+                               var newResponse = { success: true, imageUrl: imgUrl, user: response.User };
                                callback(newResponse);
                            }
                        })
@@ -241,14 +244,18 @@ app.factory('AuthenticationService',
             alert("Registration failed");
         }
 
-        service.SetCredentials = function (username, password, imageUrl) {
-            var authdata = Base64.encode(username + ':' + password);
+        service.SetCredentials = function (user, imageUrl) {
+            var authdata = Base64.encode(user.Username + ':' + user.Password);
 
             $rootScope.globals = {
                 currentUser: {
-                    username: username,
+                    ID: user.ID,
+                    username: user.Username,
                     authdata: authdata,
-                    imgUrl: imageUrl
+                    imgUrl: imageUrl,
+                    ime: user.Ime,
+                    prezime: user.Prezime,
+                    pozicija: user.Pozicija
                 }
             };
 
@@ -322,20 +329,20 @@ app
 app.controller('Ctrl', ['$translate', '$scope', '$rootScope', '$cookieStore', '$location',
     function ($translate, $scope, $rootScope, $cookieStore, $location) {
 
-    //$scope.changeLanguage = function () {
-    //    $translate.uses(($translate.uses() === 'en_EN') ? 'bos_BOS' : 'en_EN');
-    //};
+        //$scope.changeLanguage = function () {
+        //    $translate.uses(($translate.uses() === 'en_EN') ? 'bos_BOS' : 'en_EN');
+        //};
 
-    $scope.changeLanguage = function (key) {
-        $translate.use(key);
-    };
-    $scope.logout = function () {
-        $rootScope.globals = {};
-        $cookieStore.remove('globals');
-        $location.path('/login');
-    };
+        $scope.changeLanguage = function (key) {
+            $translate.use(key);
+        };
+        $scope.logout = function () {
+            $rootScope.globals = {};
+            $cookieStore.remove('globals');
+            $location.path('/login');
+        };
 
-}]);
+    }]);
 app
 .factory('Base64', function () {
     /* jshint ignore:start */

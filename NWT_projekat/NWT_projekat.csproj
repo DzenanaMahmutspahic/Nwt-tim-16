@@ -320,6 +320,7 @@
     <Content Include="Images\Captcha\c5.png" />
     <Content Include="Images\eng.png" />
     <Content Include="Images\kopirnica.jpg" />
+    <Content Include="Images\loading-horizontal.gif" />
     <Content Include="Images\Profile\user.png" />
     <Content Include="Images\Profile\user2.png" />
     <Content Include="index.html" />
@@ -328,13 +329,16 @@
     <Content Include="Modules\Authentication\Views\login.html" />
     <Content Include="Modules\Authentication\Views\Registration.html" />
     <Content Include="Modules\Authentication\Views\ResetPassword.html" />
+    <Content Include="Modules\Direktive\AdminDashboardDirektiva.js" />
     <Content Include="Modules\Direktive\brojeviDirektiva.js" />
-    <Content Include="Modules\Direktive\IspisDirektiva.js" />
     <Content Include="Modules\Direktive\meniDirektiva.js" />
     <Content Include="Modules\Direktive\DzenyDirective.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Modules\Direktive\meniDirektiva.js" />
+    <Content Include="Modules\Direktive\DtpDirektiva.js" />
+    <Content Include="Modules\Direktive\MontazaDirektiva.js" />
+    <Content Include="Modules\Direktive\StampaDirektiva.js" />
     <Content Include="Modules\Direktive\VanjskaUslugaDirektiva.js" />
     <Content Include="Modules\Home\Views\home.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -24,6 +24,33 @@ angular.module('BasicHttpAuthExample')
     ['Base64', '$http', '$cookieStore', '$rootScope', '$timeout',
     function (Base64, $http, $cookieStore, $rootScope, $timeout) {
         var service = {};
+        service.DajNezavrsenePoslove = function (callback) {
+            $http.get('/api/Posao/DajNezavrsenePoslove')
+            .success(function (response) {
+                callback({success:true, poslovi:response});
+            })
+            .error(function (response) {
+                callback({ success: false });
+            })
+        };
+        service.potvrdiPosao = function (_id, callback) {
+            $http.get('/api/Posao/PotvrdiPosao/' + _id)
+            .success(function (response) {
+                callback({ success: true });
+            })
+            .error(function (response) {
+                callback({ success: false });
+            })
+        };
+        service.DajDTP = function (dtpId, callback) {
+            $http.get('/api/Posao/DajDtpJson/' + dtpId)
+            .success(function (response) {
+                callback({ success: true, data: response });
+            })
+            .error(function (response) {
+                callback({ success: false });
+            })
+        };
         service.dodajDTP = function (sM, sC, sS, mM, mS, mC, callback) {
             $http.post('/api/Posao/UnesiDtpJson', {
                 Sofp_materijal: sM,
@@ -33,7 +60,7 @@ angular.module('BasicHttpAuthExample')
                 Fotografija_cijena: mC,
                 Fotografija_sati: mS,
                 Komentar: "",
-                Korisnik_ID: 1
+                Korisnik_ID: korisnikId
             })
             .success(function (response) {
                 var a = { success: true, data: response };
@@ -42,6 +69,15 @@ angular.module('BasicHttpAuthExample')
             .error(function (data, status, headers, config) {
                 alert("Neuspjelo postavljanje DTP.");
             });
+        };
+        service.DajMontazu = function (montazaId, callback) {
+            $http.get('/api/Posao/DajMontazuJson/' + montazaId)
+            .success(function (response) {
+                callback({ success: true, data: response });
+            })
+            .error(function (response) {
+                callback({ success: false });
+            })
         };
         service.dodajMontazu = function (sM, sC, sS, mM, mS, mC, callback) {
             $http.post('/api/Posao/UnesiMontazuJson', {
@@ -52,7 +88,7 @@ angular.module('BasicHttpAuthExample')
                 Montaza_cijena: mC,
                 Montaza_sati: mS,
                 Komentar: "",
-                Korisnik_ID: 1
+                Korisnik_ID: $rootScope.globals.currentUser.ID
             })
             .success(function (response) {
                 var a = { success: true, data: response };
@@ -61,6 +97,15 @@ angular.module('BasicHttpAuthExample')
             .error(function (data, status, headers, config) {
                 alert("Neuspjelo postavljanje Montaze.");
             });
+        };
+        service.DajStampu = function (stampaId, callback) {
+            $http.get('/api/Posao/DajStampuJson/' + stampaId)
+            .success(function (response) {
+                callback({ success: true, data: response });
+            })
+            .error(function (response) {
+                callback({ success: false });
+            })
         };
         service.dodajStampu = function (p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15,
             p16, p17, p18, p19, p20, p21, p22, p23, p24, p25, p26, p27, p28, p29, p30, p31, p32, p33, callback) {
@@ -99,7 +144,7 @@ angular.module('BasicHttpAuthExample')
                 Xerox_sati: p32,
                 Xerox_cijena: p33,
                 Komentar: "",
-                Korisnik_ID: 1
+                Korisnik_ID: $rootScope.globals.currentUser.ID
             })
             .success(function (response) {
                 var a = { success: true, data: response };
@@ -156,7 +201,7 @@ angular.module('BasicHttpAuthExample')
                  Ostalo_sati : p41,
                  Ostalo_cijena : p42,
                 Komentar: "",
-                Korisnik_ID: 1
+                Korisnik_ID: $rootScope.globals.currentUser.ID
             })
             .success(function (response) {
                 var a = { success: true, data: response };
@@ -175,7 +220,7 @@ angular.module('BasicHttpAuthExample')
                 Prevoz_sati: pS,
                 Prevoz_cijena: pC,
                 Komentar: "",
-                Korisnik_ID: 1
+                Korisnik_ID: $rootScope.globals.currentUser.ID
             })
             .success(function (response) {
                 var a = { success: true, data: response };
@@ -210,7 +255,7 @@ angular.module('BasicHttpAuthExample')
                 Spiralni_sati: p20,
                 Spiralni_cijena: p21,
                 Komentar: "",
-                Korisnik_ID: 1
+                Korisnik_ID: $rootScope.globals.currentUser.ID
             })
             .success(function (response) {
                 var a = { success: true, data: response };
@@ -238,7 +283,7 @@ angular.module('BasicHttpAuthExample')
                 Razno_sati: p14,
                 Razno_cijena: p15,
                 Komentar: "",
-                Korisnik_ID: 1
+                Korisnik_ID: $rootScope.globals.currentUser.ID
             })
             .success(function (response) {
                 var a = { success: true, data: response };
@@ -257,7 +302,7 @@ angular.module('BasicHttpAuthExample')
                 Rucni_rad_ID: p5,
                 Stampa_ID: p6,
                 Komentar: "",
-                Korisnik_ID: 1
+                Korisnik_ID: $rootScope.globals.currentUser.ID
             })
             .success(function (response) {
                 var a = { success: true, data: response };
@@ -362,28 +407,27 @@ angular.module('BasicHttpAuthExample')
     };
 
     /* jshint ignore:end */
-})
+});
+
+
+    //.factory('dataFactory', ['$http', function ($http) {
+
+    //    var urlBase = '/api/Korisnik';
+    //    var dataFactory = {};
+
+    //    dataFactory.Login = function () {
+    //        return $http.get(urlBase);
+    //    };
+    //}])
 
 
 
-    .factory('dataFactory', ['$http', function ($http) {
+    //.service('dataService', ['$http', function ($http) {
 
-        var urlBase = '/api/Korisnik';
-        var dataFactory = {};
+    //    var urlBase = '/api/Korisnik';
 
-        dataFactory.Login = function () {
-            return $http.get(urlBase);
-        };
-    }])
+    //    this.Login = function () {
+    //        return $http.get(urlBase);
+    //    };
 
-
-
-    .service('dataService', ['$http', function ($http) {
-
-        var urlBase = '/api/Korisnik';
-
-        this.Login = function () {
-            return $http.get(urlBase);
-        };
-
-    }]);
+    //}]);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -131,10 +132,34 @@ namespace NWT.Pomocnici
                     Type p_type = p.PropertyType;
 
                     if(k != null && !Convert.IsDBNull(k))
-                        p.SetValue(odgovor, Convert.ChangeType(k, p_type));
+                    {
+                        try
+                        {
+                            p.SetValue(odgovor, Convert.ChangeType(k, p_type));
+                        }
+                        catch
+                        {
+                            var converter = TypeDescriptor.GetConverter(p_type);
+                            object vrijednost;
+                            if(converter.CanConvertFrom(k.GetType()))
+                                vrijednost = converter.ConvertFrom(k.GetType());
+                            else
+                                vrijednost = GetDefault(p_type);
+                            p.SetValue(odgovor, vrijednost);
+                        }
+                    }
                 }
             }
             return odgovor;
+        }
+
+        private object GetDefault(Type type)
+        {
+            if(type.IsValueType)
+            {
+                return Activator.CreateInstance(type);
+            }
+            return null;
         }
 
         /// <summary>

@@ -8,7 +8,7 @@
           return {
               template:
 '<a href=\'index.html#/profil\'><img src=\'' + $rootScope.globals.currentUser.imgUrl + '\' width=64 height=64 />' +
-'<span>' + $rootScope.globals.currentUser.username + '</span></a>'+
+'<span></a><a href=\'index.html#/profil\'>' + $rootScope.globals.currentUser.ime + '&nbsp;' + $rootScope.globals.currentUser.prezime + '</span></a>' +
 '<div ng-controller=\'Ctrl\'>\
         <form name=\'form_logout\' ng-submit=\'logout()\' role=\'form\'>\
             <button class=\'btn-link\' type="submit">{{ \'LOGOUT\' | translate }}</button>\
