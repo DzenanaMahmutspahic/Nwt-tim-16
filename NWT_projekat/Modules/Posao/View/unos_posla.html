@@ -13,7 +13,7 @@
         .formular-sekcija, table.formular-sekcija tr td {
             border: 1px solid black;
             padding: 0px 0px 0px 0px !important;
-                background: #7debbc !important;
+                background: #7debbc 
         }
 
             table.formular-sekcija tr td[colspan] input[type=text], table.formular-sekcija tr td[colspan] input[type=number] {
@@ -234,7 +234,7 @@
                 </tr>
             </table>
                     <div style="float:right;">
-                        <button ng-show="pokaziReproMaterijal()" type="submit" class="btn btn-danger"> Dodaj Repro Materijal</button>
+                        <button ng-show="pokaziReproMaterijal()" type="submit" class="btn btn-success" ng-style="{'background-color':'lightgreen'; 'width':'100%'}"> Dodaj Repro Materijal</button>
                     </div>
                 </form>
             </div>
@@ -292,7 +292,7 @@
                         </tr>
                     </table>
                     <div style="float:right;">
-                        <button ng-show="pokaziDTP()" type="submit" class="btn btn-danger"> Dodaj DTP</button>
+                        <button ng-show="pokaziDTP()" type="submit" class="btn btn-success" > Dodaj DTP</button>
                     </div>
                 </form>
             </div> <br /> <a href="javascript:pokaziSakrij('T2')"> <span id="T2s"> + </span> 2. MONTAŽA</a> <div id="T2" class="placeholder">
@@ -354,7 +354,7 @@
             <a href="javascript:pokaziSakrij('T3')"> <span id="T3s"> + </span> 3. ŠTAMPA</a>
             <div id="T3" class="placeholder">
                 <form name="form_stampa" ng-submit="dodajStampu()" role="form">
-                    <table class="ormular-sekcija table table-striped">
+                    <table class="formular-sekcija table table-striped">
                         <tr> <th> 3. ŠTAMPA</th> <td> &nbsp</td> <td> Pranje</td> <td> Sati</td> <td> Sati rada</td> <td> Ukupno</td> </tr>
                         <tr>
                             <td> Priprema ČETVEROBOJNA</td>
@@ -445,7 +445,7 @@
             <div id="T4" class="placeholder">
                 <div vanjska-usluga-direktiva></div>
                 <form name="form_vanjskaUsluga" ng-submit="dodajVanjskuUslugu()" role="form">
-                    <table class="ormular-sekcija table table-striped" ng-show="pokaziVanjskuUslugu()">
+                    <table class="formular-sekcija table table-striped" ng-show="pokaziVanjskuUslugu()">
                         <tr>
                             <th> 4. VANjSKA USLUGA</th>
                             <td> &nbsp;</td>
@@ -479,7 +479,7 @@
             <a href="javascript:pokaziSakrij('T5')"> <span id="T5s"> + </span> 5. KNJIGOVODSTVENA DORADA</a>
             <div id="T5" class="placeholder">
                 <form name="form_knjigovDorada" ng-submit="dodajKnjigovDoradu()" role="form">
-                    <table class="ormular-sekcija table table-striped">
+                    <table class="formular-sekcija table table-striped">
                         <tr> <th> 5. KNJIGOV.DORADA</th> <td> &nbsp</td> <td> Sati rada</td> <td> Ukupno</td> </tr>
                         <tr>
                             <td> Noz 14000/h</td>
@@ -534,7 +534,7 @@
             </div> <br /> <a href="javascript:pokaziSakrij('T6')"> <span id="T6s"> + </span> 6. RUČNI RAD</a>
             <div id="T6" class="placeholder">
                 <form name="form_rucniRad" ng-submit="dodajRucniRad()" role="form">
-                    <table class="ormular-sekcija table table-striped">
+                    <table class="formular-sekcija table table-striped">
                         <tr> <th> 6. RUČNI RAD</th> <td> &nbsp</td> <td> Sati rada</td> <td> Ukupno</td> </tr>
                         <tr> <td> Slaganje</td> 
                         <td> <input autocomplete="off" type="text" name="t7c1" ng-model="t7c1" style="width:100%" /> </td> 
