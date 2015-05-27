@@ -13,6 +13,7 @@
         .formular-sekcija, table.formular-sekcija tr td {
             border: 1px solid black;
             padding: 0px 0px 0px 0px !important;
+                background: #7debbc !important;
         }
 
             table.formular-sekcija tr td[colspan] input[type=text], table.formular-sekcija tr td[colspan] input[type=number] {
@@ -75,8 +76,8 @@
     <div ng-app="BasicHttpAuthExample">
         <div ng-controller="PosaoController">
             <table class="formular-sekcija table-striped">
-                <tr>
-                    <th> VRSTA POSLA</th>
+                <tr ng-style="{'background-color':'lightgreen'; 'width':'100%'}">
+                    <th ng-style="{'background-color':'lightgreen'; 'width':'100%'}"> VRSTA POSLA</th>
                     <th colspan="3"> </th>
                     <th> Datum</th>
                 </tr>

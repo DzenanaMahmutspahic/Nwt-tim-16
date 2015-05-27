@@ -7,7 +7,7 @@
     <style>
         button {
             border: 1px solid black;
-            background: RGBA(0,0,0,0) !important;
+            background: #7debbc !important;
             margin: 5px;
             padding: 5px;
             width: 100% !important;
@@ -54,13 +54,13 @@
                     width: auto !important;
                 }
     </style>
-    <div ng-controller="PosaoController">
-        <h3>Nezavršeni poslovi</h3>
+    <div ng-controller="PosaoController" >
+        <h3 >Nezavršeni poslovi</h3>
         <table>
             <tr>
-                <td class="pola-tabele-lijevo">
-                    <div ng-repeat="posao in poslovi">
-                        <button ng-click="PokaziPosao(posao.ID)">Posao_{{posao.ID}}</button>
+                <td class="pola-tabele-lijevo" ng-style="{'background-color':'lightgreen'; 'width':'100%'}">
+                    <div ng-style="{'background-color':'lightgreen'; 'width':'100%'}" ng-repeat="posao in poslovi">
+                        <button ng-click="PokaziPosao(posao.ID)" ng-style="{'background-color':'lightgreen'; 'width':'100%'}">Posao_{{posao.ID}}</button>
                     </div>
                 </td>
                 <td class="pola-tabele-desno" ng-show="data.posao.ID">
@@ -73,7 +73,7 @@
                 <td></td>
                 <td ng-show="data.posao.ID">
                     <form name="form_potvrdiPosao" ng-submit="potvrdiPosao()" role="form">
-                        <button type="submit" class="btn btn-success">Potvrdi posao</button>
+                        <button type="submit" class="btn btn-success" ng-style="{'background-color':'lightgreen'; 'width':'100%'}">Potvrdi posao</button>
                     </form>
                 </td>
             </tr>
