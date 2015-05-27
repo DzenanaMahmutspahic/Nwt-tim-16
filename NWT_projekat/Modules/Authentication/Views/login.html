@@ -14,9 +14,9 @@
     <script src="Modules/Direktive/IspisDirektiva.js"></script>
 
 
-    <form name="form" ng-submit="login()" role="form" ng-controller="LoginController">
+    <form name="form" ng-submit="login()" role="form" ng-controller="LoginController" >
         <div class="form-group">
-            <label id="error" ng-if="error" style="float:right;color:red;">Pogrešni login podaci</label>
+            <label id="error" ng-if="error" style="float:right;color:red;" class="alert alert-error" role="alert">Pogrešni login podaci</label>
             <label for="username">Username</label>
             <i class="fa fa-key"></i>
             <input type="text" name="username" id="username" class="form-control" ng-model="username" required />
