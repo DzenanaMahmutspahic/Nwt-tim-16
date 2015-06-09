@@ -8,6 +8,7 @@ using System.Net.Mail;
 using System.Web.Http;
 using System.Linq;
 using System.Linq.Expressions;
+using System.IO;
 
 namespace NWT_projekat.Controllers
 {
@@ -684,6 +685,53 @@ namespace NWT_projekat.Controllers
             }
         }
 
+        [HttpPost]
+        public void UploadFile(System.Web.HttpPostedFileBase file)
+        {
+            if(System.Web.HttpContext.Current.Request.Files.AllKeys.Any())
+            {
+                // Get the uploaded image from the Files collection
+                var httpPostedFile = System.Web.HttpContext.Current.Request.Files["UploadedImage"];
+
+                if(httpPostedFile != null)
+                {
+                    // Validate the uploaded image(optional)
+
+                    // Get the complete file path
+                    var fileSavePath = Path.Combine(System.Web.HttpContext.Current.Server.MapPath("~/UploadedFiles"), httpPostedFile.FileName);
+
+                    // Save the uploaded file to "UploadedFiles" folder
+                    httpPostedFile.SaveAs(fileSavePath);
+                }
+            }
+        }
+
+        [HttpPost]
+        public async System.Threading.Tasks.Task<object> UploadFile1()
+        {
+            if(!Request.Content.IsMimeMultipartContent("form-data"))
+            {
+                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.UnsupportedMediaType));
+            }
+            NamedMultipartFormDataStreamProvider streamProvider = new
+              NamedMultipartFormDataStreamProvider(
+               System.Web.HttpContext.Current.Server.MapPath("~/Images/Profile"));
+            await Request.Content.ReadAsMultipartAsync(streamProvider);
+            var r = new
+            {
+                FileNames = streamProvider.FileData.Select(entry => Path.GetFileName(entry.LocalFileName)),
+            };
+            var id = Convert.ToInt32(streamProvider.FormData["ID"]);
+            var authInfo = streamProvider.FormData["authinfo"];
+            if(AutorizovanKorisnik(id, authInfo))
+            {
+                string put = Path.GetFileName(r.FileNames.FirstOrDefault());
+                var param = new Dictionary<string, object>{{"KorisnikId", id}, {"Putanja", put}};
+                _dbPomocnik.IzvrsiProceduru("DodajSliku", param);
+            }
+            return r;
+        }
+
         #endregion
 
         #region *** Pomoćne metode ***
@@ -746,5 +794,33 @@ namespace NWT_projekat.Controllers
 
         #endregion
 
+    }
+
+    public class NamedMultipartFormDataStreamProvider: MultipartFormDataStreamProvider
+    {
+        public NamedMultipartFormDataStreamProvider(string fileName)
+            : base(fileName)
+        {
+        }
+        public override string GetLocalFileName(System.Net.Http.Headers.HttpContentHeaders
+          headers)
+        {
+            string fileName = base.GetLocalFileName(headers);
+            if(!string.IsNullOrEmpty(headers.ContentDisposition.FileName))
+            {
+                string newName = Guid.NewGuid().ToString("N");
+                headers.ContentDisposition.FileName = newName + Path.GetExtension(headers.ContentDisposition.FileName.Replace('"', ' ')); 
+                fileName = headers.ContentDisposition.FileName;
+            }
+            if(fileName.StartsWith("\"") && fileName.EndsWith("\""))
+            {
+                fileName = fileName.Trim('"');
+            }
+            if(fileName.Contains(@"/") || fileName.Contains(@"\"))
+            {
+                fileName = Path.GetFileName(fileName);
+            }
+            return fileName;
+        }
     }
 }

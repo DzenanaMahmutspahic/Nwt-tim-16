@@ -40,9 +40,9 @@ var app = angular.module('BasicHttpAuthExample', [
     //'Posao',
     'pascalprecht.translate',
     'ngRoute',
-    'ngCookies'
+    'ngCookies',
  //   'angularFileUpload'
-
+   // 'chart.js'
     
 ])
 

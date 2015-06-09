@@ -10,7 +10,11 @@
     <div style="position:relative; right:0; top:0">
         <p><a href="#/upload">{{'CHANGEPICTURE' | translate }}</a></p>
     </div>
+    <div ng-controller="LineCtrl" class="ng-scope">
+        <canvas id="line" class="chart chart-line" data="{{data}}"
+                labels="{{labels}}" legend="true" series="{{series}}"
+                ></canvas>
+    </div>
     <div admin-dashboard></div>
-
 </body>
 </html>
