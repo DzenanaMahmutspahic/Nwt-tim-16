@@ -214,16 +214,21 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LogController.cs" />
+    <Compile Include="Controllers\Pomocnici\NamedMultipartFormDataStreamProvider.cs" />
     <Compile Include="Controllers\PosaoController.cs" />
+    <Compile Include="Controllers\Pomocnici\ProfilPomocnik.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\Account.cs" />
     <Compile Include="Models\DTP.cs" />
+    <Compile Include="Models\Enumeracije\VremenskiPeriod.cs" />
     <Compile Include="Models\Knjigovodstvena_dorada.cs" />
     <Compile Include="Models\Korisnik.cs" />
     <Compile Include="Models\Montaza.cs" />
+    <Compile Include="Models\Parametri\ParametriZaGraf.cs" />
+    <Compile Include="Models\PodatakZaGraf.cs" />
     <Compile Include="Models\Posao.cs" />
     <Compile Include="Models\PromjenaLozinkeModel.cs" />
     <Compile Include="Models\Repromaterijal.cs" />
@@ -340,6 +345,7 @@
     <Content Include="Modules\Direktive\MontazaDirektiva.js" />
     <Content Include="Modules\Direktive\StampaDirektiva.js" />
     <Content Include="Modules\Direktive\VanjskaUslugaDirektiva.js" />
+    <Content Include="Modules\Graf\GrafController.js" />
     <Content Include="Modules\Graf\View\Graf.html" />
     <Content Include="Modules\Home\Views\home.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -9,6 +9,7 @@
               controller: ('HomeController', ['$scope', '$rootScope', '$http', '$location', function ($scope, $rootScope, $http, $location) {
                   $scope.ime = $rootScope.globals.currentUser.ime + ' ' + $rootScope.globals.currentUser.prezime;
                   $scope.imgUrl = $rootScope.globals.currentUser.imgUrl;
+                  ucitajGraf();
               }]),
               template:
                   '<div ng-controller="HomeController"> \

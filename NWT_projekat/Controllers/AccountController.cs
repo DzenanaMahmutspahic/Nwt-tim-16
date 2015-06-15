@@ -9,6 +9,7 @@ using System.Web.Http;
 using System.Linq;
 using System.Linq.Expressions;
 using System.IO;
+using NWT_projekat.Controllers.Pomocnici;
 
 namespace NWT_projekat.Controllers
 {
@@ -28,6 +29,8 @@ namespace NWT_projekat.Controllers
 
         private readonly Zapisnik _zapisnik = null;
 
+        private readonly ProfilPomocnik _profilPomocnik;
+
         #endregion
 
         #region *** Konstruktori ***
@@ -39,6 +42,7 @@ namespace NWT_projekat.Controllers
         {
             _dbPomocnik = new DbPomocnik();
             _zapisnik = new Zapisnik(_dbPomocnik);
+            _profilPomocnik = new ProfilPomocnik(_dbPomocnik);
         }
 
         #endregion
@@ -203,7 +207,7 @@ namespace NWT_projekat.Controllers
         {
             try
             {
-                if(AutorizovanKorisnik(adminId, authInfo))
+                if(_profilPomocnik.AutorizovanKorisnik(adminId, authInfo))
                 {
                     var parametri = new Dictionary<string, object> { { "ID", Id } };
                     var response = _dbPomocnik.IzvrsiProceduru<Korisnik>(Konstante.UNAPRIJEDI_KORISNIKA, parametri);
@@ -238,7 +242,7 @@ namespace NWT_projekat.Controllers
         {
             try
             {
-                if(AutorizovanKorisnik(adminId, authInfo))
+                if(_profilPomocnik.AutorizovanKorisnik(adminId, authInfo))
                 {
                     var parametri = new Dictionary<string, object> { { "ID", Id } };
                     var response = _dbPomocnik.IzvrsiProceduru<Korisnik>(Konstante.NAZADUJ_KORISNIKA, parametri);
@@ -714,8 +718,7 @@ namespace NWT_projekat.Controllers
                 throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.UnsupportedMediaType));
             }
             NamedMultipartFormDataStreamProvider streamProvider = new
-              NamedMultipartFormDataStreamProvider(
-               System.Web.HttpContext.Current.Server.MapPath("~/Images/Profile"));
+              NamedMultipartFormDataStreamProvider(System.Web.HttpContext.Current.Server.MapPath("~/Images/Profile"));
             await Request.Content.ReadAsMultipartAsync(streamProvider);
             var r = new
             {
@@ -723,10 +726,13 @@ namespace NWT_projekat.Controllers
             };
             var id = Convert.ToInt32(streamProvider.FormData["ID"]);
             var authInfo = streamProvider.FormData["authinfo"];
-            if(AutorizovanKorisnik(id, authInfo))
+            if(_profilPomocnik.AutorizovanKorisnik(id, authInfo))
             {
                 string put = Path.GetFileName(r.FileNames.FirstOrDefault());
-                var param = new Dictionary<string, object>{{"KorisnikId", id}, {"Putanja", put}};
+                var param = new Dictionary<string, object> { 
+                    { "KorisnikId", id },
+                    { "Putanja", put }
+                };
                 _dbPomocnik.IzvrsiProceduru("DodajSliku", param);
             }
             return r;
@@ -774,53 +780,7 @@ namespace NWT_projekat.Controllers
             return true;
         }
 
-        private bool AutorizovanKorisnik(int Id, string authInfo)
-        {
-
-            var parametri = new Dictionary<string, object>{
-                    {"ID", Id}
-                };
-            var trenutniKorisnik = _dbPomocnik.IzvrsiProceduru<Korisnik>(Konstante.DAJ_KORISNIKA_ID, parametri);
-
-            if(trenutniKorisnik.ID != 0 && !trenutniKorisnik.Banovan)
-            {
-                var kod = KriptoPomocnik.Base64Encode(string.Format("{0}:{1}",
-                    trenutniKorisnik.Username, trenutniKorisnik.Password));
-
-                return authInfo == kod && trenutniKorisnik.Pozicija >= 3;
-            }
-            return false;
-        }
-
         #endregion
 
-    }
-
-    public class NamedMultipartFormDataStreamProvider: MultipartFormDataStreamProvider
-    {
-        public NamedMultipartFormDataStreamProvider(string fileName)
-            : base(fileName)
-        {
-        }
-        public override string GetLocalFileName(System.Net.Http.Headers.HttpContentHeaders
-          headers)
-        {
-            string fileName = base.GetLocalFileName(headers);
-            if(!string.IsNullOrEmpty(headers.ContentDisposition.FileName))
-            {
-                string newName = Guid.NewGuid().ToString("N");
-                headers.ContentDisposition.FileName = newName + Path.GetExtension(headers.ContentDisposition.FileName.Replace('"', ' ')); 
-                fileName = headers.ContentDisposition.FileName;
-            }
-            if(fileName.StartsWith("\"") && fileName.EndsWith("\""))
-            {
-                fileName = fileName.Trim('"');
-            }
-            if(fileName.Contains(@"/") || fileName.Contains(@"\"))
-            {
-                fileName = Path.GetFileName(fileName);
-            }
-            return fileName;
-        }
     }
 }

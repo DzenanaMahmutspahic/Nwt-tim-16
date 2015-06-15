@@ -224,6 +224,12 @@ namespace NWT.Pomocnici
                     cmd.Connection = conn;
                     cmd.CommandType = CommandType.StoredProcedure;
 
+                    if(parametri != null)
+                        foreach(KeyValuePair<string, object> parametar in parametri)
+                        {
+                            cmd.Parameters.Add(new SqlParameter("@" + parametar.Key, parametar.Value));
+                        }
+
                     conn.Open();
 
                     System.Data.SqlClient.SqlDataAdapter adapter = new System.Data.SqlClient.SqlDataAdapter(cmd);
