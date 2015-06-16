@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
@@ -131,10 +132,34 @@ namespace NWT.Pomocnici
                     Type p_type = p.PropertyType;
 
                     if(k != null && !Convert.IsDBNull(k))
-                        p.SetValue(odgovor, Convert.ChangeType(k, p_type));
+                    {
+                        try
+                        {
+                            p.SetValue(odgovor, Convert.ChangeType(k, p_type));
+                        }
+                        catch
+                        {
+                            var converter = TypeDescriptor.GetConverter(p_type);
+                            object vrijednost;
+                            if(converter.CanConvertFrom(k.GetType()))
+                                vrijednost = converter.ConvertFrom(k.GetType());
+                            else
+                                vrijednost = GetDefault(p_type);
+                            p.SetValue(odgovor, vrijednost);
+                        }
+                    }
                 }
             }
             return odgovor;
+        }
+
+        private object GetDefault(Type type)
+        {
+            if(type.IsValueType)
+            {
+                return Activator.CreateInstance(type);
+            }
+            return null;
         }
 
         /// <summary>
@@ -186,6 +211,35 @@ namespace NWT.Pomocnici
                     }
                 }
                 return odgovor;
+            }
+        }
+
+        public DataSet IzvrsiStoredProceduru(string imeProcedure, Dictionary<string, object> parametri)
+        {
+            using(System.Data.SqlClient.SqlConnection conn = new System.Data.SqlClient.SqlConnection(CONNECTION_STRING))
+            {
+                using(System.Data.SqlClient.SqlCommand cmd = new System.Data.SqlClient.SqlCommand())
+                {
+                    cmd.CommandText = imeProcedure;
+                    cmd.Connection = conn;
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    if(parametri != null)
+                        foreach(KeyValuePair<string, object> parametar in parametri)
+                        {
+                            cmd.Parameters.Add(new SqlParameter("@" + parametar.Key, parametar.Value));
+                        }
+
+                    conn.Open();
+
+                    System.Data.SqlClient.SqlDataAdapter adapter = new System.Data.SqlClient.SqlDataAdapter(cmd);
+
+                    DataSet ds = new DataSet();
+                    adapter.Fill(ds);
+
+                    conn.Close();
+                    return ds;
+                }
             }
         }
 

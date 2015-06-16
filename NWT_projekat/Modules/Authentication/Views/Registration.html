@@ -3,7 +3,7 @@
     <title>Welcome to our registration page </title>
 </head>
 <body ng-controller="RegistrationController">
-    <div id="errorMessage" ng-show="error" class="alert alert-danger" ng-bind-html="errorMessage"></div>
+    <div id="errorMessage" ng-show="error" class="alert alert-danger" role="alert" ng-bind-html="errorMessage"></div>
     <form name="form" ng-submit="submitRegistration()" role="form">
         <div class="form-group">
             <label for="name">Ime</label>

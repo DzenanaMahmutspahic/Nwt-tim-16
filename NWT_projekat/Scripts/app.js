@@ -7,15 +7,42 @@
 ////angular.module('myModule', ['ui.bootstrap']);
 ////angular.module('angularTranslateApp', [])
 
+var pozicijeEnum = {
+    Zaposlenik: 0,
+    Menadzer: 1,
+    Administrator: 2,
+    properties: {
+        1: "Zaposlenik",
+        2: "Menadzer",
+        3: "Administrator"
+    }
+};
+
+function FirstOrDefault(niz, uslov) {
+    var i = 0;
+    for (i = 0; i < niz.length; i++)
+        if (uslov(niz[i]))
+            return niz[i];
+    return null;
+}
+
+function IndexOf(niz, uslov) {
+    var i = 0;
+    for (i = 0; i < niz.length; i++)
+        if (uslov(niz[i]))
+            return i;
+    return -1;
+}
+
 var app = angular.module('BasicHttpAuthExample', [
     //'Authentication',
     //'Home',
     //'Posao',
     'pascalprecht.translate',
     'ngRoute',
-    'ngCookies'
+    'ngCookies',
  //   'angularFileUpload'
-
+   // 'chart.js'
     
 ])
 
@@ -43,6 +70,12 @@ var app = angular.module('BasicHttpAuthExample', [
         .when('/posao', {
             controller: 'PosaoController',
             templateUrl: 'modules/Posao/View/unos_posla.html',
+            hideMenus: true
+        })
+        //.when('/nezavrseniPoslovi', {
+        .when('/posao/nezavrseniPoslovi', {
+            controller: 'PosaoController',
+            templateUrl: 'modules/Posao/View/prikaz_posla.html',
             hideMenus: true
         })
         .when('/upload', {
@@ -79,6 +112,7 @@ var app = angular.module('BasicHttpAuthExample', [
                 $location.path() !== '/resetPassword' &&
                 $location.path() !== '/changePassword' &&
                 $location.path() !== '/posao' &&
+        $location.path() !== '/posao/nezavrseniPoslovi' &&
                 $location.path() !== '/upload' &&
                 $location.path() !== '/profil' &&
                 !$rootScope.globals.currentUser) {
@@ -145,8 +179,8 @@ app.controller('RegistrationController',
             }
             $scope.dataLoading = false;
         };
-    }])
-.controller('ResetPasswordController',
+    }]);
+app.controller('ResetPasswordController',
     ['$scope', '$rootScope', '$location', 'AuthenticationService',
     function ($scope, $rootScope, $location, AuthenticationService) {
 
@@ -216,7 +250,7 @@ app.controller('RegistrationController',
         });
         //return myModelObj;
     }
-}]);
+    }]);
 
 
 //novi kontroler za upload slike DZenana
@@ -265,11 +299,11 @@ app.factory('AuthenticationService',
                 function (imgUrl) {
                     $http.post('/api/Account/Login', { username: username, password: password })
                        .success(function (response) {
-                           if (response !== true) {
+                           if (response.Successfull !== true) {
                                //response.message = 'Username or password is incorrect';
-                               callback({ success: false, message: 'Wrong credentials!' });
+                               callback(response);
                            } else {
-                               var newResponse = { success: true, imageUrl:imgUrl };
+                               var newResponse = { success: true, imageUrl: imgUrl, user: response.User };
                                callback(newResponse);
                            }
                        })
@@ -297,14 +331,18 @@ app.factory('AuthenticationService',
             alert("Registration failed");
         }
 
-        service.SetCredentials = function (username, password, imageUrl) {
-            var authdata = Base64.encode(username + ':' + password);
+        service.SetCredentials = function (user, imageUrl) {
+            var authdata = Base64.encode(user.Username + ':' + user.Password);
 
             $rootScope.globals = {
                 currentUser: {
-                    username: username,
+                    ID: user.ID,
+                    username: user.Username,
                     authdata: authdata,
-                    imgUrl: imageUrl
+                    imgUrl: imageUrl,
+                    ime: user.Ime,
+                    prezime: user.Prezime,
+                    pozicija: user.Pozicija
                 }
             };
 

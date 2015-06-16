@@ -9,7 +9,7 @@ using System.Web.Http;
 
 namespace NWT_projekat.Controllers
 {
-    public class PosaoController : ApiController
+    public class PosaoController: ApiController
     {
 
         #region *** Fields ***
@@ -104,14 +104,14 @@ namespace NWT_projekat.Controllers
                     Content = new JsonContent(q)
                 };
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 _zapisnik.Zapisi(ex.ToString(), 3);
             }
             return new HttpResponseMessage()
             {
                 StatusCode = System.Net.HttpStatusCode.BadRequest,
-                Content = new JsonContent( new { message = "Greska u izvrsavanju servisa!", success = false})
+                Content = new JsonContent(new { message = "Greska u izvrsavanju servisa!", success = false })
             };
         }
 
@@ -131,7 +131,7 @@ namespace NWT_projekat.Controllers
             {
                 var q = _dbPomocnik.IzvrsiProceduru<Posao, Posao>(Konstante.DODAJ_POSAO, p).FirstOrDefault();
 
-                if (q.ID != 0)
+                if(q.ID != 0)
                     p.ID = q.ID;
 
                 return new HttpResponseMessage()
@@ -139,7 +139,7 @@ namespace NWT_projekat.Controllers
                     Content = new JsonContent(p)
                 };
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 _zapisnik.Zapisi(ex.ToString(), 3);
             }
@@ -167,6 +167,18 @@ namespace NWT_projekat.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        public List<Posao> DajNezavrsenePoslove()
+        {
+            var q = _dbPomocnik.IzvrsiProceduru<Posao, Posao>(Konstante.DAJ_NEZAVRSENE_POSLOVE, null);
+            return q;
+
+        }
+
+        /// <summary>
+        /// Servis za dobavljanje završenih poslova
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
         public System.Net.Http.HttpResponseMessage DajZavrsenePosloveJson()
         {
             try
@@ -178,7 +190,195 @@ namespace NWT_projekat.Controllers
                     Content = new JsonContent(q)
                 };
             }
-            catch (Exception ex)
+            catch(Exception ex)
+            {
+                _zapisnik.Zapisi(ex.ToString(), 3);
+            }
+            return new HttpResponseMessage()
+            {
+                StatusCode = System.Net.HttpStatusCode.BadRequest,
+                Content = new JsonContent(new { message = "Greska u izvrsavanju servisa!", success = false })
+            };
+        }
+
+        /// <summary>
+        /// Servis za dobavljanje završenih poslova
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public System.Net.Http.HttpResponseMessage DajDtpJson(int ID)
+        {
+            try
+            {
+                var parametri = new Dictionary<string, object> { { "ID", ID } };
+                var q = _dbPomocnik.IzvrsiProceduru<DTP>(Konstante.DAJ_DTP, parametri);
+
+                return new HttpResponseMessage()
+                {
+                    Content = new JsonContent(q)
+                };
+            }
+            catch(Exception ex)
+            {
+                _zapisnik.Zapisi(ex.ToString(), 3);
+            }
+            return new HttpResponseMessage()
+            {
+                StatusCode = System.Net.HttpStatusCode.BadRequest,
+                Content = new JsonContent(new { message = "Greska u izvrsavanju servisa!", success = false })
+            };
+        }
+
+        /// <summary>
+        /// Servis za dobavljanje završenih poslova
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public System.Net.Http.HttpResponseMessage DajMontazuJson(int ID)
+        {
+            try
+            {
+                var parametri = new Dictionary<string, object> { { "ID", ID } };
+                var q = _dbPomocnik.IzvrsiProceduru(Konstante.DAJ_MONAZU, parametri).Rows[0];
+
+                Montaza m = new Montaza
+                {
+                    ID = Convert.ToInt32(q["ID"]),
+                    Korisnik_ID = Convert.ToInt32(q["Korisnik_ID"]),
+                    Snimanje_materijal = q["Snimanje_materijal"].ToString(),
+                    Snimanje_sati = Convert.ToDecimal(q["Snimanje_sati"]),
+                    Snimanje_cijena = Convert.ToDecimal(q["Snimanje_cijena"]),
+                    Montaza_materijal = Convert.ToString(q["Montaza_materijal"]),
+                    Montaza_sati = Convert.ToDecimal(q["Montaza_sati"]),
+                    Montaza_cijena = Convert.ToDecimal(q["Montaza_cijena"]),
+                    Ukupno_sati = Convert.ToDecimal(q["Ukupno_sati"]),
+                    Ukupno_cijena = Convert.ToDecimal(q["Ukupno_cijena"]),
+                    Status_montaze = Convert.ToInt32(q["Status_montaze"]),
+                    //public TimeSpan Vrijeme_cekanja = Convert.ToDateTime(q["xx"]),
+                    Komentar = Convert.ToString(q["Komentar"])
+                };
+
+                return new HttpResponseMessage()
+                {
+                    Content = new JsonContent(m)
+                };
+            }
+            catch(Exception ex)
+            {
+                _zapisnik.Zapisi(ex.ToString(), 3);
+            }
+            return new HttpResponseMessage()
+            {
+                StatusCode = System.Net.HttpStatusCode.BadRequest,
+                Content = new JsonContent(new { message = "Greska u izvrsavanju servisa!", success = false })
+            };
+        }
+
+        /// <summary>
+        /// Servis za dobavljanje završenih poslova
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public System.Net.Http.HttpResponseMessage DajStampuJson(int ID)
+        {
+            try
+            {
+                var parametri = new Dictionary<string, object> { { "ID", ID } };
+                var q = _dbPomocnik.IzvrsiProceduru(Konstante.DAJ_STAMPU, parametri).Rows[0];
+
+                Stampa s = new Stampa
+                {
+
+                    Stampa_ID = Convert.ToInt32(q["Stampa_ID"]),
+                    Korisnik_ID = Convert.ToInt32(q["Korisnik_ID"]),
+                    Priprema4b_materijal = Convert.ToString(q["Priprema4b_materijal"]),
+                    Priprema4b_sati = Convert.ToDecimal(q["Priprema4b_sati"]),
+                    Priprema4b_cijena = Convert.ToDecimal(q["Priprema4b_cijena"]),
+
+                    GTO1_materijal = Convert.ToString(q["GTO1_materijal"]),
+                    GTO1_sati = Convert.ToDecimal(q["GTO1_sati"]),
+                    GTO1_cijena = Convert.ToDecimal(q["GTO1_cijena"]),
+
+                    PripremaB2_materijal = Convert.ToString(q["PripremaB2_materijal"]),
+                    PripremaB2_sati = Convert.ToDecimal(q["PripremaB2_sati"]),
+                    PripremaB2_cijena = Convert.ToDecimal(q["PripremaB2_cijena"]),
+
+                    HOB2_materijal = Convert.ToString(q["HOB2_materijal"]),
+                    HOB2_sati = Convert.ToDecimal(q["HOB2_sati"]),
+                    HOB2_cijena = Convert.ToDecimal(q["HOB2_cijena"]),
+
+                    GTO2_materijal = Convert.ToString(q["GTO2_materijal"]),
+                    GTO2_sati = Convert.ToDecimal(q["GTO2_sati"]),
+                    GTO2_cijena = Convert.ToDecimal(q["GTO2_cijena"]),
+
+                    PripremaGTO_materijal = Convert.ToString(q["PripremaGTO_materijal"]),
+                    PripremaGTO_sati = Convert.ToDecimal(q["PripremaGTO_sati"]),
+                    PripremaGTO_cijena = Convert.ToDecimal(q["PripremaGTO_cijena"]),
+
+                    PripremaNiG_materijal = Convert.ToString(q["PripremaNiG_materijal"]),
+                    PripremaNiG_sati = Convert.ToDecimal(q["PripremaNiG_sati"]),
+                    PripremaNiG_cijena = Convert.ToDecimal(q["PripremaNiG_cijena"]),
+
+                    Numeracija_materijal = Convert.ToString(q["Numeracija_materijal"]),
+                    Numeracija_sati = Convert.ToDecimal(q["Numeracija_sati"]),
+                    Numeracija_cijena = Convert.ToDecimal(q["Numeracija_cijena"]),
+
+                    Grafopres_materijal = Convert.ToString(q["Grafopres_materijal"]),
+                    Grafopres_sati = Convert.ToDecimal(q["Grafopres_sati"]),
+                    Grafopres_cijena = Convert.ToDecimal(q["Grafopres_cijena"]),
+
+                    Xeicon_materijal = Convert.ToString(q["Xeicon_materijal"]),
+                    Xeicon_sati = Convert.ToDecimal(q["Xeicon_sati"]),
+                    Xeicon_cijena = Convert.ToDecimal(q["Xeicon_cijena"]),
+
+                    Xerox_materijal = Convert.ToString(q["Xerox_materijal"]),
+                    Xerox_sati = Convert.ToDecimal(q["Xerox_sati"]),
+                    Xerox_cijena = Convert.ToDecimal(q["Xerox_cijena"]),
+
+                    Ukupno_sati = Convert.ToDecimal(q["Ukupno_sati"]),
+                    Ukupno_cijena = Convert.ToDecimal(q["Ukupno_cijena"]),
+                    Status_stampe = Convert.ToInt32(q["Status_stampe"]),
+                    //public TimeSpan Vrijeme_cekanja { get; set; }
+                    Komentar = Convert.ToString(q["Komentar"])
+                    //public DateTime Vrijeme_pocetka { get; set; }
+                    //public DateTime Vrijeme_zavrsetka { get; set; }
+                };
+
+                return new HttpResponseMessage()
+                {
+                    Content = new JsonContent(s)
+                };
+            }
+            catch(Exception ex)
+            {
+                _zapisnik.Zapisi(ex.ToString(), 3);
+            }
+            return new HttpResponseMessage()
+            {
+                StatusCode = System.Net.HttpStatusCode.BadRequest,
+                Content = new JsonContent(new { message = "Greska u izvrsavanju servisa!", success = false })
+            };
+        }
+
+        /// <summary>
+        /// Servis za potvrdu posla
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+        [System.Web.Http.HttpGet]
+        public System.Net.Http.HttpResponseMessage PotvrdiPosao(int ID)
+        {
+            try
+            {
+                var parametri = new Dictionary<string, object> { { "ID", ID } };
+                var q = _dbPomocnik.IzvrsiProceduru(Konstante.POTVRDI_POSAO, parametri);
+
+                return new HttpResponseMessage()
+                {
+                    Content = new JsonContent(true)
+                };
+            }
+            catch(Exception ex)
             {
                 _zapisnik.Zapisi(ex.ToString(), 3);
             }
@@ -201,7 +401,7 @@ namespace NWT_projekat.Controllers
             {
                 var q = _dbPomocnik.IzvrsiProceduru<Montaza, Montaza>(Konstante.DODAJ_MONTAZU, m).FirstOrDefault();
 
-                if (q != null && q.ID != 0)
+                if(q != null && q.ID != 0)
                 {
                     m.ID = q.ID;
                     return new HttpResponseMessage()
@@ -214,7 +414,7 @@ namespace NWT_projekat.Controllers
                     Content = new JsonContent(new { message = "Greska u dodavanju Montaže!", success = false })
                 };
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 _zapisnik.Zapisi(ex.ToString(), 3);
             }
@@ -245,7 +445,7 @@ namespace NWT_projekat.Controllers
                     Content = new JsonContent(r)
                 };
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 _zapisnik.Zapisi(ex.ToString(), 3);
             }
@@ -267,15 +467,15 @@ namespace NWT_projekat.Controllers
             try
             {
                 var q = _dbPomocnik.IzvrsiProceduru<Knjigovodstvena_dorada, Knjigovodstvena_dorada>(Konstante.DODAJ_KNJIGOVODSTVENU_DORADU, k).FirstOrDefault();
-                
-                if (q.ID != 0)
+
+                if(q.ID != 0)
                     k.ID = q.ID;
                 return new HttpResponseMessage()
                 {
                     Content = new JsonContent(k)
                 };
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 _zapisnik.Zapisi(ex.ToString(), 3);
             }
@@ -298,7 +498,7 @@ namespace NWT_projekat.Controllers
             {
                 var q = _dbPomocnik.IzvrsiProceduru<Rucni_rad, Rucni_rad>(Konstante.DODAJ_RUCNI_RAD, r).FirstOrDefault();
 
-                if (q.ID != 0)
+                if(q.ID != 0)
                     r.ID = q.ID;
 
                 return new HttpResponseMessage()
@@ -306,7 +506,7 @@ namespace NWT_projekat.Controllers
                     Content = new JsonContent(r)
                 };
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 _zapisnik.Zapisi(ex.ToString(), 3);
             }
@@ -329,7 +529,7 @@ namespace NWT_projekat.Controllers
             {
                 var q = _dbPomocnik.IzvrsiProceduru<Stampa, Stampa>(Konstante.DODAJ_STAMPU, s).FirstOrDefault();
 
-                if (q.Stampa_ID != 0)
+                if(q.Stampa_ID != 0)
                 {
                     s.Stampa_ID = q.Stampa_ID;
                 }
@@ -339,7 +539,7 @@ namespace NWT_projekat.Controllers
                     Content = new JsonContent(s)
                 };
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 _zapisnik.Zapisi(ex.ToString(), 3);
             }
@@ -362,7 +562,7 @@ namespace NWT_projekat.Controllers
             {
                 var q = _dbPomocnik.IzvrsiProceduru<Vanjska_usluga, Vanjska_usluga>(Konstante.DODAJ_VANJSKU_USLUGU, v).FirstOrDefault();
 
-                if (q.ID != 0)
+                if(q.ID != 0)
                     v.ID = q.ID;
 
                 return new HttpResponseMessage()
@@ -370,7 +570,7 @@ namespace NWT_projekat.Controllers
                     Content = new JsonContent(v)
                 };
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 _zapisnik.Zapisi(ex.ToString(), 3);
             }
@@ -398,7 +598,7 @@ namespace NWT_projekat.Controllers
                     Content = new JsonContent(q)
                 };
             }
-            catch (Exception ex)
+            catch(Exception ex)
             {
                 _zapisnik.Zapisi(ex.ToString(), 3);
             }
