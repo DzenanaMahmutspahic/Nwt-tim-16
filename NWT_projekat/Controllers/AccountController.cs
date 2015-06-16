@@ -8,6 +8,8 @@ using System.Net.Mail;
 using System.Web.Http;
 using System.Linq;
 using System.Linq.Expressions;
+using System.IO;
+using NWT_projekat.Controllers.Pomocnici;
 
 namespace NWT_projekat.Controllers
 {
@@ -27,6 +29,8 @@ namespace NWT_projekat.Controllers
 
         private readonly Zapisnik _zapisnik = null;
 
+        private readonly ProfilPomocnik _profilPomocnik;
+
         #endregion
 
         #region *** Konstruktori ***
@@ -38,6 +42,7 @@ namespace NWT_projekat.Controllers
         {
             _dbPomocnik = new DbPomocnik();
             _zapisnik = new Zapisnik(_dbPomocnik);
+            _profilPomocnik = new ProfilPomocnik(_dbPomocnik);
         }
 
         #endregion
@@ -202,7 +207,7 @@ namespace NWT_projekat.Controllers
         {
             try
             {
-                if(AutorizovanKorisnik(adminId, authInfo))
+                if(_profilPomocnik.AutorizovanKorisnik(adminId, authInfo))
                 {
                     var parametri = new Dictionary<string, object> { { "ID", Id } };
                     var response = _dbPomocnik.IzvrsiProceduru<Korisnik>(Konstante.UNAPRIJEDI_KORISNIKA, parametri);
@@ -237,7 +242,7 @@ namespace NWT_projekat.Controllers
         {
             try
             {
-                if(AutorizovanKorisnik(adminId, authInfo))
+                if(_profilPomocnik.AutorizovanKorisnik(adminId, authInfo))
                 {
                     var parametri = new Dictionary<string, object> { { "ID", Id } };
                     var response = _dbPomocnik.IzvrsiProceduru<Korisnik>(Konstante.NAZADUJ_KORISNIKA, parametri);
@@ -684,6 +689,55 @@ namespace NWT_projekat.Controllers
             }
         }
 
+        [HttpPost]
+        public void UploadFile(System.Web.HttpPostedFileBase file)
+        {
+            if(System.Web.HttpContext.Current.Request.Files.AllKeys.Any())
+            {
+                // Get the uploaded image from the Files collection
+                var httpPostedFile = System.Web.HttpContext.Current.Request.Files["UploadedImage"];
+
+                if(httpPostedFile != null)
+                {
+                    // Validate the uploaded image(optional)
+
+                    // Get the complete file path
+                    var fileSavePath = Path.Combine(System.Web.HttpContext.Current.Server.MapPath("~/UploadedFiles"), httpPostedFile.FileName);
+
+                    // Save the uploaded file to "UploadedFiles" folder
+                    httpPostedFile.SaveAs(fileSavePath);
+                }
+            }
+        }
+
+        [HttpPost]
+        public async System.Threading.Tasks.Task<object> UploadFile1()
+        {
+            if(!Request.Content.IsMimeMultipartContent("form-data"))
+            {
+                throw new HttpResponseException(Request.CreateResponse(HttpStatusCode.UnsupportedMediaType));
+            }
+            NamedMultipartFormDataStreamProvider streamProvider = new
+              NamedMultipartFormDataStreamProvider(System.Web.HttpContext.Current.Server.MapPath("~/Images/Profile"));
+            await Request.Content.ReadAsMultipartAsync(streamProvider);
+            var r = new
+            {
+                FileNames = streamProvider.FileData.Select(entry => Path.GetFileName(entry.LocalFileName)),
+            };
+            var id = Convert.ToInt32(streamProvider.FormData["ID"]);
+            var authInfo = streamProvider.FormData["authinfo"];
+            if(_profilPomocnik.AutorizovanKorisnik(id, authInfo))
+            {
+                string put = Path.GetFileName(r.FileNames.FirstOrDefault());
+                var param = new Dictionary<string, object> { 
+                    { "KorisnikId", id },
+                    { "Putanja", put }
+                };
+                _dbPomocnik.IzvrsiProceduru("DodajSliku", param);
+            }
+            return r;
+        }
+
         #endregion
 
         #region *** Pomoćne metode ***
@@ -724,24 +778,6 @@ namespace NWT_projekat.Controllers
             }
 
             return true;
-        }
-
-        private bool AutorizovanKorisnik(int Id, string authInfo)
-        {
-
-            var parametri = new Dictionary<string, object>{
-                    {"ID", Id}
-                };
-            var trenutniKorisnik = _dbPomocnik.IzvrsiProceduru<Korisnik>(Konstante.DAJ_KORISNIKA_ID, parametri);
-
-            if(trenutniKorisnik.ID != 0 && !trenutniKorisnik.Banovan)
-            {
-                var kod = KriptoPomocnik.Base64Encode(string.Format("{0}:{1}",
-                    trenutniKorisnik.Username, trenutniKorisnik.Password));
-
-                return authInfo == kod && trenutniKorisnik.Pozicija >= 3;
-            }
-            return false;
         }
 
         #endregion

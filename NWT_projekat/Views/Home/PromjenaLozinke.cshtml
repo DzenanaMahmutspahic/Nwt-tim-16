@@ -43,12 +43,15 @@
             <input type="hidden" name="id" value="@ViewBag.Id" />
             <input type="hidden" name="guid" value="@ViewBag.Guid" />
             <div style="width:200px;">
+                Unesi novu lozinku:
                 <input type="password" name="novaLozinka" id="lozinka1" ng-model="dynamicPopover.content" class="form-control" />
                 <br />
+                Potvrdi novu lozinku:
                 <input type="password" id="lozinka2" ng-model="dynamicPopover.content" class="form-control" />
                 <br />
                 <button type="button" onclick="submitForm()" class="btn btn-primary" ng-model="singleModel" btn-checkbox btn-checkbox-true="1" btn-checkbox-false="0">
                     {{ 'PromjenaLozinke' | translate }}
+                   
                 </button>
             </div>
             @*<button type="button" onclick="submitForm()">{{ 'PromjenaLozinke' | translate }}</button>*@

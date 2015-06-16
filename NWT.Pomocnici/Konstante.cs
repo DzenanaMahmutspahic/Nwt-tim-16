@@ -42,6 +42,7 @@ namespace NWT.Pomocnici
         public static readonly string DAJ_MONAZU = "DajMontazu";
         public static readonly string DAJ_STAMPU = "DajStampu";
         public static readonly string POTVRDI_POSAO = "PotvrdiPosao";
+        public static readonly string DAJ_PODATKE_ZA_GRAF = "DajPodatkeZaGraf_1";
 
         public static readonly string REGISTRACIJA_TEMPLATE = @"
 Dobro došli na našu stranicu i čestitamo na uspješnoj registraciji.
