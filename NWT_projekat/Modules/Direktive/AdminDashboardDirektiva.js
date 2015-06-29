@@ -11,6 +11,8 @@
               return {};
           return {
               controller: ['$scope', '$rootScope', '$http', function ($scope, $rootScope, $http) {
+                  if(true)
+                      return;
                   $scope.showLoading = true;
                   $http.get('/api/Account/DajkorisnikeJson/' + $rootScope.globals.currentUser.ID + '?authInfo=' + $rootScope.globals.currentUser.authdata)
                   .success(function (response) {

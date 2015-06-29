@@ -60,7 +60,7 @@ angular.module('BasicHttpAuthExample')
                 Fotografija_cijena: mC,
                 Fotografija_sati: mS,
                 Komentar: "",
-                Korisnik_ID: korisnikId
+                Korisnik_ID: $rootScope.globals.currentUser.ID
             })
             .success(function (response) {
                 var a = { success: true, data: response };

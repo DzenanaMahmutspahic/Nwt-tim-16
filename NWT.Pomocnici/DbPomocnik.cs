@@ -204,8 +204,26 @@ namespace NWT.Pomocnici
                             var ovajProperty = odgovor_properties.FirstOrDefault(x => x.Name == (rdr.GetName(i)));
                             var ovajValue = rdr.GetValue(i);
                             if(ovajProperty != null && ovajValue != null && ovajValue != DBNull.Value)
-                                ovajProperty.SetValue(cvor, Convert.ChangeType(ovajValue, ovajProperty.PropertyType));
-                            //parametri1.Add(rdr.GetValue(i));
+                            {
+                                //ovajProperty.SetValue(cvor, Convert.ChangeType(ovajValue, ovajProperty.PropertyType));
+
+                                try
+                                {
+                                    ovajProperty.SetValue(cvor, Convert.ChangeType(ovajValue, ovajProperty.PropertyType));
+                                }
+                                catch
+                                {
+                                    var converter = TypeDescriptor.GetConverter(ovajProperty.PropertyType);
+                                    object vrijednost;
+                                    if(converter.CanConvertFrom(ovajValue.GetType()))
+                                        vrijednost = converter.ConvertFrom(ovajValue.GetType());
+                                    else
+                                        vrijednost = GetDefault(ovajProperty.PropertyType);
+                                    ovajProperty.SetValue(cvor, vrijednost);
+                                }
+
+                                //parametri1.Add(rdr.GetValue(i));
+                            }
                         }
                         odgovor.Add(cvor);
                     }

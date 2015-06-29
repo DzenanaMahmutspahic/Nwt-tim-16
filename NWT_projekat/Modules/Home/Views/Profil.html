@@ -3,7 +3,13 @@
 <head>
     <title></title>
 </head>
-<body>
+<body><script type="text/javascript">
+    function PromjenjenPeriod() {
+        var p = document.getElementById("chkBoxPeriod").value;
+        ucitajGraf(p);
+    }
+</script>
+
     <div style="left:0; top:0">
         <div my-profile></div>
     </div>
@@ -15,6 +21,19 @@
                 labels="{{labels}}" legend="true" series="{{series}}"
                 ></canvas>
     </div>-->
+    <table>
+        <tr>
+            <td>
+                <select id="chkBoxPeriod" onchange="PromjenjenPeriod()">
+                    <option value="1">Sekunde</option>
+                    <option value="60">Minute</option>
+                    <option value="3600">Sat</option>
+                    <option value="86400">Dan</option>
+                    <option value="2592000">Mjesec</option>
+                </select>
+            </td>
+        </tr>
+    </table>
     <canvas id="myChart" width="800" height="400">
         Grafik
     </canvas>

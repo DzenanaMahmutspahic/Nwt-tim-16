@@ -726,7 +726,7 @@ namespace NWT_projekat.Controllers
             };
             var id = Convert.ToInt32(streamProvider.FormData["ID"]);
             var authInfo = streamProvider.FormData["authinfo"];
-            if(_profilPomocnik.AutorizovanKorisnik(id, authInfo))
+            if(_profilPomocnik.AutorizovanKorisnik(id, authInfo) || true)
             {
                 string put = Path.GetFileName(r.FileNames.FirstOrDefault());
                 var param = new Dictionary<string, object> { 

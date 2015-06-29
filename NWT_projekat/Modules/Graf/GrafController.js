@@ -1,4 +1,7 @@
-﻿function ucitajGraf() {
+﻿function ucitajGraf(period) {
+
+    period = typeof period !== 'undefined' ? period : 3600;
+
     var fd = new FormData()
     //fd.append("ID", $rootScope.globals.currentUser.ID);
     //fd.append("authInfo", $rootScope.globals.currentUser.authdata);
@@ -6,7 +9,7 @@
     fd.append('minute', '65536');
 
     var ajaxRequest = $.get(
-        "/api/values/get?vrsta=login&minute=65536&vremenskiPeriod=86400",
+        "/api/values/get?vrsta=login&minute=65536&vremenskiPeriod=" + period,
         function (response) {
             var ctx = document.getElementById("myChart").getContext("2d");
 
